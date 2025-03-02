@@ -1,0 +1,4 @@
+# Entries from the root .gitignore
+zgloszenie/
+.idea
+.vscode
