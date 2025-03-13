@@ -4,9 +4,9 @@ CREATE SCHEMA public;
 CREATE TABLE iuser
 (
     user_id       SERIAL PRIMARY KEY,
-    email         VARCHAR(255) UNIQUE NOT NULL,
-    username      VARCHAR(255)        NOT NULL,
-    password_hash VARCHAR(255)        NOT NULL,
+    email         VARCHAR(30) UNIQUE NOT NULL,
+    username      VARCHAR(30)        NOT NULL,
+    password_hash VARCHAR(65)        NOT NULL,
     admin         BOOLEAN DEFAULT FALSE
 );
 --------------------------------------------------------------------------------------------------
@@ -41,7 +41,28 @@ CREATE TABLE component
     html           TEXT,
     css            TEXT
 );
-
+--------------------------------------------------------------------------------------------------
+CREATE TABLE tag
+(
+    tag_id   SERIAL PRIMARY KEY,
+    tag_name VARCHAR(30) NOT NULL UNIQUE,
+    color_id INT         REFERENCES color (color_id) ON DELETE SET NULL
+);
+--------------------------------------------------------------------------------------------------
+CREATE TABLE component_tag
+(
+    component_id INT REFERENCES component (component_id) ON DELETE CASCADE,
+    tag_id       INT REFERENCES tag (tag_id) ON DELETE CASCADE,
+    PRIMARY KEY (component_id, tag_id)
+);
+--------------------------------------------------------------------------------------------------
+CREATE TABLE liked
+(
+    user_id      INT REFERENCES iuser (user_id) ON DELETE CASCADE,
+    component_id INT REFERENCES component (component_id) ON DELETE CASCADE,
+    liked_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, component_id)
+);
 --------------------------------------------------------------------------------------------------User inserts
 INSERT INTO public.iuser (user_id, email, username, password_hash, admin)
 VALUES (1, 'iuadmin@iu.iu', 'admin1', '$2y$12$9cqkVFs2HxdhzN0ZPp8/1uudWjvDZT5YJVI4euVIUJjgPazullhtm', true);
@@ -90,10 +111,46 @@ INSERT INTO public.set (set_id, set_name, user_id)
 VALUES (2, 'others', 3);
 INSERT INTO public.set (set_id, set_name, user_id)
 VALUES (3, 'easy', 2);
-
+--------------------------------------------------------------------------------------------------Tag inserts
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (1, 'simple', 1);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (2, 'fancy', 2);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (3, 'colorless', 3);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (4, 'responsive', 4);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (5, 'animated', 5);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (6, 'modest', 6);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (7, 'modern', 7);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (8, 'classic', 8);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (9, 'dark', 1);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (10, 'light', 2);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (11, 'flat', 3);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (12, 'gradient', 4);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (13, 'shadow', 5);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (14, 'bordered', 6);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (15, 'rounded', 7);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (16, 'outlined', 8);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (17, 'transparent', 1);
+INSERT INTO public.tag (tag_id, tag_name, color_id)
+VALUES (18, 'solid', 2);
 --------------------------------------------------------------------------------------------------Component inserts
 INSERT INTO public.component (component_id, component_name, set_id, type_id, color_id, user_id, created_at, css, html)
-VALUES (1, 'gradient text', 1, 2, 9, 1, '2025-01-12 14:00:50.977333',
+VALUES (1, 'gradient text', 1, 2, 9, 1, '2025-03-02 14:00:50.977333',
         e'.gradient-border {
             border: 2px solid transparent;
             border-radius: 5px;
@@ -111,7 +168,7 @@ VALUES (1, 'gradient text', 1, 2, 9, 1, '2025-01-12 14:00:50.977333',
         '&lt;input type=&quot;text&quot; class=&quot;gradient-border&quot; placeholder=&quot;Enter text here&quot;&gt;');
 --------------------------------------------------------------------------------------------------
 INSERT INTO public.component (component_id, component_name, set_id, type_id, color_id, user_id, created_at, css, html)
-VALUES (2, 'pink submit', 3, 1, 10, 2, '2025-03-12 13:54:00.663748',
+VALUES (2, 'pink submit', 3, 1, 10, 2, '2025-03-12 13:5:00.663748',
         e'#submit-button {
           display: inline-flex;
           font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif;
@@ -138,7 +195,7 @@ VALUES (2, 'pink submit', 3, 1, 10, 2, '2025-03-12 13:54:00.663748',
         '&lt;button id=&quot;submit-button&quot;&gt;Submit&lt;/button&gt;');
 --------------------------------------------------------------------------------------------------
 INSERT INTO public.component (component_id, component_name, set_id, type_id, color_id, user_id, created_at, css, html)
-VALUES (3, 'purple submit', 3, 1, 11, 2, '2025-01-23 12:48:54.729399',
+VALUES (3, 'purple submit', 3, 1, 11, 2, '2025-03-03 12:48:5.729399',
         e'#submit-button {
           display: inline-flex;
           font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif;
@@ -216,7 +273,46 @@ VALUES (5, 'green input', 3, 2, 12, 2, '2025-02-23 12:57:35.674594',
         }',
         '&lt;input component_name=&quot;text&quot; id=&quot;search_input&quot; type=&quot;text&quot; placeholder=&quot;Search&quot; /&gt;');
 
-
+--------------------------------------------------------------------------------------------------Likes inserts
+INSERT INTO public.liked (user_id, component_id, liked_at)
+VALUES (2, 5, '2025-03-07 15:48:30.070802');
+INSERT INTO public.liked (user_id, component_id, liked_at)
+VALUES (1, 1, '2025-03-07 16:32:57.245697');
+INSERT INTO public.liked (user_id, component_id, liked_at)
+VALUES (1, 5, '2025-03-07 16:32:57.806962');
+INSERT INTO public.liked (user_id, component_id, liked_at)
+VALUES (2, 2, '2025-03-08 16:05:15.519838');
+INSERT INTO public.liked (user_id, component_id, liked_at)
+VALUES (2, 1, '2025-03-11 18:52:07.011277');
+INSERT INTO public.liked (user_id, component_id, liked_at)
+VALUES (2, 4, '2025-03-01 18:32:24.644146');
+--------------------------------------------------------------------------------------------------Component_Tag inserts
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (1, 12);
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (1, 2);
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (1, 7);
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (2, 6);
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (2, 13);
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (2, 3);
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (3, 9);
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (3, 1);
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (4, 9);
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (4, 1);
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (5, 12);
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (5, 9);
+INSERT INTO public.component_tag (component_id, tag_id)
+VALUES (5, 1);
 
 SELECT setval(pg_get_serial_sequence('iuser', 'user_id'), coalesce(max(user_id) + 1, 1), false)
 FROM iuser;
@@ -228,3 +324,35 @@ SELECT setval(pg_get_serial_sequence('set', 'set_id'), coalesce(max(set_id) + 1,
 FROM set;
 SELECT setval(pg_get_serial_sequence('component', 'component_id'), coalesce(max(component_id) + 1, 1), false)
 FROM component;
+SELECT setval(pg_get_serial_sequence('tag', 'tag_id'), coalesce(max(tag_id) + 1, 1), false)
+FROM tag;
+
+
+--------------------------------------------------------------------------------------------------
+create view component_details_view
+            (component_id, component_name, user_id, username, hex, type_name, set_name, created_at, likes, tags, css,
+             html)
+as
+SELECT c.component_id,
+       c.component_name,
+       c.user_id,
+       u.username,
+       co.hex,
+       t.type_name                              AS typename,
+       s.set_name                               AS setname,
+       c.created_at,
+       (SELECT count(*) AS count
+        FROM "liked" l
+        WHERE l.component_id = c.component_id)  AS likes,
+       (SELECT jsonb_object_agg(tg.tag_name, co.hex)
+        FROM component_tag ct
+                 JOIN tag tg USING (tag_id)
+                 JOIN color co USING (color_id)
+        WHERE ct.component_id = c.component_id) AS tags,
+       c.css,
+       c.html
+FROM component c
+         LEFT JOIN color co USING (color_id)
+         LEFT JOIN set s USING (set_id)
+         LEFT JOIN type t USING (type_id)
+         LEFT JOIN iuser u ON c.user_id = u.user_id;
