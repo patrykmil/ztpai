@@ -1,21 +1,32 @@
-import { useState, useEffect } from "react";
+import {useQuery} from "@tanstack/react-query";
+import {Navigate, Route, Routes} from "react-router-dom";
 import "./App.css";
 
+function Users() {
+    const {data, isLoading, error} = useQuery({
+        queryKey: ["userData"],
+        queryFn: () =>
+            fetch("http://localhost:8080/users")
+                .then((response) => response.text())
+    });
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error.message}</div>;
+
+    return (
+        <div className="App">
+            <p>Data from backend: {data}</p>
+        </div>
+    );
+}
+
 function App() {
-  const [data, setData] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:8080")
-      .then((response) => response.text())
-      .then((data) => setData(data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
-
-  return (
-    <div className="App">
-      <p>Data from backend: {data}</p>
-    </div>
-  );
+    return (
+        <Routes>
+            <Route path="/users" element={<Users/>}/>
+            <Route path="/" element={<Navigate to="/users" replace/>}/>
+        </Routes>
+    );
 }
 
 export default App;
