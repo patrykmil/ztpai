@@ -1,4 +1,4 @@
-package iu.iu.spring_app.model;
+package iu.iu.spring_app.users.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

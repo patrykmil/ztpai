@@ -1,7 +1,7 @@
-package iu.iu.spring_app.controller;
+package iu.iu.spring_app.users.controller;
 
-import iu.iu.spring_app.model.User;
-import iu.iu.spring_app.repository.UserRepository;
+import iu.iu.spring_app.users.repository.UserRepository;
+import iu.iu.spring_app.users.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;

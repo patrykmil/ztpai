@@ -1,6 +1,6 @@
-package iu.iu.spring_app.repository;
+package iu.iu.spring_app.users.repository;
 
-import iu.iu.spring_app.model.User;
+import iu.iu.spring_app.users.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

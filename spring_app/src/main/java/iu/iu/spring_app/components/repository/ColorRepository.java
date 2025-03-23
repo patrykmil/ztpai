@@ -1,6 +1,6 @@
-package iu.iu.spring_app.repository;
+package iu.iu.spring_app.components.repository;
 
-import iu.iu.spring_app.model.Color;
+import iu.iu.spring_app.components.model.Color;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ColorRepository extends JpaRepository<Color, Integer> {

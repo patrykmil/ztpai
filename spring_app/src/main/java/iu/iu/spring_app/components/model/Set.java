@@ -1,16 +1,19 @@
-package iu.iu.spring_app.model;
+package iu.iu.spring_app.components.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "type")
-public class Type {
+@Table(name = "set")
+public class Set {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "type_id")
+    @Column(name = "set_id")
     private Integer id;
-    @Column(name = "type_name")
+
+    @Column(name = "set_name")
     private String name;
+
+    private Integer user_id;
 }

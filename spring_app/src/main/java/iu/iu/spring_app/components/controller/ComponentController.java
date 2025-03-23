@@ -1,7 +1,7 @@
-package iu.iu.spring_app.controller;
+package iu.iu.spring_app.components.controller;
 
-import iu.iu.spring_app.model.*;
-import iu.iu.spring_app.repository.*;
+import iu.iu.spring_app.components.model.*;
+import iu.iu.spring_app.components.repository.*;
 import jakarta.persistence.EntityManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class ComponentController {
+public class ComponentController 
+{
     private final ComponentRepository componentRepository;
     private final TagRepository tagRepository;
     private final SetRepository setRepository;

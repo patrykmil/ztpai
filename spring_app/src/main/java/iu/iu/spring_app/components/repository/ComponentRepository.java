@@ -1,6 +1,6 @@
-package iu.iu.spring_app.repository;
+package iu.iu.spring_app.components.repository;
 
-import iu.iu.spring_app.model.Component;
+import iu.iu.spring_app.components.model.Component;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
