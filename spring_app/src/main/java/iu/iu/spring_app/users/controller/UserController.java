@@ -1,11 +1,12 @@
 package iu.iu.spring_app.users.controller;
 
-import iu.iu.spring_app.users.repository.UserRepository;
 import iu.iu.spring_app.users.model.User;
+import iu.iu.spring_app.users.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +49,9 @@ public class UserController {
         user.setUsername(payload.get("username"));
         user.setPassword(passwordEncoder.encode(payload.get("password")));
         userRepository.save(user);
-        return ResponseEntity.ok(user);
+        Integer id = userRepository.findByEmail(payload.get("email")).getId();
+        return id > 0 ?
+                ResponseEntity.created(URI.create("/users/" + id)).body(user) :
+                ResponseEntity.internalServerError().build();
     }
 }

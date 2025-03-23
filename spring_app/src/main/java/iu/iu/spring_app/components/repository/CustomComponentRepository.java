@@ -9,5 +9,5 @@ import java.util.List;
 public interface CustomComponentRepository {
     public Integer addComponent(Component request, Set set, Color color, Type type);
 
-    public Void addTags(Integer componentId, List<Tag> tags);
+    public void addTagsToComponent(Integer componentId, List<Tag> tags);
 }

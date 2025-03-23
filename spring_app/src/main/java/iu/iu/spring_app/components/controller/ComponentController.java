@@ -2,31 +2,28 @@ package iu.iu.spring_app.components.controller;
 
 import iu.iu.spring_app.components.model.*;
 import iu.iu.spring_app.components.repository.*;
-import jakarta.persistence.EntityManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class ComponentController 
-{
+public class ComponentController {
     private final ComponentRepository componentRepository;
     private final TagRepository tagRepository;
     private final SetRepository setRepository;
     private final ColorRepository colorRepository;
     private final TypeRepository typeRepository;
-    private final EntityManager entityManager;
 
-    public ComponentController(ComponentRepository componentRepository, SetRepository setRepository, ColorRepository colorRepository, TagRepository tagRepository, EntityManager entityManager, TypeRepository typeRepository) {
+    public ComponentController(ComponentRepository componentRepository, SetRepository setRepository, ColorRepository colorRepository, TagRepository tagRepository, TypeRepository typeRepository) {
         this.componentRepository = componentRepository;
         this.setRepository = setRepository;
         this.tagRepository = tagRepository;
         this.colorRepository = colorRepository;
         this.typeRepository = typeRepository;
-        this.entityManager = entityManager;
     }
 
     @GetMapping("/components")
@@ -46,7 +43,7 @@ public class ComponentController
     @Transactional
     public ResponseEntity<Component> addComponent(@RequestBody Component request) {
 
-        Integer id = -1;
+        Integer id;
         try {
             Set set = setRepository.findByName(request.getSetName());
             if (set == null) {
@@ -79,13 +76,14 @@ public class ComponentController
             }
 
             id = componentRepository.addComponent(request, set, color, type);
-            componentRepository.addTags(id, tags);
+            componentRepository.addTagsToComponent(id, tags);
 
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
         }
         return componentRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .map(component -> ResponseEntity.created(URI.create("/components/" + id)).body(component))
+                .orElseGet(() -> ResponseEntity.internalServerError().build());
     }
 }

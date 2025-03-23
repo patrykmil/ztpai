@@ -21,7 +21,7 @@ public class ComponentRepositoryImpl implements CustomComponentRepository {
                 "INSERT INTO public.component(component_name, set_id, type_id, color_id, user_id, html, css)" +
                         "VALUES (:name, :setId, :typeId, :colorId, :userId, :html, :css) RETURNING component_id";
 
-        Integer componentID = (Integer) entityManager.createNativeQuery(query)
+        return (Integer) entityManager.createNativeQuery(query)
                 .setParameter("name", request.getName())
                 .setParameter("setId", set.getId())
                 .setParameter("typeId", type.getId())
@@ -30,16 +30,12 @@ public class ComponentRepositoryImpl implements CustomComponentRepository {
                 .setParameter("html", request.getHtml())
                 .setParameter("css", request.getCss())
                 .getSingleResult();
-
-        return componentID;
     }
 
     @Override
 //    @Transactional
-    public Void addTags(Integer componentId, List<Tag> tags) {
-        System.out.println("------------------- Tags size:" + tags.size() + "compID:" + componentId);
+    public void addTagsToComponent(Integer componentId, List<Tag> tags) {
         for (Tag tag : tags) {
-            System.out.println("------------------- tagId" + tag.getId());
             String query = "INSERT INTO public.component_tag (component_id, tag_id) VALUES (:component, :tag)";
             entityManager.createNativeQuery(query)
                     .setParameter("component", componentId)
@@ -47,7 +43,6 @@ public class ComponentRepositoryImpl implements CustomComponentRepository {
                     .executeUpdate();
 
         }
-        return null;
     }
 
 
