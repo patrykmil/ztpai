@@ -5,14 +5,14 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import "./index.css";
 import HomePage from "./HomePage.jsx";
-import ErrorNotFound from "./ErrorNotFound.jsx";
+import NotFound from "./ErrorPages/NotFound.jsx";
 import ComponentList from "./ComponentList.jsx";
 import axios from "axios";
 
 const router = createBrowserRouter([
     {path: "/", element: <HomePage/>},
     {path: "/components", element: <ComponentList/>},
-    {path: "*", element: <ErrorNotFound/>}
+    {path: "*", element: <NotFound/>}
 ])
 
 const queryClient = new QueryClient();

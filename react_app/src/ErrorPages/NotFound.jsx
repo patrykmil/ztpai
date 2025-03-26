@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
-import styles from "./ErrorNotFound.module.css"
+import styles from "./Error.module.css"
 
-const ErrorNotFound = () => {
+const NotFound = () => {
     return (
         <div className={styles.content}>
             <h1 className={styles.code}>404</h1>
@@ -13,4 +13,4 @@ const ErrorNotFound = () => {
     );
 }
 
-export default ErrorNotFound;
+export default NotFound;
