@@ -1,0 +1,36 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 1rem;
+}
+
+.code, .message {
+    display: flex;
+    justify-self: center;
+    font-size: var(--triple-font);
+    color: var(--primary);
+}
+
+.homeButton {
+    display: inline-flex;
+    width: 7.5em;
+    height: 2em;
+    font-size: var(--double-font);
+    font-weight: 500;
+    padding: 0.8rem 0.8rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    border-radius: 0.8125rem;
+    border: 3px solid var(--primary);
+    background-color: inherit;
+    margin-top: 2rem;
+}
+
+.homeButton:hover {
+    background-color: var(--primary);
+    cursor: pointer;
+}

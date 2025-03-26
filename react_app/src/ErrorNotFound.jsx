@@ -1,13 +1,15 @@
 import {Link} from "react-router-dom";
+import styles from "./ErrorNotFound.module.css"
 
 const ErrorNotFound = () => {
     return (
-        <>
-            <h1>Error 404</h1>
+        <div className={styles.content}>
+            <h1 className={styles.code}>404</h1>
+            <h2 className={styles.message}>Page not found</h2>
             <Link to={"/"}>
-                <button>Home</button>
+                <button className={styles.homeButton}>Home</button>
             </Link>
-        </>
+        </div>
     );
 }
 

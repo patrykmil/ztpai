@@ -2,6 +2,7 @@ package iu.iu.spring_app.components.service;
 
 import iu.iu.spring_app.components.model.Component;
 import iu.iu.spring_app.components.repository.ComponentRepository;
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,13 @@ public class GetComponentService {
     }
 
     public List<Component> getAllComponents() {
-        return componentRepository.findAll();
+        List<Component> components = componentRepository.findAll();
+        for (Component component : components) {
+            String unescaped = StringEscapeUtils.unescapeHtml4(component.getHtml());
+            component.setHtml(unescaped);
+            System.out.println(unescaped);
+        }
+        return components;
     }
 
     public Component getComponentById(Integer id) {
