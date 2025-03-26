@@ -1,6 +1,10 @@
 import {useQuery} from "@tanstack/react-query";
 import {api} from './main.jsx'
-import styles from "./ComponentList.module.css"
+import ComponentCard from "./ComponentListPage/ComponentCard.jsx"
+import styles from "./ComponentListPage/ComponentList.module.css";
+import NotFound from "./ErrorPages/NotFound.jsx";
+import InternalServer from "./ErrorPages/InternalServer.jsx";
+
 
 const fetchComponents = async () => {
     const {data} = await api.get("/components");
@@ -25,25 +29,12 @@ const ComponentList = () => {
     const {data, error, isLoading} = useQuery({queryKey: ["components"], queryFn: fetchComponents});
 
     if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+    if (error) return <InternalServer/>;
+    
     return (
         <div>
-            {data.map((component) => (
-                <div className={styles.listItem} key={component.id}>
-                    <span className={styles.componentName} style={{color: `#${component.hex}`}}>
-                        {component.name}
-                    </span>
-                    <p>author: {component.username}</p>
-                    <p>set: {component.setName}</p>
-                    {renderTags(component.tags)}
-                    <style>
-                        {`.component-${component.id} ${component.css}`}
-                    </style>
-                    <div
-                        className={`component-${component.id} ${styles.componentPreview}`}
-                        dangerouslySetInnerHTML={{__html: component.html}}
-                    />
-                </div>
+            {data.map(component => (
+                <ComponentCard key={component.id} component={component}/>
             ))}
         </div>
     );
