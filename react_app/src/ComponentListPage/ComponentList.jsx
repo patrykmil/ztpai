@@ -1,7 +1,7 @@
 import {useQuery} from "@tanstack/react-query";
-import {api} from './main.jsx'
-import ComponentCard from "./ComponentListPage/ComponentCard.jsx"
-import InternalServer from "./ErrorPages/InternalServer.jsx";
+import {api} from '../main.jsx'
+import ComponentCard from "./components/ComponentCard.jsx"
+import InternalServer from "../ErrorPages/InternalServer.jsx";
 
 
 const fetchComponents = async () => {

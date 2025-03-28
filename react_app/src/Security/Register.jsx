@@ -1,8 +1,8 @@
 import {useForm} from '@tanstack/react-form';
-import {api} from './main';
+import {api} from '../main.jsx';
 import {z} from 'zod';
-import styles from './Security/Security.module.css';
-import Field from './Security/Field.jsx';
+import styles from './Security.module.css';
+import Field from './components/Field.jsx';
 
 const ValidationSchema = z.object({
     email: z.string().email("Email is not correct"),

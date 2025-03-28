@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Security.module.css';
+import styles from '../Security.module.css';
 
 const FieldInfo = ({field}) => (
     <>

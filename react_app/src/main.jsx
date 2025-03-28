@@ -6,9 +6,9 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import "./index.css";
 import HomePage from "./HomePage.jsx";
 import NotFound from "./ErrorPages/NotFound.jsx";
-import ComponentList from "./ComponentList.jsx";
+import ComponentList from "./ComponentListPage/ComponentList.jsx";
 import axios from "axios";
-import Register from "./Register.jsx";
+import Register from "./Security/Register.jsx";
 
 const router = createBrowserRouter([
     {path: "/", element: <HomePage/>},

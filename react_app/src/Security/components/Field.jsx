@@ -1,6 +1,6 @@
 import React from 'react';
 import FieldInfo from './FieldInfo.jsx';
-import styles from './Security.module.css';
+import styles from '../Security.module.css';
 
 const Field = ({name, label, field}) => (
     <div>
