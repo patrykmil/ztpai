@@ -8,10 +8,12 @@ import HomePage from "./HomePage.jsx";
 import NotFound from "./ErrorPages/NotFound.jsx";
 import ComponentList from "./ComponentList.jsx";
 import axios from "axios";
+import Register from "./Register.jsx";
 
 const router = createBrowserRouter([
     {path: "/", element: <HomePage/>},
     {path: "/components", element: <ComponentList/>},
+    {path: "/register", element: <Register/>},
     {path: "*", element: <NotFound/>}
 ])
 
