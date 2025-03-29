@@ -4,7 +4,7 @@
     --background: hsl(195, 6%, 13%);
     --light-background: hsl(195, 6%, 22%);
     --primary: hsl(271, 12%, 46%);
-    --primary-transparent: hsla(0, 0%, 46%, 0.5);
+    --primary-transparent: hsla(271, 12%, 46%, 0.5);
     --accent-green: #89bd9e;
     --accent-orange: #db995a;
     --text-color: #ffffff;
@@ -30,4 +30,39 @@
 body {
     background-color: var(--background);
     /*height: 200vh;*/
+}
+
+a {
+    all: unset;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+::selection {
+    background-color: var(--primary-transparent) !important;
+    color: white;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-background);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #a6a6a6;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #969696;
+}
+
+::-webkit-scrollbar-corner {
+    display: none;
 }

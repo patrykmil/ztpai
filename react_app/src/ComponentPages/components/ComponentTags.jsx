@@ -1,4 +1,4 @@
-import styles from "./ComponentList.module.css";
+import styles from "./Component.module.css";
 
 
 const ComponentTags = ({tags}) => {

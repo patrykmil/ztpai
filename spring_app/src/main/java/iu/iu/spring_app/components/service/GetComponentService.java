@@ -18,14 +18,18 @@ public class GetComponentService {
     public List<Component> getAllComponents() {
         List<Component> components = componentRepository.findAll();
         for (Component component : components) {
-            String unescaped = StringEscapeUtils.unescapeHtml4(component.getHtml());
-            component.setHtml(unescaped);
-            System.out.println(unescaped);
+            component.setHtml(StringEscapeUtils.unescapeHtml4(component.getHtml()));
+            component.setCss(StringEscapeUtils.unescapeHtml4(component.getCss()));
         }
         return components;
     }
 
     public Component getComponentById(Integer id) {
-        return componentRepository.findById(id).orElse(null);
+        Component component = componentRepository.findById(id).orElse(null);
+        if (component != null) {
+            component.setHtml(StringEscapeUtils.unescapeHtml4(component.getHtml()));
+            component.setCss(StringEscapeUtils.unescapeHtml4(component.getCss()));
+        }
+        return component;
     }
 }

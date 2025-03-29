@@ -1,0 +1,42 @@
+.token.attr-name {
+    color: var(--accent-orange) !important;
+}
+
+.token.deleted, .token.namespace, .token.tag {
+    color: var(--accent-green) !important;
+}
+
+.token.boolean, .token.function, .token.number {
+    color: var(--accent-orange) !important;
+}
+
+.token.class-name, .token.constant, .token.property, .token.symbol {
+    color: var(--accent-orange) !important;
+}
+
+.token.atrule, .token.builtin, .token.important, .token.keyword, .token.selector {
+    color: var(--accent-green) !important;
+}
+
+.token.char, .token.regex, .token.string, .token.variable {
+    color: var(--accent-green) !important;
+    background-color: inherit !important;
+}
+
+.token.function-name {
+    color: #6196cc !important;
+}
+
+.token.entity, .token.operator, .token.url {
+    color: #67cdcc !important;
+}
+
+code[class*="language-"] {
+    font-size: var(--big-font);
+    color: white;
+    text-shadow: none;
+}
+
+pre[class*="language-"] {
+    margin: 0 !important;
+}

@@ -6,13 +6,15 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import "./index.css";
 import HomePage from "./HomePage.jsx";
 import NotFound from "./ErrorPages/NotFound.jsx";
-import ComponentList from "./ComponentListPage/ComponentList.jsx";
+import ComponentList from "./ComponentPages/ComponentList.jsx";
+import ComponentPage from "./ComponentPages/ComponentPage.jsx";
 import axios from "axios";
 import Register from "./Security/Register.jsx";
 
 const router = createBrowserRouter([
     {path: "/", element: <HomePage/>},
     {path: "/components", element: <ComponentList/>},
+    {path: "/components/:id", element: <ComponentPage/>},
     {path: "/register", element: <Register/>},
     {path: "*", element: <NotFound/>}
 ])

@@ -1,0 +1,115 @@
+.content {
+    margin: 3rem;
+    display: flex;
+    min-height: 100vh;
+    gap: 2rem;
+}
+
+.leftSide {
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+    gap: 2rem;
+    flex: 60;
+    max-width: 800px;
+}
+
+.rightSide {
+    display: flex;
+    flex-flow: column wrap;
+    flex: 40;
+}
+
+.previewContainer {
+    max-width: 33rem;
+    width: 75%;
+    border: 2px solid var(--text-color-dark);
+    aspect-ratio: 5/3;
+    border-radius: 0.5rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.listItem {
+    display: inline flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    border: 1px solid var(--light-background);
+    margin: 1rem;
+    padding: 2rem;
+    justify-content: space-between;
+    border-radius: 1rem;
+}
+
+.listItemInside {
+    display: inline flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    justify-content: space-between;
+    min-height: 16rem;
+    border-radius: 1rem;
+}
+
+.componentName {
+    font-size: var(--double-font);
+}
+
+.listItem > p {
+    font-size: var(--big-font);
+}
+
+.tag {
+    padding: 2px 6px 2px 6px;
+    border-radius: 10px;
+    color: black;
+}
+
+.componentPreview {
+    align-self: center;
+}
+
+.codeContainer {
+    display: none;
+    max-width: 800px;
+    min-height: 4.375rem;
+    padding: 0.625rem;
+    align-items: center;
+    gap: 0.625rem;
+    border-radius: 0 1.4375rem 0 0;
+    background: var(--light-background) !important;
+    resize: none;
+    border: none;
+    overflow: scroll;
+}
+
+.active {
+    display: block;
+}
+
+.changeCodeButtons {
+    display: inline;
+}
+
+.changeCode {
+    display: inline flex;
+    background-color: var(--background);
+    height: 2.375rem;
+    width: 4rem;
+    padding: 0.625rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.3125rem 0.3125rem 0 0;
+    border: 3px solid var(--light-background);
+}
+
+.changeCode.active {
+    background-color: var(--light-background);
+}
+
+.changeCode:hover {
+    cursor: pointer;
+}
