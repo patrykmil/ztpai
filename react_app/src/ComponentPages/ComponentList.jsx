@@ -10,7 +10,11 @@ const fetchComponents = async () => {
 };
 
 const ComponentList = () => {
-    const {data, error, isLoading} = useQuery({queryKey: ["components"], queryFn: fetchComponents});
+    const {data, error, isLoading, refetch} = useQuery({
+        queryKey: ["components"], queryFn: fetchComponents,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false
+    });
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <InternalServer/>;
