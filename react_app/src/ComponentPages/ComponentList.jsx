@@ -1,6 +1,7 @@
 import {useQuery} from "@tanstack/react-query";
 import {api} from '../main.jsx'
 import ComponentCard from "./components/ComponentCard.jsx"
+import RefreshButton from "./components/RefreshButton.jsx"
 import InternalServer from "../ErrorPages/InternalServer.jsx";
 
 
@@ -21,6 +22,7 @@ const ComponentList = () => {
 
     return (
         <div>
+            <RefreshButton refetch={refetch}/>
             {data.map(component => (
                 <ComponentCard key={component.id} component={component}/>
             ))}

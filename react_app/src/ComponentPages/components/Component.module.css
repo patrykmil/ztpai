@@ -113,3 +113,20 @@
 .changeCode:hover {
     cursor: pointer;
 }
+
+.refreshButton {
+    display: flex;
+    margin: 3rem;
+    padding: 0.5rem 1.2rem;
+    background-color: var(--background);
+    border: var(--accent-green) 2px solid;
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: var(--big-font);
+}
+
+.refreshButton:hover {
+    cursor: pointer;
+    background-color: var(--accent-green);
+    color: black;
+}
