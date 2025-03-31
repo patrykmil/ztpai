@@ -22,11 +22,13 @@ const Register = () => {
             try {
                 console.log(value);
                 const {data} = await api.post("/users/add", value);
-                alert(data.username + " has been registered!")
+                alert(data.username + " has registered!")
             } catch (error) {
-                console.log("err");
-                console.log("err" + value);
-                throw new Error('Registration error');
+                if (error.response?.data?.message) {
+                    alert(error.response.data.message);
+                } else {
+                    alert('Registration failed');
+                }
             }
         },
         validators: {

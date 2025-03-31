@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/users/add")
-    public ResponseEntity<User> addUser(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<?> addUser(@RequestBody Map<String, String> payload) {
         return addUserService.addUser(payload);
     }
 }

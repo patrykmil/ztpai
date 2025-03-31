@@ -1,5 +1,6 @@
 package iu.iu.spring_app.users.service;
 
+import iu.iu.spring_app.temp_default.model.ErrorMessage;
 import iu.iu.spring_app.users.model.User;
 import iu.iu.spring_app.users.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,10 @@ public class AddUserService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    public ResponseEntity<User> addUser(Map<String, String> payload) {
+    public ResponseEntity<?> addUser(Map<String, String> payload) {
         User user = userRepository.findByEmail(payload.get("email"));
         if (user != null) {
-            return ResponseEntity.status(409).body(null);
+            return ResponseEntity.status(409).body(new ErrorMessage("User with that email address already exists"));
         }
         user = new User();
         user.setEmail(payload.get("email"));
