@@ -11,7 +11,7 @@ import {useState} from "react";
 import ChangeCodeButtons from "./components/ChangeCodeButtons.jsx";
 
 const fetchComponent = async (id) => {
-    const {data} = await api.get(`/components/${id}`);
+    const {data} = await api.get(`/components/get/${id}`);
     return data;
 };
 

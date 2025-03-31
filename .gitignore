@@ -1,5 +1,5 @@
 # Entries from the root .gitignore
 .idea
 .vscode
-TODO.txt
+notes
 .env

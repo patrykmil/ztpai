@@ -5,7 +5,7 @@ import InternalServer from "../ErrorPages/InternalServer.jsx";
 
 
 const fetchComponents = async () => {
-    const {data} = await api.get("/components");
+    const {data} = await api.get("/components/get/all");
     return data;
 };
 

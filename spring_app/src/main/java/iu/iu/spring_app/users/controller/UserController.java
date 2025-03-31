@@ -19,24 +19,24 @@ public class UserController {
         this.addUserService = addUserService;
     }
 
-    @GetMapping("/users")
+    @GetMapping("/users/get/all")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(getUserService.getAllUsers());
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/users/get/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Integer id) {
         User user = getUserService.getUserById(id);
         return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/users")
+    @PostMapping("/users/get/email")
     public ResponseEntity<User> getUserByEmail(@RequestBody Map<String, String> payload) {
         User user = getUserService.getUserByEmail(payload);
         return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/addUser")
+    @PostMapping("/users/add")
     public ResponseEntity<User> addUser(@RequestBody Map<String, String> payload) {
         return addUserService.addUser(payload);
     }

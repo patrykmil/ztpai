@@ -8,7 +8,7 @@ import Field from './components/Field.jsx';
 const ValidationSchema = z.object({
     email: z.string().email("Email is not correct"),
     username: z.string().min(3, "Username must be longer than 3"),
-    password: z.string().min(8, "Password must be longer than 8").includes()
+    password: z.string().min(8, "Password must be longer than 8")
 });
 
 const Register = () => {
@@ -21,8 +21,8 @@ const Register = () => {
         onSubmit: async ({value}) => {
             try {
                 console.log(value);
-                const {data} = await api.post("/addUser", value);
-                return data;
+                const {data} = await api.post("/users/add", value);
+                alert(data.username + " has been registered!")
             } catch (error) {
                 console.log("err");
                 console.log("err" + value);

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/components")
 public class ComponentController {
     private final GetComponentService getComponentService;
     private final AddComponentService addComponentService;
@@ -18,18 +19,18 @@ public class ComponentController {
         this.addComponentService = addComponentService;
     }
 
-    @GetMapping("/components")
+    @GetMapping("/get/all")
     public ResponseEntity<List<Component>> getAllComponents() {
         return ResponseEntity.ok(getComponentService.getAllComponents());
     }
 
-    @GetMapping("/components/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Component> getComponent(@PathVariable Integer id) {
         Component component = getComponentService.getComponentById(id);
         return component != null ? ResponseEntity.ok(component) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/addComponent")
+    @PostMapping("/add")
     public ResponseEntity<Component> addComponent(@RequestBody Component request) {
         return addComponentService.addComponent(request);
     }
