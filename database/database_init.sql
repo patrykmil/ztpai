@@ -63,6 +63,19 @@ CREATE TABLE liked
     liked_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, component_id)
 );
+--------------------------------------------------------------------------------------------------Insert HEX in uppercase trigger
+CREATE OR REPLACE FUNCTION enforce_uppercase_hex()
+    RETURNS TRIGGER AS $$
+BEGIN
+    NEW.hex := UPPER(NEW.hex);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER enforce_uppercase_hex_trigger
+    BEFORE INSERT OR UPDATE ON public.color
+    FOR EACH ROW
+EXECUTE FUNCTION enforce_uppercase_hex();
 --------------------------------------------------------------------------------------------------User inserts
 INSERT INTO public.iuser (user_id, email, username, password_hash, admin)
 VALUES (1, 'iuadmin@iu.iu', 'admin1', '$2y$12$9cqkVFs2HxdhzN0ZPp8/1uudWjvDZT5YJVI4euVIUJjgPazullhtm', true);
@@ -272,7 +285,6 @@ e'#search_input {
     border: 3px solid #5ed398;
 }',
 '&lt;input component_name=&quot;text&quot; id=&quot;search_input&quot; type=&quot;text&quot; placeholder=&quot;Search&quot; /&gt;');
-
 --------------------------------------------------------------------------------------------------Likes inserts
 INSERT INTO public.liked (user_id, component_id, liked_at)
 VALUES (2, 5, '2025-03-07 15:48:30.070802');

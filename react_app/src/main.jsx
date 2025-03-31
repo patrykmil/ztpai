@@ -9,7 +9,7 @@ import NotFound from "./ErrorPages/NotFound.jsx";
 import ComponentList from "./ComponentPages/ComponentList.jsx";
 import ComponentPage from "./ComponentPages/ComponentPage.jsx";
 import axios from "axios";
-import Register from "./Security/Register.jsx";
+import Register from "./Authentication/Register.jsx";
 
 const router = createBrowserRouter([
     {path: "/", element: <HomePage/>},

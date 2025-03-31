@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
 import styles from "./Component.module.css"
-import "./Highlighting.css"
+import "./PrismHighlighting.css"
 
 const CodeField = ({content, language, activeTab}) => {
     useEffect(() => {
@@ -11,7 +11,7 @@ const CodeField = ({content, language, activeTab}) => {
 
     return (
         <pre className={`${styles.codeContainer} ${activeTab === language ? styles.active : ""}`}>
-            <code className={`language-${language} match-braces`}>
+            <code className={`language-${language}`}>
                 {content}
             </code>
         </pre>
