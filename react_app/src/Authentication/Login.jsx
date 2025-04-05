@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {api} from '../main.jsx';
 import styles from './Security.module.css';
 import Field from './components/Field.jsx';
+import {Helmet} from "react-helmet";
 
 const Login = () => {
     const form = useForm({
@@ -26,36 +27,40 @@ const Login = () => {
     });
 
     return (
-        <div className={styles.content}>
-            <div className={styles.formDiv}>
-                <form
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        form.handleSubmit();
-                    }}
-                >
-                    <form.Field
-                        name="email"
-                        children={(field) => <Field name="email" label="Email" field={field}/>}
-                    />
-                    <form.Field
-                        name="password"
-                        children={(field) => <Field name="password" label="Password" field={field}/>}
-                    />
-                    <form.Subscribe
-                        selector={(state) => [state.canSubmit, state.isSubmitting]}
-                        children={([canSubmit, isSubmitting]) => (
-                            <button className={styles.submitButton} type="submit" disabled={!canSubmit}>
-                                {isSubmitting ? '...' : 'Submit'}
-                            </button>
-                        )}
-                    />
-                </form>
-                <Link className={styles.link} to={"/register"}>Register?</Link>
+        <>
+            <Helmet>
+                <title>Login</title>
+            </Helmet>
+            <div className={styles.content}>
+                <div className={styles.formDiv}>
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            form.handleSubmit();
+                        }}
+                    >
+                        <form.Field
+                            name="email"
+                            children={(field) => <Field name="email" label="Email" field={field}/>}
+                        />
+                        <form.Field
+                            name="password"
+                            children={(field) => <Field name="password" label="Password" field={field}/>}
+                        />
+                        <form.Subscribe
+                            selector={(state) => [state.canSubmit, state.isSubmitting]}
+                            children={([canSubmit, isSubmitting]) => (
+                                <button className={styles.submitButton} type="submit" disabled={!canSubmit}>
+                                    {isSubmitting ? '...' : 'Submit'}
+                                </button>
+                            )}
+                        />
+                    </form>
+                    <Link className={styles.link} to={"/register"}>Register?</Link>
+                </div>
             </div>
-        </div>
-
+        </>
     );
 };
 
