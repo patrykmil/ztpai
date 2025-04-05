@@ -7,7 +7,7 @@
 }
 
 .formDiv {
-    height: 33.75rem;
+    max-height: 33.75rem;
     width: 19rem;
     margin-top: 1.5em;
     display: flex;
@@ -30,6 +30,10 @@ form > div {
     flex-direction: column;
     justify-content: flex-start;
     align-items: start;
+}
+
+.inputDiv {
+    margin-top: 1.5rem;
 }
 
 .inputLabel {
@@ -59,7 +63,6 @@ form > div {
 }
 
 .submitButton {
-    margin-top: .5em;
     display: inline-flex;
     width: 7.5em;
     height: 2em;
@@ -72,6 +75,8 @@ form > div {
     border-radius: 0.8125rem;
     border: 3px solid var(--primary);
     background-color: inherit;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
 }
 
 .submitButton:hover {

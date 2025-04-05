@@ -3,7 +3,7 @@ import FieldInfo from './FieldInfo.jsx';
 import styles from '../Security.module.css';
 
 const Field = ({name, label, field}) => (
-    <div>
+    <div className={styles.inputDiv}>
         <label className={styles.inputLabel} htmlFor={field.name}>{label}</label>
         <input className={styles.input}
                id={field.name}
