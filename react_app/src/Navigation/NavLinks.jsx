@@ -5,19 +5,19 @@ const NavLinks = ({isMobileMenuOpen}) => (
     <ul className={`${styles.navOptionsList} ${isMobileMenuOpen ? styles.active : ''}`}>
         <li>
             <Link to="/components" className={styles.menuItem}>
-                <img src={"/public/icons/search_thick.svg"} alt="Browse Icon"/>
+                <img src="/icons/search_thick.svg" alt="Browse Icon"/>
                 BROWSE
             </Link>
         </li>
         <li>
             <Link to={'/login'} className={styles.menuItem}>
-                <img src={"/public/icons/bookmark_fill.svg"} alt="Collection Icon"/>
+                <img src="/icons/bookmark_fill.svg" alt="Collection Icon"/>
                 COLLECTION
             </Link>
         </li>
         <li>
             <Link to="/create" className={styles.menuItem}>
-                <img src={"/public/icons/create.svg"} alt="Create Icon"/>
+                <img src="/icons/create.svg" alt="Create Icon"/>
                 CREATE
             </Link>
         </li>
