@@ -1,7 +1,7 @@
 package iu.iu.spring_app.users.controller;
 
 import iu.iu.spring_app.users.model.User;
-import iu.iu.spring_app.users.service.AddUserService;
+import iu.iu.spring_app.users.service.AuthenticationService;
 import iu.iu.spring_app.users.service.GetUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +12,11 @@ import java.util.Map;
 @RestController
 public class UserController {
     private final GetUserService getUserService;
-    private final AddUserService addUserService;
+    private final AuthenticationService authenticationService;
 
-    public UserController(GetUserService getUserService, AddUserService addUserService) {
+    public UserController(GetUserService getUserService, AuthenticationService authenticationService) {
         this.getUserService = getUserService;
-        this.addUserService = addUserService;
+        this.authenticationService = authenticationService;
     }
 
     @GetMapping("/users/get/all")
@@ -36,8 +36,13 @@ public class UserController {
         return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/users/add")
-    public ResponseEntity<?> addUser(@RequestBody Map<String, String> payload) {
-        return addUserService.addUser(payload);
+    @PostMapping("/users/register")
+    public ResponseEntity<?> register(@RequestBody Map<String, String> payload) {
+        return authenticationService.register(payload);
+    }
+
+    @PostMapping("/users/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> payload) {
+        return authenticationService.login(payload);
     }
 }

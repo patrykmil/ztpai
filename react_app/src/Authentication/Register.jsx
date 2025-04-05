@@ -21,7 +21,7 @@ const Register = () => {
         onSubmit: async ({value}) => {
             try {
                 console.log(value);
-                const {data} = await api.post("/users/add", value);
+                const {data} = await api.post("/users/register", value);
                 alert(data.username + " has registered!")
             } catch (error) {
                 if (error.response?.data?.message) {
