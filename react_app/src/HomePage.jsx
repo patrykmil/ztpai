@@ -1,7 +1,10 @@
+import Navigation from "./Navigation/Navigation.jsx";
+
 const HomePage = () => {
     return (
         <>
-            <h1>Home</h1>
+            <Navigation/>
+            <h1 style={{marginTop: "7rem"}}>Home</h1>
         </>
     )
 }

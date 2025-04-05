@@ -9,6 +9,7 @@ import styles from "./components/Component.module.css"
 import CodeField from './components/CodeField.jsx';
 import {useState} from "react";
 import ChangeCodeButtons from "./components/ChangeCodeButtons.jsx";
+import Navigation from "../Navigation/Navigation.jsx";
 
 const fetchComponent = async (id) => {
     const {data} = await api.get(`/components/get/${id}`);
@@ -28,20 +29,25 @@ const ComponentPage = () => {
     if (error) return <InternalServer/>;
 
     return (
-        <div className={styles.content}>
-            <div className={styles.leftSide}>
-                <div className={styles.previewContainer}>
-                    <ComponentPreview component={data}/>
+        <>
+            <Navigation/>
+            <div className={styles.mainPage}>
+                <div className={styles.content}>
+                    <div className={styles.leftSide}>
+                        <div className={styles.previewContainer}>
+                            <ComponentPreview component={data}/>
+                        </div>
+                        <ComponentHeader component={data}/>
+                        <ComponentDetails component={data}/>
+                    </div>
+                    <div className={styles.rightSide}>
+                        <ChangeCodeButtons activeTab={activeTab} setActiveTab={setActiveTab}/>
+                        <CodeField content={data.html} language="html" activeTab={activeTab}/>
+                        <CodeField content={data.css} language="css" activeTab={activeTab}/>
+                    </div>
                 </div>
-                <ComponentHeader component={data}/>
-                <ComponentDetails component={data}/>
             </div>
-            <div className={styles.rightSide}>
-                <ChangeCodeButtons activeTab={activeTab} setActiveTab={setActiveTab}/>
-                <CodeField content={data.html} language="html" activeTab={activeTab}/>
-                <CodeField content={data.css} language="css" activeTab={activeTab}/>
-            </div>
-        </div>
+        </>
     );
 };
 

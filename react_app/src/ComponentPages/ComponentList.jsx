@@ -3,7 +3,8 @@ import {api} from '../main.jsx'
 import ComponentCard from "./components/ComponentCard.jsx"
 import RefreshButton from "./components/RefreshButton.jsx"
 import InternalServer from "../ErrorPages/InternalServer.jsx";
-
+import Navigation from "../Navigation/Navigation.jsx";
+import styles from "./components/Component.module.css"
 
 const fetchComponents = async () => {
     const {data} = await api.get("/components/get/all");
@@ -21,12 +22,15 @@ const ComponentList = () => {
     if (error) return <InternalServer/>;
 
     return (
-        <div>
-            <RefreshButton refetch={refetch}/>
-            {data.map(component => (
-                <ComponentCard key={component.id} component={component}/>
-            ))}
-        </div>
+        <>
+            <Navigation/>
+            <div className={styles.mainPage}>
+                <RefreshButton refetch={refetch}/>
+                {data.map(component => (
+                    <ComponentCard key={component.id} component={component}/>
+                ))}
+            </div>
+        </>
     );
 };
 

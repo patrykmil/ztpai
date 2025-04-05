@@ -1,0 +1,182 @@
+
+.nav {
+    width: 100vw;
+    border-bottom: var(--light-background) 2px solid;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    background-color: var(--background);
+}
+
+.nav * {
+    font-size: var(--big-font);
+    text-decoration: none;
+}
+
+.topNavLeft {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: left;
+    align-items: center;
+    max-width: 800px;
+    flex: 4;
+}
+
+.topNavRight {
+    flex: 1;
+}
+
+nav .logo {
+    height: 4em;
+    margin: 0.5em 1em 0.5em 2em;
+    z-index: 3;
+}
+
+nav .logo:hover {
+    filter: drop-shadow(0 0 0.75rem var(--primary));
+    cursor: pointer;
+}
+
+.navOptionsList {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.navOptionsList img {
+    height: 2em;
+    padding-right: 0.5em;
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menuItem:hover {
+    font-size: var(--hover-font);
+}
+
+.topNavRight, .topNavRight > a {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.topNavRight {
+    padding-right: 3em;
+}
+
+.topNavRight img {
+    height: 3em;
+    padding-right: 1em;
+}
+
+.rightMenuItem {
+    transition: all 0.2s;
+}
+
+.rightMenuItem:hover {
+    font-size: var(--hover-font);
+    cursor: pointer;
+}
+
+nav button {
+    background: none;
+    border: none;
+}
+
+.rightMenuText {
+    transition: all 0.1s;
+}
+
+.rightMenuText:hover {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+/* Mobile nav */
+
+nav .mobileMenuIcon {
+    display: none;
+}
+
+nav .mobileOption {
+    display: none;
+}
+
+.navOptionsList.active {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 5em;
+    width: 100%;
+    height: fit-content;
+    background-color: var(--background);
+    justify-content: center;
+    align-items: center;
+}
+
+.navOptionsList.active li {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1em;
+}
+
+.mobileOption {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1;
+    padding-right: 1em;
+    z-index: 3;
+}
+
+
+@media (max-width: 900px) {
+    nav {
+        width: 100%;
+    }
+
+    body {
+        margin-top: 0;
+    }
+
+    nav {
+        position: relative;
+    }
+
+    .navOptionsList {
+        display: none;
+    }
+
+    nav .mobileMenuIcon {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex: 1;
+        padding-right: 1em;
+        z-index: 3;
+    }
+
+    .topNavRight {
+        display: none;
+    }
+
+    nav.absolute {
+        position: fixed;
+    }
+}
