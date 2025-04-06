@@ -2,6 +2,7 @@ package iu.iu.spring_app.users.service;
 
 import iu.iu.spring_app.temp_default.model.ErrorMessage;
 import iu.iu.spring_app.users.model.User;
+import iu.iu.spring_app.users.repository.AvatarRepository;
 import iu.iu.spring_app.users.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,10 +15,12 @@ import java.util.Map;
 public class AuthenticationService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final AvatarRepository avatarRepository;
 
-    public AuthenticationService(UserRepository userRepository) {
+    public AuthenticationService(UserRepository userRepository, AvatarRepository avatarRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
+        this.avatarRepository = avatarRepository;
     }
 
     public ResponseEntity<?> register(Map<String, String> payload) {
@@ -33,6 +36,7 @@ public class AuthenticationService {
         user.setEmail(payload.get("email"));
         user.setUsername(payload.get("username"));
         user.setPassword(passwordEncoder.encode(payload.get("password")));
+        user.setAvatar(avatarRepository.findRandom());
         userRepository.save(user);
         Integer id = userRepository.findByEmail(payload.get("email")).getId();
         return id > 0 ?
