@@ -2,12 +2,15 @@ import styles from "./Component.module.css";
 
 
 const ComponentTags = ({tags}) => {
-    const tagObjects = JSON.parse(tags);
     return (
         <div className={styles.tagButton}>
-            {Object.entries(tagObjects).map(([key, value]) => (
-                <span className={styles.tag} key={key} style={{backgroundColor: `#${value}`}}>
-                    {key}
+            {tags.map(tag => (
+                <span
+                    className={styles.tag}
+                    key={tag.name}
+                    style={{backgroundColor: `#${tag.color.hex}`}}
+                >
+                    {tag.name}
                 </span>
             ))}
         </div>
