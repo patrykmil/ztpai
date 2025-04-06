@@ -12,5 +12,6 @@ public class Color {
     @Column(name = "color_id")
     private Integer id;
 
+    @Column(nullable = false, length = 6)
     private String hex;
 }

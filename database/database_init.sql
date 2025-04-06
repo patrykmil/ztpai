@@ -1,12 +1,19 @@
 DROP SCHEMA IF EXISTS public CASCADE;
 CREATE SCHEMA public;
 
+CREATE TABLE avatar
+(
+    avatar_id   SERIAL PRIMARY KEY,
+    avatar_path VARCHAR(255) NOT NULL
+);
+--------------------------------------------------------------------------------------------------
 CREATE TABLE iuser
 (
     user_id       SERIAL PRIMARY KEY,
     email         VARCHAR(30) UNIQUE NOT NULL,
     username      VARCHAR(30)        NOT NULL,
     password_hash VARCHAR(65)        NOT NULL,
+    avatar_id     INT REFERENCES    avatar (avatar_id) ON DELETE SET NULL,
     admin         BOOLEAN DEFAULT FALSE
 );
 --------------------------------------------------------------------------------------------------
@@ -76,13 +83,32 @@ CREATE TRIGGER enforce_uppercase_hex_trigger
     BEFORE INSERT OR UPDATE ON public.color
     FOR EACH ROW
 EXECUTE FUNCTION enforce_uppercase_hex();
+--------------------------------------------------------------------------------------------------Avatar inserts
+INSERT INTO public.avatar (avatar_id, avatar_path)
+VALUES (1, 'basic_green.svg');
+INSERT INTO public.avatar (avatar_id, avatar_path)
+VALUES (2, 'basic_orange.svg');
+INSERT INTO public.avatar (avatar_id, avatar_path)
+VALUES (3, 'basic_purple.svg');
+INSERT INTO public.avatar (avatar_id, avatar_path)
+VALUES (4, 'glasses_green.svg');
+INSERT INTO public.avatar (avatar_id, avatar_path)
+VALUES (5, 'glasses_orange.svg');
+INSERT INTO public.avatar (avatar_id, avatar_path)
+VALUES (6, 'glasses_purple.svg');
+INSERT INTO public.avatar (avatar_id, avatar_path)
+VALUES (7, 'hair_green.svg');
+INSERT INTO public.avatar (avatar_id, avatar_path)
+VALUES (8, 'hair_orange.svg');
+INSERT INTO public.avatar (avatar_id, avatar_path)
+VALUES (9, 'hair_purple.svg');
 --------------------------------------------------------------------------------------------------User inserts
-INSERT INTO public.iuser (user_id, email, username, password_hash, admin)
-VALUES (1, 'iuadmin@iu.iu', 'admin1', '$2y$12$9cqkVFs2HxdhzN0ZPp8/1uudWjvDZT5YJVI4euVIUJjgPazullhtm', true);
-INSERT INTO public.iuser (user_id, email, username, password_hash)
-VALUES (2, 'patryk@gmail.com', 'patryk', '$2a$12$AO9m5bhM66mJ6VYJmpcnDeyiB14EmM1FyDhP5plk6wAvSwD0YEirm');
-INSERT INTO public.iuser (user_id, email, username, password_hash)
-VALUES (3, 'none@proton.me', 'none', '$2y$12$d/MJQW2V0jQkYbLLJqZRpOHyH8Fcs4Bqh78i17oqhAASJjPEInV5K');
+INSERT INTO public.iuser (user_id, email, username, password_hash, avatar_id, admin)
+VALUES (1, 'iuadmin@iu.iu', 'admin1', '$2y$12$9cqkVFs2HxdhzN0ZPp8/1uudWjvDZT5YJVI4euVIUJjgPazullhtm', 3, true);
+INSERT INTO public.iuser (user_id, email, username, password_hash, avatar_id)
+VALUES (2, 'patryk@gmail.com', 'patryk', '$2a$12$AO9m5bhM66mJ6VYJmpcnDeyiB14EmM1FyDhP5plk6wAvSwD0YEirm', 1);
+INSERT INTO public.iuser (user_id, email, username, password_hash, avatar_id)
+VALUES (3, 'none@proton.me', 'none', '$2y$12$d/MJQW2V0jQkYbLLJqZRpOHyH8Fcs4Bqh78i17oqhAASJjPEInV5K', 8);
 --------------------------------------------------------------------------------------------------Type inserts
 INSERT INTO public.type (type_id, type_name)
 VALUES (1, 'button');
@@ -138,11 +164,11 @@ VALUES (5, 'animated', 5);
 INSERT INTO public.tag (tag_id, tag_name, color_id)
 VALUES (6, 'modest', 6);
 INSERT INTO public.tag (tag_id, tag_name, color_id)
-VALUES (7, 'modern', 7);
+VALUES (7, 'modern', 8);
 INSERT INTO public.tag (tag_id, tag_name, color_id)
 VALUES (8, 'classic', 8);
 INSERT INTO public.tag (tag_id, tag_name, color_id)
-VALUES (9, 'dark', 1);
+VALUES (9, 'dark', 7);
 INSERT INTO public.tag (tag_id, tag_name, color_id)
 VALUES (10, 'light', 2);
 INSERT INTO public.tag (tag_id, tag_name, color_id)
@@ -326,6 +352,8 @@ VALUES (5, 9);
 INSERT INTO public.component_tag (component_id, tag_id)
 VALUES (5, 1);
 
+SELECT setval(pg_get_serial_sequence('avatar', 'avatar_id'), coalesce(max(avatar_id) + 1, 1), false)
+FROM avatar;
 SELECT setval(pg_get_serial_sequence('iuser', 'user_id'), coalesce(max(user_id) + 1, 1), false)
 FROM iuser;
 SELECT setval(pg_get_serial_sequence('type', 'type_id'), coalesce(max(type_id) + 1, 1), false)

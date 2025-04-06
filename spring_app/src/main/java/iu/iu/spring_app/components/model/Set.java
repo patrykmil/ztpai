@@ -1,7 +1,10 @@
 package iu.iu.spring_app.components.model;
 
+import iu.iu.spring_app.users.model.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Data
 @Entity
@@ -12,8 +15,12 @@ public class Set {
     @Column(name = "set_id")
     private Integer id;
 
-    @Column(name = "set_name")
+    @Column(name = "set_name", nullable = false, length = 30)
     private String name;
 
-    private Integer user_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private User user;
+
 }

@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 @Service
 public class AddComponentService {
@@ -18,7 +17,11 @@ public class AddComponentService {
     private final ColorRepository colorRepository;
     private final TypeRepository typeRepository;
 
-    public AddComponentService(ComponentRepository componentRepository, SetRepository setRepository, ColorRepository colorRepository, TagRepository tagRepository, TypeRepository typeRepository) {
+    public AddComponentService(ComponentRepository componentRepository,
+                               SetRepository setRepository,
+                               ColorRepository colorRepository,
+                               TagRepository tagRepository,
+                               TypeRepository typeRepository) {
         this.componentRepository = componentRepository;
         this.setRepository = setRepository;
         this.tagRepository = tagRepository;
@@ -26,49 +29,53 @@ public class AddComponentService {
         this.typeRepository = typeRepository;
     }
 
+
     @Transactional
     public ResponseEntity<Component> addComponent(Component request) {
-        Integer id;
-        try {
-            Set set = setRepository.findByName(request.getSetName());
-            if (set == null) {
-                System.out.println(request.getSetName());
-                return ResponseEntity.notFound().build();
-            }
+        Component component = new Component();
+        component.setName(request.getName());
+        component.setHtml(request.getHtml());
+        component.setCss(request.getCss());
+        component.setAuthor(request.getAuthor());
 
-            Color color = colorRepository.findByHex(request.getHex());
-            if (color == null) {
-                System.out.println(request.getHex());
-                return ResponseEntity.notFound().build();
-            }
-
-            Type type = typeRepository.findByName(request.getTypeName());
-            if (type == null) {
-                System.out.println(request.getTypeName());
-                return ResponseEntity.notFound().build();
-            }
-
-            List<Tag> tags = new ArrayList<>();
-            List<String> tagsString = List.of(request.getTags().split("\\s*,\\s*"));
-
-            for (String tag : tagsString) {
-                Tag t = tagRepository.findByName(tag);
-                if (t == null) {
-                    System.out.println(tag);
-                    return ResponseEntity.notFound().build();
-                }
-                tags.add(t);
-            }
-
-            id = componentRepository.addComponent(request, set, color, type);
-            componentRepository.addTagsToComponent(id, tags);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
+        Type type = typeRepository.findByName(request.getType().getName());
+        if (type == null) {
+            return ResponseEntity.badRequest().build();
         }
-        return componentRepository.findById(id)
-                .map(component -> ResponseEntity.created(URI.create("/components/" + id)).body(component))
-                .orElseGet(() -> ResponseEntity.internalServerError().build());
+        component.setType(type);
+
+        if (request.getColor() != null) {
+            Color color = colorRepository.findByHex(request.getColor().getHex().toUpperCase());
+            if (color == null) {
+                color = new Color();
+                color.setHex(request.getColor().getHex());
+                color = colorRepository.save(color);
+            }
+            component.setColor(color);
+        }
+
+        if (request.getSet() != null && request.getSet().getName() != null) {
+            Set set = setRepository.findByName(request.getSet().getName());
+            component.setSet(set);
+        }
+
+        if (request.getTags() != null) {
+            java.util.Set<Tag> tags = new HashSet<>();
+            for (Tag requestTag : request.getTags()) {
+                Tag tag = tagRepository.findByName(requestTag.getName());
+                if (tag == null) {
+                    tag = new Tag();
+                    tag.setName(requestTag.getName());
+                    tag = tagRepository.save(tag);
+                }
+                tags.add(tag);
+            }
+            component.setTags(tags);
+        }
+
+        Component savedComponent = componentRepository.save(component);
+
+        return ResponseEntity.created(URI.create("/api/components/" + savedComponent.getId()))
+                .body(savedComponent);
     }
 }

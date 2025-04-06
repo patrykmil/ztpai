@@ -17,19 +17,20 @@ public class GetComponentService {
 
     public List<Component> getAllComponents() {
         List<Component> components = componentRepository.findAll();
-        for (Component component : components) {
-            component.setHtml(StringEscapeUtils.unescapeHtml4(component.getHtml()));
-            component.setCss(StringEscapeUtils.unescapeHtml4(component.getCss()));
-        }
+        components.forEach(this::unescapeComponent);
         return components;
     }
 
     public Component getComponentById(Integer id) {
         Component component = componentRepository.findById(id).orElse(null);
         if (component != null) {
-            component.setHtml(StringEscapeUtils.unescapeHtml4(component.getHtml()));
-            component.setCss(StringEscapeUtils.unescapeHtml4(component.getCss()));
+            unescapeComponent(component);
         }
         return component;
+    }
+
+    private void unescapeComponent(Component component) {
+        component.setHtml(StringEscapeUtils.unescapeHtml4(component.getHtml()));
+        component.setCss(StringEscapeUtils.unescapeHtml4(component.getCss()));
     }
 }

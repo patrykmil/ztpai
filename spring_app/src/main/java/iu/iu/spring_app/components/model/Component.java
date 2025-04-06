@@ -1,42 +1,63 @@
 package iu.iu.spring_app.components.model;
 
+import iu.iu.spring_app.users.model.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import java.sql.Timestamp;
+import java.util.HashSet;
 
 @Data
 @Entity
-@Table(name = "component_details_view")
+@Table(name = "component")
 public class Component {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "component_id")
     private Integer id;
 
-    @Column(name = "component_name")
+    @Column(name = "component_name", nullable = false, length = 30)
     private String name;
 
-    @Column(name = "user_id")
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User author;
 
-    private String username;
+    @ManyToOne
+    @JoinColumn(name = "color_id", referencedColumnName = "color_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private Color color;
 
-    private String hex;
+    @ManyToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "type_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Type type;
 
-    @Column(name = "type_name")
-    private String typeName;
+    @ManyToOne
+    @JoinColumn(name = "set_id", referencedColumnName = "set_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private Set set;
 
-    @Column(name = "set_name")
-    private String setName;
-
-    @Column(name = "created_at")
-    private String createdAt;
-
-    private Integer likes;
-
-    private String tags;
-
+    @Column(columnDefinition = "TEXT")
     private String html;
 
+    @Column(columnDefinition = "TEXT")
     private String css;
+
+    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
+    private Timestamp createdAt;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "component_tag",
+            joinColumns = @JoinColumn(name = "component_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private java.util.Set<Tag> tags = new HashSet<>();
+
 }
