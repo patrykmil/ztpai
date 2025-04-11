@@ -2,6 +2,9 @@ package iu.iu.spring_app.components.service;
 
 import iu.iu.spring_app.components.model.*;
 import iu.iu.spring_app.components.repository.*;
+import iu.iu.spring_app.errors.ResourceNotFoundException;
+import iu.iu.spring_app.users.model.User;
+import iu.iu.spring_app.users.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,31 +19,35 @@ public class AddComponentService {
     private final SetRepository setRepository;
     private final ColorRepository colorRepository;
     private final TypeRepository typeRepository;
+    private final UserRepository userRepository;
 
     public AddComponentService(ComponentRepository componentRepository,
                                SetRepository setRepository,
                                ColorRepository colorRepository,
                                TagRepository tagRepository,
-                               TypeRepository typeRepository) {
+                               TypeRepository typeRepository, UserRepository userRepository) {
         this.componentRepository = componentRepository;
         this.setRepository = setRepository;
         this.tagRepository = tagRepository;
         this.colorRepository = colorRepository;
         this.typeRepository = typeRepository;
+        this.userRepository = userRepository;
     }
 
 
     @Transactional
-    public ResponseEntity<Component> addComponent(Component request) {
+    public Component addComponent(Component request) {
         Component component = new Component();
         component.setName(request.getName());
         component.setHtml(request.getHtml());
         component.setCss(request.getCss());
-        component.setAuthor(request.getAuthor());
+
+        User author = userRepository.findByUsername(request.getAuthor().getUsername());
+        component.setAuthor(author);
 
         Type type = typeRepository.findByName(request.getType().getName());
         if (type == null) {
-            return ResponseEntity.badRequest().build();
+            throw(new ResourceNotFoundException("Type " + request.getType().getName() + " not found"));
         }
         component.setType(type);
 
@@ -75,7 +82,6 @@ public class AddComponentService {
 
         Component savedComponent = componentRepository.save(component);
 
-        return ResponseEntity.created(URI.create("/api/components/" + savedComponent.getId()))
-                .body(savedComponent);
+        return savedComponent;
     }
 }
