@@ -1,6 +1,6 @@
 package iu.iu.spring_app.users.service;
 
-import iu.iu.spring_app.temp_default.model.ErrorMessage;
+import iu.iu.spring_app.errors.ErrorMessage;
 import iu.iu.spring_app.users.model.User;
 import iu.iu.spring_app.users.repository.AvatarRepository;
 import iu.iu.spring_app.users.repository.UserRepository;

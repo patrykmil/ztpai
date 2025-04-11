@@ -1,4 +1,4 @@
-package iu.iu.spring_app.temp_default.model;
+package iu.iu.spring_app.errors;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
