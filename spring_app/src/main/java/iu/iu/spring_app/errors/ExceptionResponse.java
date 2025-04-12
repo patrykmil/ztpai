@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 
 @Getter
 public class ExceptionResponse {
-    // Getters and setters
     private final LocalDateTime timestamp;
     private final String message;
     private final int status;

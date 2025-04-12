@@ -27,5 +27,7 @@ public class GetUserService {
         return userRepository.findByEmail(payload.get("email"));
     }
 
-    public User getUserByUsername(Map<String, String> payload) {return userRepository.findByUsername(payload.get("username"));}
+    public User getUserByUsername(Map<String, String> payload) {
+        return userRepository.findByUsername(payload.get("username"));
+    }
 }

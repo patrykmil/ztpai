@@ -27,8 +27,8 @@ public class Tag {
     @JoinColumn(name = "color_id", referencedColumnName = "color_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Color color;
+
     @ManyToMany(mappedBy = "tags")
-    
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

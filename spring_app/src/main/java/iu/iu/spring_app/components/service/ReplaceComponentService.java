@@ -21,6 +21,7 @@ public class ReplaceComponentService {
         this.tagsService = tagsService;
         this.colorService = colorService;
     }
+
     public Component replaceComponent(Component request) {
         Component oldComponent = getComponentService.getComponentById(request.getId());
         if (oldComponent == null) {

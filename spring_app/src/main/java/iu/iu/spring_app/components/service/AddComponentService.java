@@ -48,7 +48,7 @@ public class AddComponentService {
 
         Type type = typeRepository.findByName(request.getType().getName());
         if (type == null) {
-            throw(new ResourceNotFoundException("Type " + request.getType().getName() + " not found"));
+            throw (new ResourceNotFoundException("Type " + request.getType().getName() + " not found"));
         }
         component.setType(type);
 
