@@ -5,11 +5,9 @@ import iu.iu.spring_app.components.repository.*;
 import iu.iu.spring_app.errors.ResourceNotFoundException;
 import iu.iu.spring_app.users.model.User;
 import iu.iu.spring_app.users.repository.UserRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.net.URI;
 import java.util.HashSet;
 
 @Service
@@ -68,12 +66,11 @@ public class AddComponentService {
 
         if (request.getTags() != null) {
             java.util.Set<Tag> tags = new HashSet<>();
+            Tag tag;
             for (Tag requestTag : request.getTags()) {
-                Tag tag = tagRepository.findByName(requestTag.getName());
+                tag = tagRepository.findByName(requestTag.getName());
                 if (tag == null) {
-                    tag = new Tag();
-                    tag.setName(requestTag.getName());
-                    tag = tagRepository.save(tag);
+                    throw new ResourceNotFoundException("Tag " + requestTag.getName() + " not found");
                 }
                 tags.add(tag);
             }
