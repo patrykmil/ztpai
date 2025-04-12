@@ -1,35 +1,38 @@
 package iu.iu.spring_app.components.service;
 
-import iu.iu.spring_app.components.model.*;
-import iu.iu.spring_app.components.repository.*;
+import iu.iu.spring_app.components.model.Component;
+import iu.iu.spring_app.components.model.Set;
+import iu.iu.spring_app.components.model.Type;
+import iu.iu.spring_app.components.repository.ComponentRepository;
+import iu.iu.spring_app.components.repository.SetRepository;
+import iu.iu.spring_app.components.repository.TypeRepository;
 import iu.iu.spring_app.errors.ResourceNotFoundException;
 import iu.iu.spring_app.users.model.User;
 import iu.iu.spring_app.users.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-
 @Service
 public class AddComponentService {
     private final ComponentRepository componentRepository;
-    private final TagRepository tagRepository;
     private final SetRepository setRepository;
-    private final ColorRepository colorRepository;
     private final TypeRepository typeRepository;
     private final UserRepository userRepository;
+    private final TagsService tagsService;
+    private final ColorService colorService;
 
     public AddComponentService(ComponentRepository componentRepository,
                                SetRepository setRepository,
-                               ColorRepository colorRepository,
-                               TagRepository tagRepository,
-                               TypeRepository typeRepository, UserRepository userRepository) {
+                               TypeRepository typeRepository,
+                               UserRepository userRepository,
+                               TagsService tagsService,
+                               ColorService colorService) {
         this.componentRepository = componentRepository;
         this.setRepository = setRepository;
-        this.tagRepository = tagRepository;
-        this.colorRepository = colorRepository;
         this.typeRepository = typeRepository;
         this.userRepository = userRepository;
+        this.tagsService = tagsService;
+        this.colorService = colorService;
     }
 
 
@@ -49,36 +52,15 @@ public class AddComponentService {
         }
         component.setType(type);
 
-        if (request.getColor() != null) {
-            Color color = colorRepository.findByHex(request.getColor().getHex().toUpperCase());
-            if (color == null) {
-                color = new Color();
-                color.setHex(request.getColor().getHex());
-                color = colorRepository.save(color);
-            }
-            component.setColor(color);
-        }
 
         if (request.getSet() != null && request.getSet().getName() != null) {
             Set set = setRepository.findByName(request.getSet().getName());
             component.setSet(set);
         }
 
-        if (request.getTags() != null) {
-            java.util.Set<Tag> tags = new HashSet<>();
-            Tag tag;
-            for (Tag requestTag : request.getTags()) {
-                tag = tagRepository.findByName(requestTag.getName());
-                if (tag == null) {
-                    throw new ResourceNotFoundException("Tag " + requestTag.getName() + " not found");
-                }
-                tags.add(tag);
-            }
-            component.setTags(tags);
-        }
+        colorService.setComponentColor(component, request);
+        tagsService.setComponentTags(component, request);
 
-        Component savedComponent = componentRepository.save(component);
-
-        return savedComponent;
+        return componentRepository.save(component);
     }
 }
