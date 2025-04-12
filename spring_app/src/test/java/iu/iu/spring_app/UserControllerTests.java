@@ -4,6 +4,7 @@ import iu.iu.spring_app.errors.ResourceNotFoundException;
 import iu.iu.spring_app.users.controller.UserController;
 import iu.iu.spring_app.users.model.User;
 import iu.iu.spring_app.users.service.AuthenticationService;
+import iu.iu.spring_app.users.service.DeleteUserService;
 import iu.iu.spring_app.users.service.GetUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,9 @@ public class UserControllerTests {
     @Mock
     private AuthenticationService authenticationService;
 
+    @Mock
+    private DeleteUserService deleteUserService;
+
     @InjectMocks
     private UserController userController;
 
@@ -44,7 +48,7 @@ public class UserControllerTests {
     @BeforeEach
     void setUp() {
         testUser = new User();
-        testUser.setId(99);
+        testUser.setId(1);
         testUser.setEmail("test@test.com");
         testUser.setUsername("testuser");
         testUser.setPassword("password");
@@ -80,8 +84,8 @@ public class UserControllerTests {
 
     @Test
     void getUserById_Success() {
-        when(getUserService.getUserById(99)).thenReturn(testUser);
-        ResponseEntity<User> response = userController.getUserById(99);
+        when(getUserService.getUserById(1)).thenReturn(testUser);
+        ResponseEntity<User> response = userController.getUserById(1);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(testUser, response.getBody());
@@ -108,6 +112,22 @@ public class UserControllerTests {
         when(getUserService.getUserByEmail(any())).thenReturn(null);
 
         assertThrows(ResourceNotFoundException.class, () -> userController.getUserByEmail(loginPayload));
+    }
+
+    @Test
+    void getUserByUsername_Success() {
+        when(getUserService.getUserByUsername(any())).thenReturn(testUser);
+        ResponseEntity<User> response = userController.getUserByUsername(loginPayload);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        assertEquals(testUser, response.getBody());
+    }
+
+    @Test
+    void getUserByUsername_NotFound() {
+        when(getUserService.getUserByUsername(any())).thenReturn(null);
+
+        assertThrows(ResourceNotFoundException.class, () -> userController.getUserByUsername(loginPayload));
     }
 
     @Test
@@ -142,5 +162,58 @@ public class UserControllerTests {
         invalidPayload.put("email", "test@test.com");
 
         assertThrows(ResourceNotFoundException.class, () -> userController.login(invalidPayload));
+    }
+
+    @Test
+    void login_InvalidPassword() {
+        Map<String, String> invalidPayload = new HashMap<>();
+        invalidPayload.put("email", "test@test.com");
+        invalidPayload.put("password", "wrongpassword");
+
+        when(authenticationService.login(invalidPayload))
+                .thenReturn(new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
+
+        ResponseEntity<?> response = userController.login(invalidPayload);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    }
+
+    @Test
+    void deleteByEmail_Success() {
+        Map<String, String> payload = new HashMap<>();
+        payload.put("email", "test@test.com");
+
+        ResponseEntity<?> response = userController.deleteByEmail(payload);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void deleteByEmail_NotFound() {
+        Map<String, String> payload = new HashMap<>();
+        payload.put("email", "notfound@test.com");
+
+        org.mockito.Mockito.doThrow(new ResourceNotFoundException("User not found"))
+                .when(deleteUserService).deleteUserByEmail(payload);
+
+        assertThrows(ResourceNotFoundException.class, () -> userController.deleteByEmail(payload));
+    }
+
+    @Test
+    void deleteByUsername_Success() {
+        Map<String, String> payload = new HashMap<>();
+        payload.put("username", "testuser");
+
+        ResponseEntity<?> response = userController.deleteByUsername(payload);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void deleteByUsername_NotFound() {
+        Map<String, String> payload = new HashMap<>();
+        payload.put("username", "nonexistent");
+
+        org.mockito.Mockito.doThrow(new ResourceNotFoundException("User not found"))
+                .when(deleteUserService).deleteUserByUsername(payload);
+
+        assertThrows(ResourceNotFoundException.class, () -> userController.deleteByUsername(payload));
     }
 }
