@@ -1,12 +1,12 @@
 package iu.iu.spring_app;
 
-import iu.iu.spring_app.components.controller.ComponentController;
-import iu.iu.spring_app.components.model.Component;
-import iu.iu.spring_app.components.service.AddComponentService;
-import iu.iu.spring_app.components.service.DeleteComponentService;
-import iu.iu.spring_app.components.service.GetComponentService;
-import iu.iu.spring_app.components.service.ReplaceComponentService;
-import iu.iu.spring_app.errors.ResourceNotFoundException;
+import iu.iu.spring_app.api.components.controller.ComponentController;
+import iu.iu.spring_app.api.components.model.Component;
+import iu.iu.spring_app.api.components.service.AddComponentService;
+import iu.iu.spring_app.api.components.service.DeleteComponentService;
+import iu.iu.spring_app.api.components.service.GetComponentService;
+import iu.iu.spring_app.api.components.service.ReplaceComponentService;
+import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
