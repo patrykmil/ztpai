@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/components")
+@RequestMapping("/api/components")
 public class ComponentController {
     private final GetComponentService getComponentService;
     private final AddComponentService addComponentService;
