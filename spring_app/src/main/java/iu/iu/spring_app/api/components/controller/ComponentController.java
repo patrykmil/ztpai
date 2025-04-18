@@ -7,6 +7,8 @@ import iu.iu.spring_app.api.components.service.GetComponentService;
 import iu.iu.spring_app.api.components.service.ReplaceComponentService;
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -23,7 +25,8 @@ public class ComponentController {
 
     public ComponentController(GetComponentService getComponentService,
                                AddComponentService addComponentService,
-                               ReplaceComponentService replaceComponentService, DeleteComponentService deleteComponentService) {
+                               ReplaceComponentService replaceComponentService,
+                               DeleteComponentService deleteComponentService) {
         this.getComponentService = getComponentService;
         this.addComponentService = addComponentService;
         this.replaceComponentService = replaceComponentService;
@@ -49,29 +52,35 @@ public class ComponentController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Component> addComponent(@RequestBody Component request) {
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Component> addComponent(@RequestBody Component request,
+                                                  Authentication authentication) {
         if (request == null) {
             throw new ResourceNotFoundException("Request body is null");
         }
-        Component savedComponent = addComponentService.addComponent(request);
+        Component savedComponent = addComponentService.addComponent(request, authentication.getName());
         return ResponseEntity.created(URI.create("/api/components/" + savedComponent.getId()))
                 .body(savedComponent);
     }
 
     @PutMapping("/replace")
-    public ResponseEntity<Component> replaceComponent(@RequestBody Component request) {
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Component> replaceComponent(@RequestBody Component request,
+                                                      Authentication authentication) {
         if (request == null) {
             throw new ResourceNotFoundException("Request body is null");
         }
-        return ResponseEntity.ok(replaceComponentService.replaceComponent(request));
+        return ResponseEntity.ok(replaceComponentService.replaceComponent(request, authentication.getName()));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Component> deleteComponent(@RequestBody Map<String, Integer> request) {
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Component> deleteComponent(@RequestBody Map<String, Integer> request,
+                                                     Authentication authentication) {
         if (request == null) {
             throw new ResourceNotFoundException("Request body is null");
         }
-        deleteComponentService.deleteComponentById(request);
+        deleteComponentService.deleteComponentById(request.get("id"), authentication.getName());
         return ResponseEntity.ok().build();
     }
 }

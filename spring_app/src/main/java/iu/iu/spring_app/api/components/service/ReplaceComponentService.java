@@ -22,10 +22,13 @@ public class ReplaceComponentService {
         this.colorService = colorService;
     }
 
-    public Component replaceComponent(Component request) {
+    public Component replaceComponent(Component request, String userEmail) {
         Component oldComponent = getComponentService.getComponentById(request.getId());
         if (oldComponent == null) {
             throw new ResourceNotFoundException("Component " + request.getId() + " not found");
+        }
+        if (!oldComponent.getAuthor().getEmail().equals(userEmail)) {
+            throw new org.springframework.security.access.AccessDeniedException("Not authorized to modify this component");
         }
         oldComponent.setName(request.getName());
         oldComponent.setHtml(request.getHtml());

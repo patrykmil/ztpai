@@ -35,23 +35,25 @@ public class AddComponentService {
         this.colorService = colorService;
     }
 
-
     @Transactional
-    public Component addComponent(Component request) {
+    public Component addComponent(Component request, String userEmail) {
+        System.out.println(request);
+        User author = userRepository.findByEmail(userEmail);
+        if (!author.getName().equals(request.getAuthor().getName())) {
+            throw new org.springframework.security.access.AccessDeniedException("Not authorized to create component for another user");
+        }
+
         Component component = new Component();
         component.setName(request.getName());
         component.setHtml(request.getHtml());
         component.setCss(request.getCss());
-
-        User author = userRepository.findByName(request.getAuthor().getName());
         component.setAuthor(author);
 
         Type type = typeRepository.findByName(request.getType().getName());
         if (type == null) {
-            throw (new ResourceNotFoundException("Type " + request.getType().getName() + " not found"));
+            throw new ResourceNotFoundException("Type " + request.getType().getName() + " not found");
         }
         component.setType(type);
-
 
         if (request.getSet() != null && request.getSet().getName() != null) {
             Set set = setRepository.findByName(request.getSet().getName());
