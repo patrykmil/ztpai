@@ -1,6 +1,7 @@
 package iu.iu.spring_app;
 
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
+import iu.iu.spring_app.api.security.service.AuthenticationService;
 import iu.iu.spring_app.api.security.service.UserService;
 import iu.iu.spring_app.api.users.controller.UserController;
 import iu.iu.spring_app.api.users.model.User;
@@ -27,6 +28,8 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTests {
+    @Mock
+    private AuthenticationService authenticationService;
 
     @Mock
     private GetUserService getUserService;
@@ -39,6 +42,7 @@ public class UserControllerTests {
 
     @InjectMocks
     private UserController userController;
+
 
     private User testUser;
     private List<User> userList;
@@ -64,6 +68,7 @@ public class UserControllerTests {
         registerPayload.put("email", "test@test.com");
         registerPayload.put("password", "password");
         registerPayload.put("username", "testuser");
+
     }
 
     @Test
@@ -129,53 +134,6 @@ public class UserControllerTests {
 
         assertThrows(ResourceNotFoundException.class, () -> userController.getUserByUsername(loginPayload));
     }
-
-//    @Test
-//    void register_Success() {
-//        when(userService.register(any()))
-//                .thenReturn(new ResponseEntity<>(HttpStatus.CREATED));
-//
-//        ResponseEntity<?> response = userController.register(registerPayload);
-//        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-//    }
-//
-//    @Test
-//    void register_MissingFields() {
-//        Map<String, String> invalidPayload = new HashMap<>();
-//        invalidPayload.put("email", "test@test.com");
-//
-//        assertThrows(ResourceNotFoundException.class, () -> userController.register(invalidPayload));
-//    }
-//
-//    @Test
-//    void login_Success() {
-//        when(userService.login(any()))
-//                .thenReturn(new ResponseEntity<>(HttpStatus.OK));
-//
-//        ResponseEntity<?> response = userController.login(loginPayload);
-//        assertEquals(HttpStatus.OK, response.getStatusCode());
-//    }
-//
-//    @Test
-//    void login_MissingFields() {
-//        Map<String, String> invalidPayload = new HashMap<>();
-//        invalidPayload.put("email", "test@test.com");
-//
-//        assertThrows(ResourceNotFoundException.class, () -> userController.login(invalidPayload));
-//    }
-//
-//    @Test
-//    void login_InvalidPassword() {
-//        Map<String, String> invalidPayload = new HashMap<>();
-//        invalidPayload.put("email", "test@test.com");
-//        invalidPayload.put("password", "wrongpassword");
-//
-//        when(userService.login(invalidPayload))
-//                .thenReturn(new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
-//
-//        ResponseEntity<?> response = userController.login(invalidPayload);
-//        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
-//    }
 
     @Test
     void deleteByEmail_Success() {

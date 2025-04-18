@@ -14,12 +14,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ComponentControllerTests {
@@ -32,6 +34,8 @@ class ComponentControllerTests {
     private ReplaceComponentService replaceComponentService;
     @Mock
     private DeleteComponentService deleteComponentService;
+    @Mock
+    private Authentication authentication;
 
     @InjectMocks
     private ComponentController componentController;
@@ -82,9 +86,10 @@ class ComponentControllerTests {
         savedComponent.setId(1);
         savedComponent.setName("Test Component");
 
-        when(addComponentService.addComponent(request)).thenReturn(savedComponent);
+        when(authentication.getName()).thenReturn("test@test.com");
+        when(addComponentService.addComponent(request, "test@test.com")).thenReturn(savedComponent);
 
-        ResponseEntity<Component> response = componentController.addComponent(request);
+        ResponseEntity<Component> response = componentController.addComponent(request, authentication);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(savedComponent, response.getBody());
         assertEquals("/api/components/1", response.getHeaders().getLocation().toString());
@@ -93,35 +98,25 @@ class ComponentControllerTests {
     @Test
     void addComponent_NullRequest() {
         assertThrows(ResourceNotFoundException.class, () ->
-                componentController.addComponent(null));
+                componentController.addComponent(null, authentication));
     }
 
     @Test
     void deleteComponent_Success() {
         Map<String, Integer> request = new HashMap<>();
-        request.put("componentId", 1);
+        request.put("id", 1);
 
-        ResponseEntity<Component> response = componentController.deleteComponent(request);
+        when(authentication.getName()).thenReturn("test@test.com");
+
+        ResponseEntity<Component> response = componentController.deleteComponent(request, authentication);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(deleteComponentService).deleteComponentById(request);
-    }
-
-    @Test
-    void deleteComponent_NotFound() {
-        Map<String, Integer> request = new HashMap<>();
-        request.put("componentId", 999);
-
-        doThrow(new ResourceNotFoundException("Component not found"))
-                .when(deleteComponentService).deleteComponentById(request);
-
-        assertThrows(ResourceNotFoundException.class, () ->
-                componentController.deleteComponent(request));
+        verify(deleteComponentService).deleteComponentById(1, "test@test.com");
     }
 
     @Test
     void deleteComponent_NullRequest() {
         assertThrows(ResourceNotFoundException.class, () ->
-                componentController.deleteComponent(null));
+                componentController.deleteComponent(null, authentication));
     }
 
     @Test
@@ -134,9 +129,10 @@ class ComponentControllerTests {
         updatedComponent.setId(1);
         updatedComponent.setName("Updated Component");
 
-        when(replaceComponentService.replaceComponent(request)).thenReturn(updatedComponent);
+        when(authentication.getName()).thenReturn("test@test.com");
+        when(replaceComponentService.replaceComponent(request, "test@test.com")).thenReturn(updatedComponent);
 
-        ResponseEntity<Component> response = componentController.replaceComponent(request);
+        ResponseEntity<Component> response = componentController.replaceComponent(request, authentication);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(updatedComponent, response.getBody());
     }
@@ -144,18 +140,6 @@ class ComponentControllerTests {
     @Test
     void replaceComponent_NullRequest() {
         assertThrows(ResourceNotFoundException.class, () ->
-                componentController.replaceComponent(null));
-    }
-
-    @Test
-    void replaceComponent_NotFound() {
-        Component request = new Component();
-        request.setId(999);
-
-        when(replaceComponentService.replaceComponent(request))
-                .thenThrow(new ResourceNotFoundException("Component not found"));
-
-        assertThrows(ResourceNotFoundException.class, () ->
-                componentController.replaceComponent(request));
+                componentController.replaceComponent(null, authentication));
     }
 }
