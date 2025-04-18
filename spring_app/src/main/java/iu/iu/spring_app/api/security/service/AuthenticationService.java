@@ -1,8 +1,9 @@
 package iu.iu.spring_app.api.security.service;
 
+import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import iu.iu.spring_app.api.security.dto.JwtAuthenticationResponse;
-import iu.iu.spring_app.api.security.dto.SignInRequest;
-import iu.iu.spring_app.api.security.dto.SignUpRequest;
+import iu.iu.spring_app.api.security.dto.LoginRequest;
+import iu.iu.spring_app.api.security.dto.RegisterRequest;
 import iu.iu.spring_app.api.users.model.User;
 import iu.iu.spring_app.api.users.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationResponse signup(SignUpRequest request) {
+    public JwtAuthenticationResponse register(RegisterRequest request) {
         var user = User
                 .builder()
                 .name(request.getUsername())
@@ -38,10 +39,11 @@ public class AuthenticationService {
                 .build();
     }
 
-    public JwtAuthenticationResponse signin(SignInRequest request) {
+    public JwtAuthenticationResponse login(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        var user = userRepository.findByEmail(request.getEmail());
+        var user = userRepository.findByEmail(request.getEmail()).
+                orElseThrow(() -> new ResourceNotFoundException("User not found"));
         var jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder()
                 .token(jwt)

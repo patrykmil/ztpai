@@ -38,27 +38,28 @@ public class AddComponentService {
     @Transactional
     public Component addComponent(Component request, String userEmail) {
         System.out.println(request);
-        User author = userRepository.findByEmail(userEmail);
+        User author = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         if (!author.getName().equals(request.getAuthor().getName())) {
             throw new org.springframework.security.access.AccessDeniedException("Not authorized to create component for another user");
         }
 
-        Component component = new Component();
-        component.setName(request.getName());
-        component.setHtml(request.getHtml());
-        component.setCss(request.getCss());
-        component.setAuthor(author);
+        Type type = typeRepository.findByName(request.getType().getName())
+                .orElseThrow(() -> new ResourceNotFoundException("Type not found"));
 
-        Type type = typeRepository.findByName(request.getType().getName());
-        if (type == null) {
-            throw new ResourceNotFoundException("Type " + request.getType().getName() + " not found");
-        }
-        component.setType(type);
+        Set set = setRepository.findByName(request.getSet().getName())
+                .orElseThrow(() -> new ResourceNotFoundException("Set not found"));
 
-        if (request.getSet() != null && request.getSet().getName() != null) {
-            Set set = setRepository.findByName(request.getSet().getName());
-            component.setSet(set);
-        }
+        Component component = Component.builder()
+                        .name(request.getName())
+                        .html(request.getHtml())
+                        .css(request.getCss())
+                        .author(author)
+                        .type(type)
+                        .build();
+        component.setSet(set);
+
+
 
         colorService.setComponentColor(component, request);
         tagsService.setComponentTags(component, request);

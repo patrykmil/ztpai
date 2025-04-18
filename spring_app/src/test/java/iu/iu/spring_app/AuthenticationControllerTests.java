@@ -2,8 +2,8 @@ package iu.iu.spring_app;
 
 import iu.iu.spring_app.api.security.controller.AuthenticationController;
 import iu.iu.spring_app.api.security.dto.JwtAuthenticationResponse;
-import iu.iu.spring_app.api.security.dto.SignInRequest;
-import iu.iu.spring_app.api.security.dto.SignUpRequest;
+import iu.iu.spring_app.api.security.dto.LoginRequest;
+import iu.iu.spring_app.api.security.dto.RegisterRequest;
 import iu.iu.spring_app.api.security.service.AuthenticationService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,16 +43,16 @@ public class AuthenticationControllerTests {
 
     @Test
     void register_Success() {
-        SignUpRequest signUpRequest = SignUpRequest.builder()
+        RegisterRequest registerRequest = RegisterRequest.builder()
                 .email("test@test.com")
                 .password("password")
                 .username("testuser")
                 .build();
 
-        when(authenticationService.signup(any(SignUpRequest.class)))
+        when(authenticationService.register(any(RegisterRequest.class)))
                 .thenReturn(testJwtResponse);
 
-        JwtAuthenticationResponse response = authenticationController.register(signUpRequest);
+        JwtAuthenticationResponse response = authenticationController.register(registerRequest);
 
         assertEquals(testJwtResponse.getToken(), response.getToken());
         assertEquals(testJwtResponse.getId(), response.getId());
@@ -61,15 +61,15 @@ public class AuthenticationControllerTests {
 
     @Test
     void login_Success() {
-        SignInRequest signInRequest = SignInRequest.builder()
+        LoginRequest loginRequest = LoginRequest.builder()
                 .email("test@test.com")
                 .password("password")
                 .build();
 
-        when(authenticationService.signin(any(SignInRequest.class)))
+        when(authenticationService.login(any(LoginRequest.class)))
                 .thenReturn(testJwtResponse);
 
-        JwtAuthenticationResponse response = authenticationController.login(signInRequest);
+        JwtAuthenticationResponse response = authenticationController.login(loginRequest);
 
         assertEquals(testJwtResponse.getToken(), response.getToken());
         assertEquals(testJwtResponse.getId(), response.getId());
@@ -78,14 +78,14 @@ public class AuthenticationControllerTests {
 
     @Test
     void login_InvalidCredentials() {
-        SignInRequest signInRequest = SignInRequest.builder()
+        LoginRequest loginRequest = LoginRequest.builder()
                 .email("test@test.com")
                 .password("wrongpassword")
                 .build();
 
-        when(authenticationService.signin(any(SignInRequest.class)))
+        when(authenticationService.login(any(LoginRequest.class)))
                 .thenThrow(new BadCredentialsException("Invalid credentials"));
 
-        assertThrows(BadCredentialsException.class, () -> authenticationController.login(signInRequest));
+        assertThrows(BadCredentialsException.class, () -> authenticationController.login(loginRequest));
     }
 }

@@ -2,7 +2,10 @@ package iu.iu.spring_app.api.components.model;
 
 import iu.iu.spring_app.api.users.model.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -13,6 +16,9 @@ import java.util.HashSet;
 @Data
 @Entity
 @Table(name = "component")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Component {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,8 +1,8 @@
 package iu.iu.spring_app.api.security.controller;
 
 import iu.iu.spring_app.api.security.dto.JwtAuthenticationResponse;
-import iu.iu.spring_app.api.security.dto.SignInRequest;
-import iu.iu.spring_app.api.security.dto.SignUpRequest;
+import iu.iu.spring_app.api.security.dto.LoginRequest;
+import iu.iu.spring_app.api.security.dto.RegisterRequest;
 import iu.iu.spring_app.api.security.service.AuthenticationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,12 +20,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public JwtAuthenticationResponse register(@RequestBody SignUpRequest request) {
-        return authenticationService.signup(request);
+    public JwtAuthenticationResponse register(@RequestBody RegisterRequest request) {
+        return authenticationService.register(request);
     }
 
     @PostMapping("/login")
-    public JwtAuthenticationResponse login(@RequestBody SignInRequest request) {
-        return authenticationService.signin(request);
+    public JwtAuthenticationResponse login(@RequestBody LoginRequest request) {
+        return authenticationService.login(request);
     }
 }

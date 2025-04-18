@@ -57,11 +57,8 @@ public class LikedService {
     }
 
     private User getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new ResourceNotFoundException("User not found");
-        }
-        return user;
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     private void validateComponent(Integer componentId) {

@@ -17,7 +17,8 @@ public class UserService {
     }
 
     public UserDetailsService userDetailsService() {
-        return userRepository::findByEmail;
+        return username -> userRepository.findByEmail(username)
+                .orElseThrow(() -> new org.springframework.security.core.userdetails.UsernameNotFoundException("User not found"));
     }
 
     public User save(User user) {

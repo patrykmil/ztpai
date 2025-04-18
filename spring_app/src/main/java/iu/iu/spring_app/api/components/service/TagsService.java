@@ -21,10 +21,8 @@ public class TagsService {
         if (request.getTags() != null) {
             Set<Tag> tags = new HashSet<>();
             for (Tag requestTag : request.getTags()) {
-                Tag tag = tagRepository.findByName(requestTag.getName());
-                if (tag == null) {
-                    throw new ResourceNotFoundException("Tag " + requestTag.getName() + " not found");
-                }
+                Tag tag = tagRepository.findByName(requestTag.getName())
+                        .orElseThrow(() -> new ResourceNotFoundException("Tag not found"));
                 tags.add(tag);
             }
             component.setTags(tags);

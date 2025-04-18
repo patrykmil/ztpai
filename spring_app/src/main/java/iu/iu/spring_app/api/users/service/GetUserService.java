@@ -1,5 +1,6 @@
 package iu.iu.spring_app.api.users.service;
 
+import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import iu.iu.spring_app.api.users.model.User;
 import iu.iu.spring_app.api.users.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -24,10 +25,12 @@ public class GetUserService {
     }
 
     public User getUserByEmail(Map<String, String> payload) {
-        return userRepository.findByEmail(payload.get("email"));
+        return userRepository.findByEmail(payload.get("email"))
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     public User getUserByUsername(Map<String, String> payload) {
-        return userRepository.findByName(payload.get("username"));
+        return userRepository.findByName(payload.get("username"))
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 }
