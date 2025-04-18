@@ -31,7 +31,11 @@ public class AuthenticationService {
 
         user = userService.save(user);
         var jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+        return JwtAuthenticationResponse.builder()
+                .token(jwt)
+                .id(user.getId())
+                .name(user.getName())
+                .build();
     }
 
     public JwtAuthenticationResponse signin(SignInRequest request) {
@@ -39,6 +43,10 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         var user = userRepository.findByEmail(request.getEmail());
         var jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+        return JwtAuthenticationResponse.builder()
+                .token(jwt)
+                .id(user.getId())
+                .name(user.getName())
+                .build();
     }
 }
