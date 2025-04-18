@@ -1,4 +1,4 @@
-package iu.iu.spring_app.api.components.model;
+package iu.iu.spring_app.api.liked.model;
 
 import lombok.Data;
 

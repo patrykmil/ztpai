@@ -1,7 +1,10 @@
-package iu.iu.spring_app.api.components.model;
+package iu.iu.spring_app.api.liked.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
@@ -10,6 +13,9 @@ import java.sql.Timestamp;
 @Table(name = "liked")
 @Data
 @IdClass(LikedId.class)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Liked {
     @Id
     @Column(name = "user_id")
@@ -21,6 +27,6 @@ public class Liked {
 
     @Column(name = "liked_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @CreationTimestamp
-    private Timestamp likedAt;
-
+    @Builder.Default
+    private Timestamp likedAt = new Timestamp(System.currentTimeMillis());
 }

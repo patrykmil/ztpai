@@ -1,8 +1,6 @@
 package iu.iu.spring_app;
 
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
-import iu.iu.spring_app.api.security.service.AuthenticationService;
-import iu.iu.spring_app.api.security.service.UserService;
 import iu.iu.spring_app.api.users.controller.UserController;
 import iu.iu.spring_app.api.users.model.User;
 import iu.iu.spring_app.api.users.service.DeleteUserService;
@@ -29,13 +27,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTests {
     @Mock
-    private AuthenticationService authenticationService;
-
-    @Mock
     private GetUserService getUserService;
-
-    @Mock
-    private UserService userService;
 
     @Mock
     private DeleteUserService deleteUserService;
