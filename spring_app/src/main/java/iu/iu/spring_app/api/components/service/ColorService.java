@@ -8,20 +8,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class ColorService {
     private final ColorRepository colorRepository;
+    private final ValidationService validationService;
 
-    public ColorService(ColorRepository colorRepository) {
+    public ColorService(ColorRepository colorRepository, ValidationService validationService) {
         this.colorRepository = colorRepository;
+        this.validationService = validationService;
     }
 
     public void setComponentColor(Component component, Component request) {
         if (request.getColor() != null) {
-            Color color = colorRepository.findByHex(request.getColor().getHex().toUpperCase());
+            String sanitizedHex = validationService.sanitizeInput(request.getColor().getHex().toUpperCase());
+            if (!validationService.isValidHexColor(sanitizedHex)) {
+                throw new IllegalArgumentException("Invalid color hex code");
+            }
+
+            Color color = colorRepository.findByHex(sanitizedHex);
             if (color == null) {
                 color = new Color();
-                color.setHex(component.getColor().getHex());
+                color.setHex(sanitizedHex);
                 color = colorRepository.save(color);
             }
             component.setColor(color);
         }
     }
+
 }

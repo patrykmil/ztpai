@@ -1,5 +1,6 @@
 package iu.iu.spring_app.api.components.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import iu.iu.spring_app.api.users.model.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class Set {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JsonIgnore
     private User user;
 
 }

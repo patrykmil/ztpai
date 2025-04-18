@@ -3,6 +3,7 @@ package iu.iu.spring_app.api.components.service;
 import iu.iu.spring_app.api.components.model.Component;
 import iu.iu.spring_app.api.components.repository.ComponentRepository;
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,33 +12,41 @@ public class ReplaceComponentService {
     private final GetComponentService getComponentService;
     private final TagsService tagsService;
     private final ColorService colorService;
+    private final ValidationService validationService;
 
     public ReplaceComponentService(ComponentRepository componentRepository,
                                    GetComponentService getComponentService,
                                    TagsService tagsService,
-                                   ColorService colorService) {
+                                   ColorService colorService,
+                                   ValidationService validationService) {
         this.componentRepository = componentRepository;
         this.getComponentService = getComponentService;
         this.tagsService = tagsService;
         this.colorService = colorService;
+        this.validationService = validationService;
     }
 
+    @Transactional
     public Component replaceComponent(Component request, String userEmail) {
+        validationService.validateComponent(request);
+
         Component oldComponent = getComponentService.getComponentById(request.getId());
         if (oldComponent == null) {
-            throw new ResourceNotFoundException("Component " + request.getId() + " not found");
+            throw new ResourceNotFoundException("Component not found");
         }
-        if (!oldComponent.getAuthor().getEmail().equals(userEmail)) {
+
+        String sanitizedEmail = validationService.sanitizeInput(userEmail);
+        if (!oldComponent.getAuthor().getEmail().equals(sanitizedEmail)) {
             throw new org.springframework.security.access.AccessDeniedException("Not authorized to modify this component");
         }
-        oldComponent.setName(request.getName());
-        oldComponent.setHtml(request.getHtml());
-        oldComponent.setCss(request.getCss());
+
+        oldComponent.setName(validationService.sanitizeInput(request.getName()));
+        oldComponent.setHtml(validationService.sanitizeHtml(request.getHtml()));
+        oldComponent.setCss(validationService.sanitizeCss(request.getCss()));
 
         colorService.setComponentColor(oldComponent, request);
         tagsService.setComponentTags(oldComponent, request);
 
         return componentRepository.save(oldComponent);
     }
-
 }

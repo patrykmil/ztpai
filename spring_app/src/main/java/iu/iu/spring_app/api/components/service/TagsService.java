@@ -12,16 +12,21 @@ import java.util.Set;
 @Service
 public class TagsService {
     private final TagRepository tagRepository;
+    private final ValidationService validationService;
 
-    public TagsService(TagRepository tagRepository) {
+    public TagsService(TagRepository tagRepository, ValidationService validationService) {
         this.tagRepository = tagRepository;
+        this.validationService = validationService;
     }
 
     public void setComponentTags(Component component, Component request) {
         if (request.getTags() != null) {
+            validationService.validateTags(request.getTags());
+
             Set<Tag> tags = new HashSet<>();
             for (Tag requestTag : request.getTags()) {
-                Tag tag = tagRepository.findByName(requestTag.getName())
+                String sanitizedName = validationService.sanitizeInput(requestTag.getName());
+                Tag tag = tagRepository.findByName(sanitizedName)
                         .orElseThrow(() -> new ResourceNotFoundException("Tag not found"));
                 tags.add(tag);
             }

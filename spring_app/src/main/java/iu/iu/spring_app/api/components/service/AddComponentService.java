@@ -20,46 +20,49 @@ public class AddComponentService {
     private final UserRepository userRepository;
     private final TagsService tagsService;
     private final ColorService colorService;
+    private final ValidationService validationService;
 
     public AddComponentService(ComponentRepository componentRepository,
                                SetRepository setRepository,
                                TypeRepository typeRepository,
                                UserRepository userRepository,
                                TagsService tagsService,
-                               ColorService colorService) {
+                               ColorService colorService,
+                               ValidationService validationService) {
         this.componentRepository = componentRepository;
         this.setRepository = setRepository;
         this.typeRepository = typeRepository;
         this.userRepository = userRepository;
         this.tagsService = tagsService;
         this.colorService = colorService;
+        this.validationService = validationService;
     }
 
     @Transactional
     public Component addComponent(Component request, String userEmail) {
-        System.out.println(request);
-        User author = userRepository.findByEmail(userEmail)
+        validationService.validateComponent(request);
+
+        User author = userRepository.findByEmail(validationService.sanitizeInput(userEmail))
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        if (!author.getName().equals(request.getAuthor().getName())) {
-            throw new org.springframework.security.access.AccessDeniedException("Not authorized to create component for another user");
+
+        if (!author.getName().equals(validationService.sanitizeInput(request.getAuthor().getName()))) {
+            throw new org.springframework.security.access.AccessDeniedException("Not authorized");
         }
 
-        Type type = typeRepository.findByName(request.getType().getName())
+        Type type = typeRepository.findByName(validationService.sanitizeInput(request.getType().getName()))
                 .orElseThrow(() -> new ResourceNotFoundException("Type not found"));
 
-        Set set = setRepository.findByName(request.getSet().getName())
+        Set set = setRepository.findByName(validationService.sanitizeInput(request.getSet().getName()))
                 .orElseThrow(() -> new ResourceNotFoundException("Set not found"));
 
         Component component = Component.builder()
-                        .name(request.getName())
-                        .html(request.getHtml())
-                        .css(request.getCss())
-                        .author(author)
-                        .type(type)
-                        .build();
+                .name(validationService.sanitizeInput(request.getName()))
+                .html(validationService.sanitizeHtml(request.getHtml()))
+                .css(validationService.sanitizeCss(request.getCss()))
+                .author(author)
+                .type(type)
+                .build();
         component.setSet(set);
-
-
 
         colorService.setComponentColor(component, request);
         tagsService.setComponentTags(component, request);
