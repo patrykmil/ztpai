@@ -10,7 +10,6 @@ import CodeField from './components/CodeField.jsx';
 import {useState} from "react";
 import ChangeCodeButtons from "./components/ChangeCodeButtons.jsx";
 import Navigation from "../Navigation/Navigation.jsx";
-import {Helmet} from "react-helmet";
 
 const fetchComponent = async (id) => {
     const {data} = await api.get(`/api/components/get/${id}`);
@@ -31,9 +30,6 @@ const ComponentPage = () => {
 
     return (
         <>
-            <Helmet>
-                <title>Component</title>
-            </Helmet>
             <Navigation/>
             <div className={styles.mainPage}>
                 <div className={styles.content}>

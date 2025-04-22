@@ -5,7 +5,6 @@ import RefreshButton from "./components/RefreshButton.jsx"
 import InternalServer from "../ErrorPages/InternalServer.jsx";
 import Navigation from "../Navigation/Navigation.jsx";
 import styles from "./components/Component.module.css"
-import {Helmet} from "react-helmet";
 
 const fetchComponents = async () => {
     const {data} = await api.get("/api/components/get/all");
@@ -24,9 +23,6 @@ const ComponentList = () => {
 
     return (
         <>
-            <Helmet>
-                <title>Browse</title>
-            </Helmet>
             <Navigation/>
             <div className={styles.mainPage}>
                 <RefreshButton refetch={refetch}/>

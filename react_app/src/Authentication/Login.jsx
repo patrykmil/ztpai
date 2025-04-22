@@ -3,7 +3,6 @@ import {Link, useNavigate} from "react-router-dom";
 import {api} from '../main.jsx';
 import styles from './Security.module.css';
 import Field from './components/Field.jsx';
-import {Helmet} from "react-helmet";
 import useAuthStore from '../store/authStore.js'
 
 const Login = () => {
@@ -34,9 +33,6 @@ const Login = () => {
 
     return (
         <>
-            <Helmet>
-                <title>Login</title>
-            </Helmet>
             <div className={styles.content}>
                 <div className={styles.formDiv}>
                     <form

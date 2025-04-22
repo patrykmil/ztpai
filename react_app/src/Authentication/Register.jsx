@@ -4,7 +4,6 @@ import {api} from '../main.jsx';
 import {z} from 'zod';
 import styles from './Security.module.css';
 import Field from './components/Field.jsx';
-import {Helmet} from "react-helmet";
 
 const ValidationSchema = z.object({
     email: z.string().email("Email is not correct"),
@@ -40,9 +39,6 @@ const Register = () => {
 
     return (
         <>
-            <Helmet>
-                <title>Register</title>
-            </Helmet>
             <div className={styles.content}>
                 <div className={styles.formDiv}>
                     <form

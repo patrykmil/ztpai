@@ -79,8 +79,8 @@ nav .logo:hover {
 }
 
 .topNavRight img {
-    height: 3em;
-    padding-right: 1em;
+    height: 5rem;
+    margin-right: 1rem;
 }
 
 .rightMenuItem {
@@ -145,6 +145,9 @@ nav .mobileOption {
     z-index: 3;
 }
 
+.avatar {
+    height: 5rem !important;
+}
 
 @media (max-width: 900px) {
     nav {

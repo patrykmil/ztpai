@@ -13,4 +13,5 @@ public class JwtAuthenticationResponse {
     String token;
     Integer id;
     String name;
+    String avatarPath;
 }

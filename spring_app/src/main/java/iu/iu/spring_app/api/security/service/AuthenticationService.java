@@ -49,6 +49,7 @@ public class AuthenticationService {
                 .token(jwt)
                 .id(user.getId())
                 .name(user.getName())
+                .avatarPath(user.getAvatar().getAvatarPath())
                 .build();
     }
 }

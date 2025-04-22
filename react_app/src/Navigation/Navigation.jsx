@@ -2,17 +2,21 @@ import {useState} from 'react';
 import TopNavLeft from './TopNavLeft';
 import TopNavRight from './TopNavRight';
 import styles from './Navigation.module.css';
+import useAuthStore from "../store/authStore.js";
 
-const Navigation = ({user}) => {
+const Navigation = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+    const userInfo = useAuthStore()
+    console.log(userInfo)
+    console.log(Object.values(userInfo).length)
     return (
         <nav className={styles.nav}>
             <TopNavLeft
+                user={userInfo}
                 isMobileMenuOpen={isMobileMenuOpen}
                 setIsMobileMenuOpen={setIsMobileMenuOpen}
             />
-            <TopNavRight/>
+            <TopNavRight user={userInfo}/>
         </nav>
     );
 };
