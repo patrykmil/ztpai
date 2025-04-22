@@ -11,6 +11,7 @@ import ComponentPage from "./ComponentPages/ComponentPage.jsx";
 import axios from "axios";
 import Register from "./Authentication/Register.jsx";
 import Login from "./Authentication/Login.jsx";
+import useAuthStore from "./store/authStore.js";
 
 const router = createBrowserRouter([
     {path: "/", element: <HomePage/>},
@@ -25,6 +26,16 @@ const queryClient = new QueryClient();
 
 export const api = axios.create({
     baseURL: 'http://localhost:8080'
+});
+
+api.interceptors.request.use((config) => {
+    const token = useAuthStore.getState().token;
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
 });
 
 createRoot(document.getElementById("root")).render(

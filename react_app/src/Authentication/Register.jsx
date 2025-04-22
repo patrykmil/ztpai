@@ -1,5 +1,5 @@
 import {useForm} from '@tanstack/react-form';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {api} from '../main.jsx';
 import {z} from 'zod';
 import styles from './Security.module.css';
@@ -13,6 +13,7 @@ const ValidationSchema = z.object({
 });
 
 const Register = () => {
+    const navigate = useNavigate();
     const form = useForm({
         defaultValues: {
             email: '',
@@ -22,8 +23,8 @@ const Register = () => {
         onSubmit: async ({value}) => {
             try {
                 console.log(value);
-                const {data} = await api.post("/users/register", value);
-                alert(data.username + " has registered!")
+                await api.post("/register", value);
+                navigate('/login');
             } catch (error) {
                 if (error.response?.data?.message) {
                     alert(error.response.data.message);

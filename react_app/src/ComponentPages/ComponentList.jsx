@@ -8,7 +8,7 @@ import styles from "./components/Component.module.css"
 import {Helmet} from "react-helmet";
 
 const fetchComponents = async () => {
-    const {data} = await api.get("/components/get/all");
+    const {data} = await api.get("/api/components/get/all");
     return data;
 };
 

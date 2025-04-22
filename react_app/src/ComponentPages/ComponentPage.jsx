@@ -13,7 +13,7 @@ import Navigation from "../Navigation/Navigation.jsx";
 import {Helmet} from "react-helmet";
 
 const fetchComponent = async (id) => {
-    const {data} = await api.get(`/components/get/${id}`);
+    const {data} = await api.get(`/api/components/get/${id}`);
     return data;
 };
 

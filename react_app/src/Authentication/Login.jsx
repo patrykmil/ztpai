@@ -1,11 +1,15 @@
 import {useForm} from '@tanstack/react-form';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {api} from '../main.jsx';
 import styles from './Security.module.css';
 import Field from './components/Field.jsx';
 import {Helmet} from "react-helmet";
+import useAuthStore from '../store/authStore.js'
 
 const Login = () => {
+    const setAuth = useAuthStore(state => state.setAuth);
+    const navigate = useNavigate();
+
     const form = useForm({
         defaultValues: {
             email: '',
@@ -14,8 +18,10 @@ const Login = () => {
         onSubmit: async ({value}) => {
             try {
                 console.log(value);
-                const {data} = await api.post("/users/login", value);
-                alert(data.username + " has signed in!")
+                const {data} = await api.post("/login", value);
+                console.log(data)
+                setAuth(data)
+                navigate('/')
             } catch (error) {
                 if (error.response?.data?.message) {
                     alert(error.response.data.message);
