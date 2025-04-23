@@ -7,6 +7,7 @@ import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -32,5 +33,9 @@ public class TagsService {
             }
             component.setTags(tags);
         }
+    }
+
+    public List<Tag> getTags() {
+        return  tagRepository.findAll();
     }
 }
