@@ -2,4 +2,4 @@ FROM postgres
 
 COPY . /app/database
 
-COPY database/database_init.sql /docker-entrypoint-initdb.d/
+COPY database_init.sql /docker-entrypoint-initdb.d/
