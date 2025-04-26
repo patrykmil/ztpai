@@ -15,17 +15,17 @@ public class ValidationService {
     private static final int MAX_CSS_LENGTH = 5000;
     private static final int MAX_TAGS = 10;
 
-    public void validateComponent(Component request) {
-        if (request == null || StringUtils.isBlank(request.getName())) {
-            throw new IllegalArgumentException("Invalid request");
+    public void validateComponent(Component payload) {
+        if (payload == null || StringUtils.isBlank(payload.getName())) {
+            throw new IllegalArgumentException("Invalid payload");
         }
-        if (request.getName().length() > MAX_NAME_LENGTH) {
+        if (payload.getName().length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("Name too long");
         }
-        if (request.getHtml().length() > MAX_HTML_LENGTH) {
+        if (payload.getHtml().length() > MAX_HTML_LENGTH) {
             throw new IllegalArgumentException("HTML too long");
         }
-        if (request.getCss().length() > MAX_CSS_LENGTH) {
+        if (payload.getCss().length() > MAX_CSS_LENGTH) {
             throw new IllegalArgumentException("CSS too long");
         }
     }

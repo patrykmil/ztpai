@@ -69,12 +69,12 @@ public class ComponentController {
     @ApiResponse(responseCode = "404", description = "Unable to create component", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @PostMapping("/add")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Component> addComponent(@RequestBody Component request,
+    public ResponseEntity<Component> addComponent(@RequestBody Component payload,
                                                   Authentication authentication) {
-        if (request == null) {
+        if (payload == null) {
             throw new ResourceNotFoundException("Request body is null");
         }
-        Component savedComponent = addComponentService.addComponent(request, authentication.getName());
+        Component savedComponent = addComponentService.addComponent(payload, authentication.getName());
         return ResponseEntity.created(URI.create("/api/components/" + savedComponent.getId()))
                 .body(savedComponent);
     }
@@ -85,12 +85,12 @@ public class ComponentController {
     @ApiResponse(responseCode = "404", description = "Component not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @PutMapping("/replace")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Component> replaceComponent(@RequestBody Component request,
+    public ResponseEntity<Component> replaceComponent(@RequestBody Component payload,
                                                       Authentication authentication) {
-        if (request == null) {
+        if (payload == null) {
             throw new ResourceNotFoundException("Request body is null");
         }
-        return ResponseEntity.ok(replaceComponentService.replaceComponent(request, authentication.getName()));
+        return ResponseEntity.ok(replaceComponentService.replaceComponent(payload, authentication.getName()));
     }
 
     @Operation(summary = "Delete component", description = "Deletes an existing component for the authenticated user")
@@ -101,12 +101,12 @@ public class ComponentController {
     @PreAuthorize("isAuthenticated()")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Component ID to delete", required = true,
             content = @Content(schema = @Schema(example = "{\"id\": 1}")))
-    public ResponseEntity<Component> deleteComponent(@RequestBody Map<String, Integer> request,
+    public ResponseEntity<Component> deleteComponent(@RequestBody Map<String, Integer> payload,
                                                      Authentication authentication) {
-        if (request == null) {
+        if (payload == null) {
             throw new ResourceNotFoundException("Request body is null");
         }
-        deleteComponentService.deleteComponentById(request.get("id"), authentication.getName());
+        deleteComponentService.deleteComponentById(payload.get("id"), authentication.getName());
         return ResponseEntity.ok().build();
     }
 }

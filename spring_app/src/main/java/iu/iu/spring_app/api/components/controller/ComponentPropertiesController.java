@@ -17,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -63,8 +64,8 @@ public class ComponentPropertiesController {
     @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @PostMapping("/sets/add")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Set> addSet(@RequestBody String setName, Authentication authentication) {
-        Set newSet = setService.addUserSet(setName, authentication.getName());
+    public ResponseEntity<Set> addSet(@RequestBody Map<String, String> payload, Authentication authentication) {
+        Set newSet = setService.addUserSet(payload.get("setName"), authentication.getName());
         return ResponseEntity.ok(newSet);
     }
 }

@@ -15,9 +15,9 @@ public class ColorService {
         this.validationService = validationService;
     }
 
-    public void setComponentColor(Component component, Component request) {
-        if (request.getColor() != null) {
-            String sanitizedHex = validationService.sanitizeInput(request.getColor().getHex().toUpperCase());
+    public void setComponentColor(Component component, Component payload) {
+        if (payload.getColor() != null) {
+            String sanitizedHex = validationService.sanitizeInput(payload.getColor().getHex().toUpperCase());
             if (!validationService.isValidHexColor(sanitizedHex)) {
                 throw new IllegalArgumentException("Invalid color hex code");
             }

@@ -39,33 +39,33 @@ public class AddComponentService {
     }
 
     @Transactional
-    public Component addComponent(Component request, String userEmail) {
-        validationService.validateComponent(request);
+    public Component addComponent(Component payload, String userEmail) {
+        validationService.validateComponent(payload);
 
         User author = userRepository.findByEmail(validationService.sanitizeInput(userEmail))
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        if (!author.getName().equals(validationService.sanitizeInput(request.getAuthor().getName()))) {
+        if (!author.getName().equals(validationService.sanitizeInput(payload.getAuthor().getName()))) {
             throw new org.springframework.security.access.AccessDeniedException("Not authorized");
         }
 
-        Type type = typeRepository.findByName(validationService.sanitizeInput(request.getType().getName()))
+        Type type = typeRepository.findByName(validationService.sanitizeInput(payload.getType().getName()))
                 .orElseThrow(() -> new ResourceNotFoundException("Type not found"));
 
-        Set set = setRepository.findByName(validationService.sanitizeInput(request.getSet().getName()))
+        Set set = setRepository.findByName(validationService.sanitizeInput(payload.getSet().getName()))
                 .orElseThrow(() -> new ResourceNotFoundException("Set not found"));
 
         Component component = Component.builder()
-                .name(validationService.sanitizeInput(request.getName()))
-                .html(validationService.sanitizeHtml(request.getHtml()))
-                .css(validationService.sanitizeCss(request.getCss()))
+                .name(validationService.sanitizeInput(payload.getName()))
+                .html(validationService.sanitizeHtml(payload.getHtml()))
+                .css(validationService.sanitizeCss(payload.getCss()))
                 .author(author)
                 .type(type)
                 .build();
         component.setSet(set);
 
-        colorService.setComponentColor(component, request);
-        tagsService.setComponentTags(component, request);
+        colorService.setComponentColor(component, payload);
+        tagsService.setComponentTags(component, payload);
 
         return componentRepository.save(component);
     }

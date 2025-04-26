@@ -27,10 +27,10 @@ public class ReplaceComponentService {
     }
 
     @Transactional
-    public Component replaceComponent(Component request, String userEmail) {
-        validationService.validateComponent(request);
+    public Component replaceComponent(Component payload, String userEmail) {
+        validationService.validateComponent(payload);
 
-        Component oldComponent = getComponentService.getComponentById(request.getId());
+        Component oldComponent = getComponentService.getComponentById(payload.getId());
         if (oldComponent == null) {
             throw new ResourceNotFoundException("Component not found");
         }
@@ -40,12 +40,12 @@ public class ReplaceComponentService {
             throw new org.springframework.security.access.AccessDeniedException("Not authorized to modify this component");
         }
 
-        oldComponent.setName(validationService.sanitizeInput(request.getName()));
-        oldComponent.setHtml(validationService.sanitizeHtml(request.getHtml()));
-        oldComponent.setCss(validationService.sanitizeCss(request.getCss()));
+        oldComponent.setName(validationService.sanitizeInput(payload.getName()));
+        oldComponent.setHtml(validationService.sanitizeHtml(payload.getHtml()));
+        oldComponent.setCss(validationService.sanitizeCss(payload.getCss()));
 
-        colorService.setComponentColor(oldComponent, request);
-        tagsService.setComponentTags(oldComponent, request);
+        colorService.setComponentColor(oldComponent, payload);
+        tagsService.setComponentTags(oldComponent, payload);
 
         return componentRepository.save(oldComponent);
     }

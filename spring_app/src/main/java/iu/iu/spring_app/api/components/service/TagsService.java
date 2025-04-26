@@ -20,13 +20,13 @@ public class TagsService {
         this.validationService = validationService;
     }
 
-    public void setComponentTags(Component component, Component request) {
-        if (request.getTags() != null) {
-            validationService.validateTags(request.getTags());
+    public void setComponentTags(Component component, Component payload) {
+        if (payload.getTags() != null) {
+            validationService.validateTags(payload.getTags());
 
             Set<Tag> tags = new HashSet<>();
-            for (Tag requestTag : request.getTags()) {
-                String sanitizedName = validationService.sanitizeInput(requestTag.getName());
+            for (Tag payloadTag : payload.getTags()) {
+                String sanitizedName = validationService.sanitizeInput(payloadTag.getName());
                 Tag tag = tagRepository.findByName(sanitizedName)
                         .orElseThrow(() -> new ResourceNotFoundException("Tag not found"));
                 tags.add(tag);
