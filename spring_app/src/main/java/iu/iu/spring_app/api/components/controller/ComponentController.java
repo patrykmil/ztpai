@@ -1,10 +1,15 @@
 package iu.iu.spring_app.api.components.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import iu.iu.spring_app.api.components.model.Component;
 import iu.iu.spring_app.api.components.service.AddComponentService;
 import iu.iu.spring_app.api.components.service.DeleteComponentService;
 import iu.iu.spring_app.api.components.service.GetComponentService;
 import iu.iu.spring_app.api.components.service.ReplaceComponentService;
+import iu.iu.spring_app.api.errors.ExceptionResponse;
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,8 +20,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-    @RestController
-    @RequestMapping("/api/components")
+@RestController
+@RequestMapping("/api/components")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Components", description = "APIs for managing components")
 public class ComponentController {
     private final GetComponentService getComponentService;
     private final AddComponentService addComponentService;
@@ -33,6 +39,9 @@ public class ComponentController {
         this.deleteComponentService = deleteComponentService;
     }
 
+    @Operation(summary = "Get all components", description = "Retrieves all components in the system")
+    @ApiResponse(responseCode = "200", description = "Components found", content = @Content(schema = @Schema(implementation = Component.class)))
+    @ApiResponse(responseCode = "404", description = "No components found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @GetMapping("/get/all")
     public ResponseEntity<List<Component>> getAllComponents() {
         List<Component> components = getComponentService.getAllComponents();
@@ -42,6 +51,9 @@ public class ComponentController {
         return ResponseEntity.ok(components);
     }
 
+    @Operation(summary = "Get component by ID", description = "Retrieves a specific component by its ID")
+    @ApiResponse(responseCode = "200", description = "Component found", content = @Content(schema = @Schema(implementation = Component.class)))
+    @ApiResponse(responseCode = "404", description = "Component not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @GetMapping("/get/{id}")
     public ResponseEntity<Component> getComponent(@PathVariable Integer id) {
         Component component = getComponentService.getComponentById(id);
@@ -51,6 +63,10 @@ public class ComponentController {
         return ResponseEntity.ok(component);
     }
 
+    @Operation(summary = "Add a new component", description = "Creates a new component for the authenticated user")
+    @ApiResponse(responseCode = "201", description = "Component created successfully", content = @Content(schema = @Schema(implementation = Component.class)))
+    @ApiResponse(responseCode = "403", description = "User not authenticated", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Unable to create component", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @PostMapping("/add")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Component> addComponent(@RequestBody Component request,
@@ -63,6 +79,10 @@ public class ComponentController {
                 .body(savedComponent);
     }
 
+    @Operation(summary = "Replace existing component", description = "Updates an existing component for the authenticated user")
+    @ApiResponse(responseCode = "200", description = "Component updated successfully", content = @Content(schema = @Schema(implementation = Component.class)))
+    @ApiResponse(responseCode = "403", description = "User not authenticated", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Component not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @PutMapping("/replace")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Component> replaceComponent(@RequestBody Component request,
@@ -73,8 +93,14 @@ public class ComponentController {
         return ResponseEntity.ok(replaceComponentService.replaceComponent(request, authentication.getName()));
     }
 
+    @Operation(summary = "Delete component", description = "Deletes an existing component for the authenticated user")
+    @ApiResponse(responseCode = "200", description = "Component deleted successfully")
+    @ApiResponse(responseCode = "403", description = "User not authenticated", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Component not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @DeleteMapping("/delete")
     @PreAuthorize("isAuthenticated()")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Component ID to delete", required = true,
+            content = @Content(schema = @Schema(example = "{\"id\": 1}")))
     public ResponseEntity<Component> deleteComponent(@RequestBody Map<String, Integer> request,
                                                      Authentication authentication) {
         if (request == null) {

@@ -26,13 +26,13 @@ public class SetService {
         return setRepository.findByUser(user);
     }
 
-    public void addUserSet(String setName, String userName) {
+    public Set addUserSet(String setName, String userName) {
         User user = userRepository.findByEmail(userName).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")
         );
         Set newSet = new Set();
         newSet.setName(setName);
         newSet.setUser(user);
-        setRepository.save(newSet);
+        return setRepository.save(newSet);
     }
 }
