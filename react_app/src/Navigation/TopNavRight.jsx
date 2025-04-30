@@ -16,8 +16,8 @@ const TopNavRight = ({user}) => (
             <div className={styles.topNavRight}>
                 <Link to={`/users/${user.username}`}>
                     <img src={`/public/avatars/${user.avatar}`}  alt={"Avatar"}></img>
-                    <p className={styles.rightMenuText}>{user.username}</p>
                 </Link>
+                    <p className={styles.rightMenuText} onClick={user.logout}>Logout</p>
             </div>
         )
     );

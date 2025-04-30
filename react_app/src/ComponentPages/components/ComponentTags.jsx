@@ -3,7 +3,7 @@ import styles from "./Component.module.css";
 
 const ComponentTags = ({tags}) => {
     return (
-        <div className={styles.tagButton}>
+        <div className={styles.tagBackground}>
             {tags.map(tag => (
                 <span
                     className={styles.tag}

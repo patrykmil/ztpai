@@ -7,8 +7,6 @@ import useAuthStore from "../store/authStore.js";
 const Navigation = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const userInfo = useAuthStore()
-    console.log(userInfo)
-    console.log(Object.values(userInfo).length)
     return (
         <nav className={styles.nav}>
             <TopNavLeft
