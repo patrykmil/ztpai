@@ -127,7 +127,7 @@ const ComponentCreate = () => {
         return null;
     }
 
-    if (isLoading) return <div>Loading...</div>;
+   if (isLoading) return <div className="loadingText">Loading...</div>;
     if (error) return <InternalServer/>;
 
     const handleAddTag = (tag) => {

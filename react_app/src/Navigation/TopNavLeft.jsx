@@ -4,7 +4,7 @@ import styles from './Navigation.module.css';
 
 const TopNavLeft = ({user, isMobileMenuOpen, setIsMobileMenuOpen}) => (
     <div className={styles.topNavLeft}>
-        <Link to="/start">
+        <Link to="/">
             <img className={styles.logo} src="/images/logo.svg" alt="Logo"/>
         </Link>
         <NavLinks user={user} isMobileMenuOpen={isMobileMenuOpen}/>

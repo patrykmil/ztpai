@@ -25,7 +25,7 @@ const ComponentPage = () => {
 
     const [activeTab, setActiveTab] = useState("html");
 
-    if (isLoading) return <div>Loading...</div>;
+   if (isLoading) return <div className="loadingText">Loading...</div>;
     if (error) return <InternalServer/>;
 
     return (

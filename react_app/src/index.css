@@ -40,6 +40,13 @@ a:hover {
     cursor: pointer;
 }
 
+.loadingText {
+    font-size: var(--triple-font);
+    align-self: center;
+    justify-self: center;
+    color:var(--primary);
+}
+
 ::selection {
     background-color: var(--primary-transparent) !important;
     color: white;
