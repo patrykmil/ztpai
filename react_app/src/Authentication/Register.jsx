@@ -47,6 +47,7 @@ const Register = () => {
                             e.stopPropagation();
                             form.handleSubmit();
                         }}
+                        className={styles.form}
                     >
                         <form.Field
                             name="email"

@@ -45,10 +45,6 @@ public class AddComponentService {
         User author = userRepository.findByEmail(validationService.sanitizeInput(userEmail))
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        if (!author.getName().equals(validationService.sanitizeInput(payload.getAuthor().getName()))) {
-            throw new org.springframework.security.access.AccessDeniedException("Not authorized");
-        }
-
         Type type = typeRepository.findByName(validationService.sanitizeInput(payload.getType().getName()))
                 .orElseThrow(() -> new ResourceNotFoundException("Type not found"));
 

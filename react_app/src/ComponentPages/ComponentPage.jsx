@@ -6,7 +6,7 @@ import ComponentPreview from "./components/ComponentPreview.jsx";
 import ComponentDetails from "./components/ComponentDetails.jsx";
 import ComponentHeader from "./components/ComponentHeader.jsx";
 import styles from "./components/Component.module.css"
-import CodeField from './components/CodeField.jsx';
+import PrismCodeField from './components/PrismCodeField.jsx';
 import {useState} from "react";
 import ChangeCodeButtons from "./components/ChangeCodeButtons.jsx";
 import Navigation from "../Navigation/Navigation.jsx";
@@ -42,8 +42,8 @@ const ComponentPage = () => {
                     </div>
                     <div className={styles.rightSide}>
                         <ChangeCodeButtons activeTab={activeTab} setActiveTab={setActiveTab}/>
-                        <CodeField content={data.html} language="html" activeTab={activeTab}/>
-                        <CodeField content={data.css} language="css" activeTab={activeTab}/>
+                        <PrismCodeField content={data.html} language="html" activeTab={activeTab}/>
+                        <PrismCodeField content={data.css} language="css" activeTab={activeTab}/>
                     </div>
                 </div>
             </div>

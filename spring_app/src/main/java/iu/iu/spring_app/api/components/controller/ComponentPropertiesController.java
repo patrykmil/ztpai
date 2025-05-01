@@ -59,9 +59,11 @@ public class ComponentPropertiesController {
     }
 
     @Operation(summary = "Add a new set", description = "Creates a new component set for the authenticated user")
-    @ApiResponse(responseCode = "200", description = "Set created successfully")
+    @ApiResponse(responseCode = "201", description = "Set created successfully")
     @ApiResponse(responseCode = "403", description = "User not authenticated", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Set name", required = true,
+            content = @Content(schema = @Schema(example = "{\"setName\": \"string\"}")))
     @PostMapping("/sets/add")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Set> addSet(@RequestBody Map<String, String> payload, Authentication authentication) {

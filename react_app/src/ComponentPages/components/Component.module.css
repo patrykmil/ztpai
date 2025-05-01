@@ -22,6 +22,7 @@
 .rightSide {
     display: flex;
     flex-flow: column wrap;
+    align-content: center;
     flex: 40;
 }
 
@@ -93,8 +94,7 @@
 
 .codeContainer {
     display: none;
-    max-width: 800px;
-    min-width: 25rem;
+    width: clamp(25rem, 95%, 50rem);
     min-height: 4.375rem;
     padding: 0.625rem;
     align-items: center;
@@ -209,6 +209,110 @@
     flex-flow: row wrap;
 }
 
+.autoResize {
+    /*min-height: 40vh;*/
+    field-sizing: content;
+    font-size: var(--big-font);
+}
+
+.submitButton {
+    align-self: center;
+    margin: 3rem;
+    width: 7.5em;
+    height: 2em;
+    font-size: var(--double-font);
+    font-weight: 500;
+    padding: 0.8rem 0.8rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    border-radius: 0.8125rem;
+    border: 3px solid var(--primary);
+    background-color: inherit;
+}
+
+.submitButton:hover {
+    background-color: var(--primary);
+    color: #fff;
+    cursor: pointer;
+}
+
+.popup.active {
+    display: flex;
+}
+
+.popup {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    margin-top: -140px;
+    margin-left: -125px;
+    overflow: auto;
+}
+
+.popupContent {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    background-color: var(--light-background);
+    border: 1px solid var(--primary);
+    width: 250px;
+    height: 285px;
+    border-radius: 0.8125rem;
+}
+
+.popupContent > h2 {
+    font-size: var(--big-font);
+    font-weight: 500;
+}
+
+.popupContent > input {
+    font-size: var(--regular-font);
+    font-weight: 400;
+    padding: 0.3rem 0.3rem;
+    border-radius: 0.6rem;
+    border: 2px solid var(--primary);
+    background-color: inherit;
+}
+
+.popupContent > button {
+    display: inline-flex;
+    width: 7.5em;
+    height: 2em;
+    font-size: var(--big-font);
+    font-weight: 500;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.6rem;
+    border: 2px solid var(--primary);
+    background-color: inherit;
+}
+
+.popupContent > button:hover {
+    cursor: pointer;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 @media (max-width: 950px) {
     .content {
         flex-direction: column;
@@ -218,6 +322,7 @@
 
     .leftSide, .rightSide {
         flex: none;
+        align-items: center;
     }
 
     .previewContainer {

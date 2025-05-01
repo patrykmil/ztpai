@@ -11,13 +11,20 @@ import SelectField from "./components/SelectField.jsx";
 import {useQuery} from "@tanstack/react-query";
 import InternalServer from "../ErrorPages/InternalServer.jsx";
 import InputField from "./components/InputField.jsx";
+import ChangeCodeButtons from "./components/ChangeCodeButtons.jsx";
+import InputCodeField from "./components/InputCodeField.jsx";
 
 const fetchSupp = async (userId) => {
-    const [typesResponse, tagsResponse, setsResponse] = await Promise.all([api.get("/api/types/get/all"), api.get("/api/tags/get/all"), api.get(`/api/sets/get/${userId}`)]);
+    const [typesResponse, tagsResponse, setsResponse] = await Promise.all(
+        [
+                api.get("/api/types/get/all"),
+                api.get("/api/tags/get/all"),
+                api.get(`/api/sets/get/${userId}`)
+        ]);
     return {
         types: typesResponse.data,
         tags: tagsResponse.data,
-        sets: setsResponse.data,
+        sets: [...setsResponse.data, {name: '+Add new set', id: -1}],
     };
 };
 
@@ -25,22 +32,30 @@ const ComponentCreate = () => {
     const [tags, setTags] = useState([]);
     const userInfo = useAuthStore();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!userInfo.token) {
-            navigate("/login");
-        }
-    }, [userInfo, navigate]);
+    const [activeTab, setActiveTab] = useState("html");
+    const [previewData, setPreviewData] = useState(
+        {
+        id: 999,
+        css: "p {\n\tfont-size:24px;\n\t" +
+            "background: linear-gradient(to right, violet, green);\n\t" +
+            "-webkit-background-clip: text;\n\t" +
+            "background-clip: text;\n\t" +
+            "color: transparent;\n}",
+        html: "<p>Start creating!!!</p>",
+    })
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
 
     const {
         data: suppData,
         isLoading,
         error,
+        refetch
     } = useQuery({
         queryKey: ["supp", userInfo.userId],
         queryFn: () => fetchSupp(userInfo.userId),
         enabled: !!userInfo.userId,
     });
+
 
     const ValidationSchema = z.object({
         name: z.string().min(3, "Name must be longer than 2"),
@@ -57,17 +72,38 @@ const ComponentCreate = () => {
             hex: "",
             tags: [],
             tag: "",
-            html: "",
-            css: "",
+            html: previewData.html,
+            css: previewData.css,
         },
         onSubmit: async ({value}) => {
             try {
                 const submitData = {
-                    ...value,
                     tag: undefined,
+                    name: value.name,
+                    color: {
+                        hex: value.hex
+                    },
+                    type: {
+                        name: value.type
+                    },
+                    set: {
+                        name: value.set
+                    },
+                    html: value.html,
+                    css: value.css,
+                    tags: value.tags.map(tag => ({
+                        id: tag.id,
+                        name: tag.name,
+                        color: {
+                            id: tag.color.id,
+                            hex: tag.color.hex
+                        }
+                    }))
                 };
-                console.log(value);
-                await api.post("/api/components/add", submitData);
+                const response = await api.post("/api/components/add", submitData);
+                if (response.status === 201) {
+                    navigate(`/components/${response.data.id}`)
+                }
             } catch (error) {
                 if (error.response?.data) {
                     alert(error.response.data);
@@ -81,14 +117,18 @@ const ComponentCreate = () => {
         },
     });
 
+    useEffect(() => {
+        if (!userInfo.token) {
+            navigate("/login");
+        }
+    }, [userInfo, navigate]);
+
+    if (!userInfo.token) {
+        return null;
+    }
+
     if (isLoading) return <div>Loading...</div>;
     if (error) return <InternalServer/>;
-
-    const previewData = {
-        id: 999,
-        css: "button {" + "background-color: yellow;" + "padding: 2rem;" + "color: black;" + "}",
-        html: "<button>aha</button>",
-    };
 
     const handleAddTag = (tag) => {
         const currentTags = form.getFieldValue("tags") || [];
@@ -111,7 +151,14 @@ const ComponentCreate = () => {
         <>
             <Navigation/>
             <div className={styles.mainPage}>
-                <div className={styles.content}>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        form.handleSubmit();
+                    }}
+                    className={styles.content}
+                >
                     <div className={styles.leftSide}>
                         <div className={styles.previewContainer}>
                             <ComponentPreview component={previewData}/>
@@ -120,11 +167,27 @@ const ComponentCreate = () => {
                             <form.Field name="name" children={(field) => <InputField name="name" placeholder="Name"
                                                                                      field={field}/>}/>
                             <form.Field name="type"
-                                        children={(field) => <SelectField name="type" placeholder="Type" field={field}
-                                                                          options={suppData.types}/>}/>
+                                        children={(field) =>
+                                            <SelectField name="type" placeholder="Type" field={field}
+                                                         options={suppData.types}/>}/>
                             <form.Field name="set"
-                                        children={(field) => <SelectField name="set" placeholder="Set" field={field}
-                                                                          options={suppData.sets}/>}/>
+                                        children={(field) =>
+                                            <SelectField
+                                                name="set"
+                                                placeholder="Set"
+                                                field={field}
+                                                options={suppData?.sets}
+                                                onInput={(e) => {
+                                                    const value = e.target.value;
+                                                    const addNew = '+Add new set';
+                                                    if (value === addNew) {
+                                                        console.log('Add new');
+                                                        setIsPopupVisible(true)
+                                                        e.target.value = '';
+                                                    }
+                                                }}
+
+                                            />}/>
                             <form.Field name="hex" children={(field) => <InputField name="hex" placeholder="Color HEX"
                                                                                     field={field}/>}/>
                             <form.Field
@@ -160,6 +223,84 @@ const ComponentCreate = () => {
                             ))}
                         </div>
                     </div>
+                    <div className={styles.rightSide}>
+                        <ChangeCodeButtons activeTab={activeTab} setActiveTab={setActiveTab}/>
+                        <form.Field
+                            name="html"
+                            children={() => (
+                                <InputCodeField
+                                    start={previewData.html}
+                                    language="html"
+                                    activeTab={activeTab}
+                                    onInput={(e) => {
+                                        const value = e.target.value;
+                                        form.setFieldValue('html', value);
+                                        setPreviewData({
+                                            ...previewData,
+                                            html: value
+                                        });
+                                    }}
+                                />
+                            )}
+                        />
+                        <form.Field
+                            name="css"
+                            children={() => (
+                                <InputCodeField
+                                    start={previewData.css}
+                                    language="css"
+                                    activeTab={activeTab}
+                                    onInput={(e) => {
+                                        const value = e.target.value;
+                                        form.setFieldValue('css', value);
+                                        setPreviewData({
+                                            ...previewData,
+                                            css: value
+                                        });
+                                    }}
+                                />
+                            )}
+                        />
+                        <form.Subscribe
+                            selector={(state) => [state.canSubmit, state.isSubmitting]}
+                            children={([canSubmit, isSubmitting]) => (
+                        <button className={styles.submitButton} type="submit" disabled={!canSubmit}>
+                            {isSubmitting ? '...' : 'Submit'}
+                        </button>
+                            )}
+                        />
+                    </div>
+                </form>
+            </div>
+            <div className={`${styles.popup} ${isPopupVisible ? styles.active : ''}`}>
+                <div className={styles.popupContent}>
+                    <span className={styles.close}
+                          onClick={()=> setIsPopupVisible(false)}
+                    >&times;
+                    </span>
+                    <h2>Create New Set</h2>
+                    <input type="text" id="newSetName" placeholder="Enter new set name"/>
+                    <button
+                        onClick={async () => {
+                            const newSetName = document.getElementById('newSetName').value;
+                            if (newSetName) {
+                                const nameInput = document.getElementById('newSetName');
+                                const value = nameInput.value;
+                                const response = await api.post('api/sets/add', {setName: value})
+                                if (response.status === 200) {
+                                    setIsPopupVisible(false);
+                                    nameInput.value='';
+                                    await refetch();
+                                    form.setFieldMeta('set', {
+                                        isTouched: false,
+                                        errors: []
+                                    });
+                                    form.setFieldValue('set', newSetName);
+                                }
+                            }
+                        }}
+                        >Create
+                    </button>
                 </div>
             </div>
         </>

@@ -18,7 +18,7 @@
     border: 1px solid #fff;
 }
 
-form {
+.form {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-evenly;

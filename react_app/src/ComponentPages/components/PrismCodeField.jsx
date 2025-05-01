@@ -4,7 +4,7 @@ import 'prismjs/themes/prism.css';
 import styles from "./Component.module.css"
 import "./PrismHighlighting.css"
 
-const CodeField = ({content, language, activeTab}) => {
+const PrismCodeField = ({content, language, activeTab}) => {
     useEffect(() => {
         Prism.highlightAll();
     }, [content]);
@@ -18,4 +18,4 @@ const CodeField = ({content, language, activeTab}) => {
     );
 };
 
-export default CodeField;
+export default PrismCodeField;
