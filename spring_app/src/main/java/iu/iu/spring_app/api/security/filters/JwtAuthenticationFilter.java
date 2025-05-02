@@ -27,28 +27,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserService userService;
 
-    @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request,
-                                    @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain filterChain)
-                                    throws IOException, ServletException {
-        final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String email;
-        if(StringUtils.isEmpty(authHeader) ||
-                !StringUtils.startsWith(authHeader, "Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+@Override
+protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                @NonNull HttpServletResponse response,
+                                @NonNull FilterChain filterChain)
+                                throws IOException, ServletException {
+    final String authHeader = request.getHeader("Authorization");
+    final String jwt;
+    if(StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
+        filterChain.doFilter(request, response);
+        return;
+    }
 
-        jwt = authHeader.substring(7);
-        log.debug("JWT: {}", jwt);
-        email = jwtService.extractUserName(jwt);
+    jwt = authHeader.substring(7);
+    try {
+        final String email = jwtService.extractUserName(jwt);
         if(StringUtils.isNoneEmpty(email) && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userService.userDetailsService().loadUserByUsername(email);
             if(jwtService.isTokenValid(jwt, userDetails)) {
-                log.debug("User found with email {}", email);
-                SecurityContext context = SecurityContextHolder.getContext();
+                SecurityContext context = SecurityContextHolder.createEmptyContext();
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );
@@ -57,6 +54,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.setContext(context);
             }
         }
-        filterChain.doFilter(request, response);
+    } catch (Exception e) {
+        SecurityContextHolder.clearContext();
     }
+    filterChain.doFilter(request, response);
+}
 }
