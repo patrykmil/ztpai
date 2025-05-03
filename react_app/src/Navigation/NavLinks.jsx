@@ -7,19 +7,19 @@ const NavLinks = ({user, isMobileMenuOpen = false}) =>
             <li>
                 <Link to="/components" className={styles.menuItem}>
                     <img src="/icons/search_thick.svg" alt="Browse Icon"/>
-                    BROWSE
+                    Browse
                 </Link>
             </li>
             <li>
                 <Link to="/login" className={styles.menuItem}>
                     <img src="/icons/bookmark_fill.svg" alt="Collection Icon"/>
-                    COLLECTION
+                    Collection
                 </Link>
             </li>
             <li>
                 <Link to="/create" className={styles.menuItem}>
                     <img src="/icons/create.svg" alt="Create Icon"/>
-                    CREATE
+                    Create
                 </Link>
             </li>
             {!user?.token ? (

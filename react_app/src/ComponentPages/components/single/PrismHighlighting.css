@@ -32,7 +32,7 @@
 }
 
 code[class*="language-"] {
-    font-size: var(--big-font);
+    font-size: var(--font-big);
     color: white;
     text-shadow: none;
 }

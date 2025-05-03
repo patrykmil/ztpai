@@ -10,21 +10,21 @@
 .code, .message {
     display: flex;
     justify-self: center;
-    font-size: var(--triple-font);
+    font-size: var(--font-triple);
     color: var(--primary);
 }
 
 .homeButton {
     display: inline-flex;
-    width: 7.5em;
-    height: 2em;
-    font-size: var(--double-font);
+    width: 15rem;
+    height: 4rem;
+    font-size: var(--font-double);
     font-weight: 500;
     padding: 0.8rem 0.8rem;
     justify-content: center;
     align-items: center;
     gap: 0.625rem;
-    border-radius: 0.8125rem;
+    border-radius: var(--border-radius-standard);
     border: 3px solid var(--primary);
     background-color: inherit;
     margin-top: 2rem;

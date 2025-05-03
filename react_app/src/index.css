@@ -1,19 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
 
 :root {
-    --background: hsl(195, 6%, 13%);
-    --light-background: hsl(195, 6%, 22%);
+    --background-darkmode: hsl(195, 6%, 13%);
+    --background-gray: hsl(195, 6%, 22%);
     --primary: hsl(271, 12%, 46%);
     --primary-transparent: hsla(271, 12%, 46%, 0.5);
     --accent-green: hsla(144, 28%, 64%, 1);
     --accent-orange: hsla(29, 64%, 61%, 1);
-    --text-color: hsla(0, 0%, 100%, 1);
-    --regular-font: 1rem;
-    --small-font: 0.75rem;
-    --big-font: 1.2rem;
-    --double-font: 2rem;
-    --triple-font: 3rem;
-    --hover-font: 1.4rem;
+    --text-color-darkmode: hsla(0, 0%, 100%, 1);
+    --font-label: 0.75rem;
+    --font-regular: 1rem;
+    --font-big: 1.2rem;
+    --font-hover: 1.4rem;
+    --font-double: 2rem;
+    --font-triple: 3rem;
+    --border-radius-standard: 0.625rem;
 }
 
 /* General */
@@ -21,13 +22,13 @@
 * {
     margin: 0;
     padding: 0;
-    color: var(--text-color);
+    color: var(--text-color-darkmode);
     font-family: "Geist", sans-serif;
     font-weight: 400;
 }
 
 body {
-    background-color: var(--background);
+    background-color: var(--background-darkmode);
     /*height: 200vh;*/
 }
 
@@ -45,7 +46,7 @@ a:hover {
 }
 
 .loadingText {
-    font-size: var(--triple-font);
+    font-size: var(--font-triple);
     justify-self: center;
     color:var(--primary);
 }
@@ -60,13 +61,13 @@ a:hover {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--light-background);
-    border-radius: 10px;
+    background: var(--background-gray);
+    border-radius: var(--border-radius-standard);
 }
 
 ::-webkit-scrollbar-thumb {
     background: #a6a6a6;
-    border-radius: 10px;
+    border-radius: var(--border-radius-standard);
 }
 
 ::-webkit-scrollbar-thumb:hover {

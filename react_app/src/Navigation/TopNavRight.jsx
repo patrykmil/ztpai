@@ -5,11 +5,11 @@ const TopNavRight = ({user}) => (
         !user?.token ? (
             <div className={styles.topNavRight}>
                 <Link to="/login" className={styles.rightMenuText}>
-                    LOG IN
+                    Log in
                 </Link>
                 <p style={{margin: "0 1rem"}}>or</p>
                 <Link to="/register" className={styles.rightMenuText}>
-                    REGISTER
+                    Register
                 </Link>
             </div>
         ) : (

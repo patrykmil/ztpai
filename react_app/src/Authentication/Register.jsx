@@ -65,7 +65,7 @@ const Register = () => {
                             selector={(state) => [state.canSubmit, state.isSubmitting]}
                             children={([canSubmit, isSubmitting]) => (
                                 <button className={styles.submitButton} type="submit" disabled={!canSubmit}>
-                                    {isSubmitting ? '...' : 'Submit'}
+                                    {isSubmitting ? '...' : 'Register'}
                                 </button>
                             )}
                         />

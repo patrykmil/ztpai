@@ -55,7 +55,7 @@ const Login = () => {
                             selector={(state) => [state.canSubmit, state.isSubmitting]}
                             children={([canSubmit, isSubmitting]) => (
                                 <button className={styles.submitButton} type="submit" disabled={!canSubmit}>
-                                    {isSubmitting ? '...' : 'Submit'}
+                                    {isSubmitting ? '...' : 'Log in'}
                                 </button>
                             )}
                         />

@@ -1,17 +1,17 @@
 
 .nav {
     width: 100vw;
-    border-bottom: var(--light-background) 2px solid;
+    border-bottom: var(--background-gray) 2px solid;
     position: fixed;
     top: 0;
     z-index: 1;
     display: flex;
     flex-flow: row nowrap;
-    background-color: var(--background);
+    background-color: var(--background-darkmode);
 }
 
 .nav * {
-    font-size: var(--big-font);
+    font-size: var(--font-big);
     text-decoration: none;
 }
 
@@ -20,7 +20,7 @@
     flex-flow: row nowrap;
     justify-content: left;
     align-items: center;
-    max-width: 800px;
+    max-width: 50rem;
     flex: 4;
 }
 
@@ -29,8 +29,8 @@
 }
 
 nav .logo {
-    height: 4em;
-    margin: 0.5em 1em 0.5em 2em;
+    height: 4rem;
+    margin: 1rem;
     z-index: 3;
 }
 
@@ -51,21 +51,20 @@ nav .logo:hover {
 }
 
 .navOptionsList img {
-    height: 2em;
-    padding-right: 0.5em;
+    height: 3rem;
+    padding-right: 1rem;
 }
 
 .menuItem {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1em;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .menuItem:hover {
-    font-size: var(--hover-font);
+    font-size: var(--font-hover);
 }
 
 .topNavRight, .topNavRight > a {
@@ -75,7 +74,7 @@ nav .logo:hover {
 }
 
 .topNavRight {
-    padding-right: 3em;
+    padding-right: 3rem;
 }
 
 .topNavRight img {
@@ -88,7 +87,7 @@ nav .logo:hover {
 }
 
 .rightMenuItem:hover {
-    font-size: var(--hover-font);
+    font-size: var(--font-hover);
     cursor: pointer;
 }
 
@@ -99,6 +98,7 @@ nav button {
 
 .rightMenuText {
     transition: all 0.1s;
+    font-size: var(--font-big);
 }
 
 .rightMenuText:hover {
@@ -120,10 +120,10 @@ nav .mobileOption {
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 5em;
+    top: 5rem;
     width: 100%;
     height: fit-content;
-    background-color: var(--background);
+    background-color: var(--background-darkmode);
     justify-content: center;
     align-items: center;
 }
@@ -133,7 +133,7 @@ nav .mobileOption {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    padding: 1em;
+    padding: 2.5rem;
 }
 
 .mobileOption {
@@ -141,7 +141,7 @@ nav .mobileOption {
     justify-content: flex-end;
     align-items: center;
     flex: 1;
-    padding-right: 1em;
+    padding-right: 1rem;
     z-index: 3;
 }
 
@@ -149,7 +149,7 @@ nav .mobileOption {
     height: 5rem !important;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 56.25rem) {
     nav {
         width: 100%;
     }
@@ -171,7 +171,7 @@ nav .mobileOption {
         justify-content: flex-end;
         align-items: center;
         flex: 1;
-        padding-right: 1em;
+        padding-right: 1rem;
         z-index: 3;
     }
 
