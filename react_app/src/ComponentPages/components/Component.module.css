@@ -313,6 +313,26 @@
     cursor: pointer;
 }
 
+.interactionButton {
+    background-color: var(--background);
+    display: inline-flex;
+    padding: 0.375rem 0.75rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    border: 1px dashed var(--primary);
+    border-radius: 0.4375rem;
+    cursor: pointer;
+}
+
+.interactionButton:hover {
+    background-color: var(--primary-transparent);
+}
+
+.interactionButton > img {
+    height: 2.8125rem;
+}
+
 @media (max-width: 950px) {
     .content {
         flex-direction: column;
