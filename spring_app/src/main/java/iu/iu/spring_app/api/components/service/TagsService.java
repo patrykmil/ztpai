@@ -6,9 +6,9 @@ import iu.iu.spring_app.api.components.repository.TagRepository;
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class TagsService {
@@ -24,18 +24,21 @@ public class TagsService {
         if (payload.getTags() != null) {
             validationService.validateTags(payload.getTags());
 
-            Set<Tag> tags = new HashSet<>();
-            for (Tag payloadTag : payload.getTags()) {
-                String sanitizedName = validationService.sanitizeInput(payloadTag.getName());
-                Tag tag = tagRepository.findByName(sanitizedName)
-                        .orElseThrow(() -> new ResourceNotFoundException("Tag not found"));
-                tags.add(tag);
-            }
+            Set<Tag> tags = payload.getTags().stream()
+                    .map(payloadTag -> validationService.sanitizeInput(payloadTag.getName()))
+                    .map(this::getTagByName)
+                    .collect(Collectors.toSet());
+
             component.setTags(tags);
         }
     }
 
     public List<Tag> getTags() {
         return  tagRepository.findAll();
+    }
+
+    public Tag getTagByName(String name) {
+        return tagRepository.findByName(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Tag not found"));
     }
 }

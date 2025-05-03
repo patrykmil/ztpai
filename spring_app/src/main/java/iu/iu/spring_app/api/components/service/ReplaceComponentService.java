@@ -2,7 +2,6 @@ package iu.iu.spring_app.api.components.service;
 
 import iu.iu.spring_app.api.components.model.Component;
 import iu.iu.spring_app.api.components.repository.ComponentRepository;
-import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +30,6 @@ public class ReplaceComponentService {
         validationService.validateComponent(payload);
 
         Component oldComponent = getComponentService.getComponentById(payload.getId());
-        if (oldComponent == null) {
-            throw new ResourceNotFoundException("Component not found");
-        }
 
         String sanitizedEmail = validationService.sanitizeInput(userEmail);
         if (!oldComponent.getAuthor().getEmail().equals(sanitizedEmail)) {

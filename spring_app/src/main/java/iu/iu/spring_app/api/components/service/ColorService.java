@@ -16,20 +16,22 @@ public class ColorService {
     }
 
     public void setComponentColor(Component component, Component payload) {
-        if (payload.getColor() != null) {
-            String sanitizedHex = validationService.sanitizeInput(payload.getColor().getHex().substring(1).toUpperCase());
-            if (!validationService.isValidHexColor(sanitizedHex)) {
-                throw new IllegalArgumentException("Invalid color hex code");
-            }
-
-            Color color = colorRepository.findByHex(sanitizedHex);
-            if (color == null) {
-                color = new Color();
-                color.setHex(sanitizedHex);
-                color = colorRepository.save(color);
-            }
-            component.setColor(color);
+        if (payload.getColor() == null) {
+            throw new IllegalArgumentException("Component has no color");
         }
+
+        String sanitizedHex = validationService.sanitizeInput(payload.getColor().getHex().substring(1).toUpperCase());
+        if (!validationService.isValidHexColor(sanitizedHex)) {
+            throw new IllegalArgumentException("Invalid color hex code");
+        }
+
+        Color color = colorRepository.findByHex(sanitizedHex);
+        if (color == null) {
+            color = new Color();
+            color.setHex(sanitizedHex);
+            color = colorRepository.save(color);
+        }
+        component.setColor(color);
     }
 
 }

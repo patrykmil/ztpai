@@ -35,44 +35,32 @@ public class UserController implements UserControllerInterface {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> getUserById(Integer id) {
-        User user = getUserService.getUserById(id);
-        if (user == null) {
-            throw new ResourceNotFoundException("User " + id + " not found");
-        }
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(getUserService.getUserById(id));
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> getUserByEmail(Map<String, String> payload) {
-        User user = getUserService.getUserByEmail(payload);
-        if (user == null) {
-            throw new ResourceNotFoundException("User " + payload.get("email") + " not found");
-        }
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(getUserService.getUserByEmail(payload.get("email")));
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> getUserByUsername(Map<String, String> payload) {
-        User user = getUserService.getUserByUsername(payload);
-        if (user == null) {
-            throw new ResourceNotFoundException("User " + payload.get("username") + " not found");
-        }
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(getUserService.getUserByUsername(payload.get("username")));
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteByEmail(Map<String, String> payload) {
-        deleteUserService.deleteUserByEmail(payload);
+        deleteUserService.deleteUserByEmail(payload.get("email"));
         return ResponseEntity.ok().build();
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteByUsername(Map<String, String> payload) {
-        deleteUserService.deleteUserByUsername(payload);
+        deleteUserService.deleteUserByUsername(payload.get("username"));
         return ResponseEntity.ok().build();
     }
 }

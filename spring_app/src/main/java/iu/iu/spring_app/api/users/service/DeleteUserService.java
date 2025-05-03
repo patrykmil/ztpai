@@ -4,8 +4,6 @@ import iu.iu.spring_app.api.users.model.User;
 import iu.iu.spring_app.api.users.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 @Service
 public class DeleteUserService {
     private final UserRepository userRepository;
@@ -15,13 +13,13 @@ public class DeleteUserService {
         this.getUserService = getUserService;
     }
 
-    public void deleteUserByEmail(Map<String, String> payload) {
-        User user = getUserService.getUserByEmail(payload);
+    public void deleteUserByEmail(String email) {
+        User user = getUserService.getUserByEmail(email);
         userRepository.delete(user);
     }
 
-    public void deleteUserByUsername(Map<String, String> payload) {
-        User user = getUserService.getUserByUsername(payload);
+    public void deleteUserByUsername(String username) {
+        User user = getUserService.getUserByUsername(username);
         userRepository.delete(user);
     }
 }

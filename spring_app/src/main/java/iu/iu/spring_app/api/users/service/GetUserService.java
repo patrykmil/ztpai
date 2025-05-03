@@ -6,7 +6,6 @@ import iu.iu.spring_app.api.users.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class GetUserService {
@@ -21,16 +20,17 @@ public class GetUserService {
     }
 
     public User getUserById(Integer id) {
-        return userRepository.findById(id).orElse(null);
-    }
-
-    public User getUserByEmail(Map<String, String> payload) {
-        return userRepository.findByEmail(payload.get("email"))
+        return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
-    public User getUserByUsername(Map<String, String> payload) {
-        return userRepository.findByName(payload.get("username"))
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByName(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 }

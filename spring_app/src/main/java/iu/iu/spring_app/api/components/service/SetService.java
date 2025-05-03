@@ -26,6 +26,11 @@ public class SetService {
         return setRepository.findByUser(user);
     }
 
+    public Set getSetByName(String name) {
+        return setRepository.findByName(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Set not found"));
+    }
+
     public Set addUserSet(String setName, String userName) {
         User user = userRepository.findByEmail(userName).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")
