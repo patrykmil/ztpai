@@ -11,7 +11,7 @@ const ButtonCopy = ({component}) => {
     };
 
     return (
-        <button className={styles.interactionButton} onClick={() => copy(component)}>
+        <button className={styles.interactionButton} onClick={copy}>
             <img src={"/icons/copy.svg"} alt={"Copy"}/>
         </button>
     );

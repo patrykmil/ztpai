@@ -1,46 +1,42 @@
 import styles from "./Component.module.css";
 import useAuthStore from "../../store/authStore.js";
 import {api} from "../../main.jsx";
-import {useEffect, useState} from "react";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 const ButtonLike = ({component}) => {
-    const [liked, setLiked] = useState(false);
     const userInfo = useAuthStore();
+    const queryClient = useQueryClient();
 
-    const checkLike = async () => {
-        try {
-            const response = await api.post(`/api/components/checkLike/${component.id}`)
-            if (response.status === 200) {
-                setLiked(await response.data);
-            }
-        }
-        catch (e) {
-            console.error(e);
-        }
-    }
+    const {data: liked = false} = useQuery({
+        queryKey: ['like', component.id],
+        queryFn: async () => {
+            const response = await api.post(`/api/components/checkLike/${component.id}`);
+            return response.data;
+        },
+        enabled: !!userInfo.userId
+    });
 
-    const switchLike = async () => {
-        try {
-            const response = await api.post(`/api/components/switchLike/${component.id}`)
-            if (response.status === 200) {
-                setLiked(!liked);
-            }
+    const switchLikeMutation = useMutation({
+        mutationFn: async () => {
+            const response = await api.post(`/api/components/switchLike/${component.id}`);
+            return response.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['like', component.id]);
         }
-        catch (e) {
-            console.error(e);
-        }
-    }
-
-    useEffect(() => {
-        checkLike(component).catch(console.error);
-    }, [checkLike, component]);
+    });
 
     if (userInfo.userId) {
         return (
-            <button className={styles.interactionButton}
-                    onClick={() => switchLike(component)}
+            <button
+                className={styles.interactionButton}
+                onClick={() => switchLikeMutation.mutate()}
+                disabled={switchLikeMutation.isPending}
             >
-                <img src={`/icons/${ liked ? 'heart_fill' : 'heart_nofill' }.svg`} alt={"Like component"}/>
+                <img
+                    src={`/icons/${liked ? 'heart_fill' : 'heart_nofill'}.svg`}
+                    alt="Like component"
+                />
             </button>
         );
     }

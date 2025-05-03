@@ -11,7 +11,7 @@ const ButtonShare = ({component}) => {
     };
 
     return (
-        <button className={styles.interactionButton} onClick={() => copyLink(component)}>
+        <button className={styles.interactionButton} onClick={copyLink}>
             <img src={"/icons/share.svg"} alt={"Copy link"}/>
         </button>
     );
