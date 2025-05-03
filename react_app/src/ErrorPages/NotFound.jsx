@@ -1,18 +1,7 @@
-import {Link} from "react-router-dom";
-import styles from "./Error.module.css"
+import ErrorTemplate from "./ErrorTemplate.jsx";
 
 const NotFound = () => {
-    return (
-        <>
-            <div className={styles.content}>
-                <h1 className={styles.code}>404</h1>
-                <h2 className={styles.message}>Page Not Found</h2>
-                <Link to={"/"}>
-                    <button className={styles.homeButton}>Home</button>
-                </Link>
-            </div>
-        </>
-    );
+    return <ErrorTemplate code={404} message={"Page Not Found"}/>;
 }
 
 export default NotFound;

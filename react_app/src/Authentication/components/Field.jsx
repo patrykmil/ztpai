@@ -2,7 +2,7 @@ import React from 'react';
 import FieldInfo from './FieldInfo.jsx';
 import styles from '../Security.module.css';
 
-const Field = ({name, label, field}) => (
+const Field = ({label, field}) => (
     <div className={styles.inputDiv}>
         <label className={styles.inputLabel} htmlFor={field.name}>{label}</label>
         <input className={styles.input}

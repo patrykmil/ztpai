@@ -5,10 +5,9 @@
     --light-background: hsl(195, 6%, 22%);
     --primary: hsl(271, 12%, 46%);
     --primary-transparent: hsla(271, 12%, 46%, 0.5);
-    --accent-green: #89bd9e;
-    --accent-orange: #db995a;
-    --text-color: #ffffff;
-    --text-color-dark: hsl(195, 6%, 42%);
+    --accent-green: hsla(144, 28%, 64%, 1);
+    --accent-orange: hsla(29, 64%, 61%, 1);
+    --text-color: hsla(0, 0%, 100%, 1);
     --regular-font: 1rem;
     --small-font: 0.75rem;
     --big-font: 1.2rem;

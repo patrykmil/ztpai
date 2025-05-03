@@ -18,5 +18,5 @@ export const ValidationSchema = (suppData) => z.object({
     name: z.string().min(3, "Name must be longer than 2"),
     type: z.string().refine((val) => suppData?.types.some((t) => t.name === val), "Select valid type"),
     set: z.string().refine((val) => suppData?.sets.some((s) => s.name === val), "Select valid set"),
-    hex: z.string().startsWith("#", "Start with #").length(7, "Length must be 7"),
+    hex: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Hex color must be valid")
 });
