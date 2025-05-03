@@ -26,7 +26,7 @@ const ButtonLike = ({component}) => {
         }
     });
 
-    if (userInfo.userId) {
+    if (userInfo.userId && userInfo.userId !== component.author.id) {
         return (
             <button
                 className={styles.interactionButton}

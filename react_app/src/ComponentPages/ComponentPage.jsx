@@ -41,10 +41,12 @@ const ComponentPage = () => {
                         <div className={styles.previewContainer}>
                             <ComponentPreview component={data}/>
                         </div>
-                        <ButtonCopy component={data}/>
-                        <ButtonShare component={data}/>
-                        <ButtonDelete component={data}/>
-                        <ButtonLike component={data}/>
+                        <div className={styles.interactionButtonsContainer}>
+                            <ButtonCopy component={data}/>
+                            <ButtonShare component={data}/>
+                            <ButtonDelete component={data}/>
+                            <ButtonLike component={data}/>
+                        </div>
                         <ComponentHeader component={data}/>
                         <ComponentDetails component={data}/>
                     </div>
