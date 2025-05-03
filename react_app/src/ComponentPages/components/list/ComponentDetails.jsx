@@ -1,5 +1,5 @@
-import ComponentTags from "./ComponentTags.jsx";
-import styles from "./Component.module.css";
+import ComponentTags from "../single/ComponentTags.jsx";
+import styles from "../Component.module.css";
 
 const ComponentDetails = ({component}) => (
     <>

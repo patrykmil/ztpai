@@ -1,6 +1,6 @@
-import styles from "./Component.module.css";
-import useAuthStore from "../../store/authStore.js";
-import {api} from "../../main.jsx";
+import styles from "../Component.module.css";
+import useAuthStore from "../../../store/authStore.js";
+import {api} from "../../../main.jsx";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 const ButtonLike = ({component}) => {

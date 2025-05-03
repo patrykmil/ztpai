@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
-import styles from "./Component.module.css"
+import styles from "../Component.module.css"
 import "./PrismHighlighting.css"
 
 const PrismCodeField = ({content, language, activeTab}) => {

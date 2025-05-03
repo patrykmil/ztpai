@@ -1,4 +1,4 @@
-import styles from "./Component.module.css";
+import styles from "../Component.module.css";
 
 const ChangeCodeButtons = ({activeTab, setActiveTab}) => (
     <div className={styles.changeCodeButtons}>

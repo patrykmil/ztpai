@@ -1,6 +1,6 @@
-import styles from "./Component.module.css";
-import useAuthStore from "../../store/authStore.js";
-import {api} from "../../main.jsx";
+import styles from "../Component.module.css";
+import useAuthStore from "../../../store/authStore.js";
+import {api} from "../../../main.jsx";
 import {useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 

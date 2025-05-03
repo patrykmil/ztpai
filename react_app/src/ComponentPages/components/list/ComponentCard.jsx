@@ -1,11 +1,11 @@
-import styles from "./Component.module.css";
+import styles from "../Component.module.css";
 import ComponentHeader from "./ComponentHeader.jsx";
 import ComponentDetails from "./ComponentDetails.jsx";
-import ComponentPreview from "./ComponentPreview.jsx";
+import ComponentPreview from "../ComponentPreview.jsx";
 import {Link} from "react-router-dom";
-import ButtonCopy from "./ButtonCopy.jsx";
-import ButtonLike from "./ButtonLike.jsx";
-import ButtonShare from "./ButtonShare.jsx";
+import ButtonCopy from "../interaction/ButtonCopy.jsx";
+import ButtonLike from "../interaction/ButtonLike.jsx";
+import ButtonShare from "../interaction/ButtonShare.jsx";
 
 
 const ComponentCard = ({component}) => (

@@ -1,4 +1,4 @@
-import styles from "./Component.module.css";
+import styles from "../Component.module.css";
 
 const ButtonShare = ({component}) => {
     const copyLink = async () => {

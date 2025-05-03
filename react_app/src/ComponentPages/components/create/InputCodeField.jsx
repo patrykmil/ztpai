@@ -1,4 +1,4 @@
-import styles from "./Component.module.css"
+import styles from "../Component.module.css"
 
 const InputCodeField = ({start, language, activeTab, onInput}) => {
 

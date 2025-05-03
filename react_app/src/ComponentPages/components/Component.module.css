@@ -350,8 +350,9 @@
 }
 
 @media (max-width: 950px) {
-    .content {
-        flex-direction: column;
+    .content, .mainPage {
+        display: flex;
+        flex-flow: column wrap;
         align-items: center;
         margin: 0;
     }
@@ -376,4 +377,14 @@
         justify-self: center;
     }
 
+}
+
+@media (max-width: 500px) {
+    .listItem {
+        flex-direction: column;
+    }
+
+    .interactionButtonsContainerList {
+        flex-direction: row;
+    }
 }

@@ -35,8 +35,8 @@ const NavLinks = ({user, isMobileMenuOpen = false}) =>
                 <li className={styles.mobileOption}>
                     <Link to={`/users/${user.username}`} className={styles.menuItem}>
                         <img src={`/public/avatars/${user.avatar}`}  alt={"Avatar"} className={styles.avatar}></img>
-                        <p className={styles.menuItem}>{user.username}</p>
                     </Link>
+                        <p className={styles.rightMenuText} onClick={user.logout}>Logout</p>
                 </li>
             )}
         </ul>

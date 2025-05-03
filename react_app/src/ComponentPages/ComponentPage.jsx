@@ -3,17 +3,17 @@ import {useQuery} from "@tanstack/react-query";
 import {api} from '../main.jsx'
 import InternalServer from "../ErrorPages/InternalServer.jsx";
 import ComponentPreview from "./components/ComponentPreview.jsx";
-import ComponentDetails from "./components/ComponentDetails.jsx";
-import ComponentHeader from "./components/ComponentHeader.jsx";
+import ComponentDetails from "./components/list/ComponentDetails.jsx";
+import ComponentHeader from "./components/list/ComponentHeader.jsx";
 import styles from "./components/Component.module.css"
-import PrismCodeField from './components/PrismCodeField.jsx';
+import PrismCodeField from './components/single/PrismCodeField.jsx';
 import {useState} from "react";
-import ChangeCodeButtons from "./components/ChangeCodeButtons.jsx";
+import ChangeCodeButtons from "./components/create/ChangeCodeButtons.jsx";
 import Navigation from "../Navigation/Navigation.jsx";
-import ButtonCopy from "./components/ButtonCopy.jsx";
-import ButtonShare from "./components/ButtonShare.jsx";
-import ButtonDelete from "./components/ButtonDelete.jsx";
-import ButtonLike from "./components/ButtonLike.jsx";
+import ButtonCopy from "./components/interaction/ButtonCopy.jsx";
+import ButtonShare from "./components/interaction/ButtonShare.jsx";
+import ButtonDelete from "./components/interaction/ButtonDelete.jsx";
+import ButtonLike from "./components/interaction/ButtonLike.jsx";
 
 const fetchComponent = async (id) => {
     const {data} = await api.get(`/api/components/get/${id}`);
