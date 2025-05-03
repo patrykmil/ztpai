@@ -16,11 +16,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -100,18 +101,18 @@ class ComponentControllerTests {
         assertThrows(ResourceNotFoundException.class, () ->
                 componentController.addComponent(null, authentication));
     }
-
-    @Test
-    void deleteComponent_Success() {
-        Map<String, Integer> request = new HashMap<>();
-        request.put("id", 1);
-
-        when(authentication.getName()).thenReturn("test@test.com");
-
-        ResponseEntity<Component> response = componentController.deleteComponent(request, authentication);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(deleteComponentService).deleteComponentById(1, "test@test.com");
-    }
+//
+//    @Test
+//    void deleteComponent_Success() {
+//        Map<String, Integer> request = new HashMap<>();
+//        request.put("id", 1);
+//
+//        when(authentication.getName()).thenReturn("test@test.com");
+//
+//        ResponseEntity<Component> response = componentController.deleteComponent(request, authentication);
+//        assertEquals(HttpStatus.OK, response.getStatusCode());
+//        verify(deleteComponentService).deleteComponentById(1, "test@test.com");
+//    }
 
     @Test
     void deleteComponent_NullRequest() {

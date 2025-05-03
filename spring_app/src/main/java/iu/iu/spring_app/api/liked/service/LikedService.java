@@ -56,6 +56,13 @@ public class LikedService {
                 );
     }
 
+    @Transactional
+    public Boolean getIsLiked(Integer componentId, String email) {
+        User user = getUserByEmail(email);
+        validateComponent(componentId);
+        return likedRepository.findByUserIDAndComponentID(user.getId(), componentId).isPresent();
+    }
+
     private User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));

@@ -24,6 +24,17 @@ public class LikedController {
         this.likedService = likedService;
     }
 
+    @Operation(summary = "Check if component is liked", description = "Check if component is liked for the authenticated user")
+    @ApiResponse(responseCode = "200", description = "Component liked successfully")
+    @ApiResponse(responseCode = "403", description = "User is not permitted", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Component not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
+    @PostMapping("/checkLike/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Boolean> getIsLiked(@PathVariable Integer id, Authentication authentication) {
+        Boolean liked = likedService.getIsLiked(id, authentication.getName());
+        return ResponseEntity.ok(liked);
+    }
+
     @Operation(summary = "Like a component", description = "Adds a like to a component for the authenticated user")
     @ApiResponse(responseCode = "200", description = "Component liked successfully")
     @ApiResponse(responseCode = "403", description = "User is not permitted", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))

@@ -10,6 +10,10 @@ import PrismCodeField from './components/PrismCodeField.jsx';
 import {useState} from "react";
 import ChangeCodeButtons from "./components/ChangeCodeButtons.jsx";
 import Navigation from "../Navigation/Navigation.jsx";
+import ButtonCopy from "./components/ButtonCopy.jsx";
+import ButtonShare from "./components/ButtonShare.jsx";
+import ButtonDelete from "./components/ButtonDelete.jsx";
+import ButtonLike from "./components/ButtonLike.jsx";
 
 const fetchComponent = async (id) => {
     const {data} = await api.get(`/api/components/get/${id}`);
@@ -37,6 +41,10 @@ const ComponentPage = () => {
                         <div className={styles.previewContainer}>
                             <ComponentPreview component={data}/>
                         </div>
+                        <ButtonCopy component={data}/>
+                        <ButtonShare component={data}/>
+                        <ButtonDelete component={data}/>
+                        <ButtonLike component={data}/>
                         <ComponentHeader component={data}/>
                         <ComponentDetails component={data}/>
                     </div>
