@@ -43,7 +43,7 @@
 
 .listItem {
     display: inline flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     gap: 1rem;
     border: 1px solid var(--light-background);
     margin: 1rem;
@@ -331,6 +331,7 @@
 
 .interactionButton > img {
     height: 2.8125rem;
+    width: 3rem;
 }
 
 .interactionButtonsContainer {
@@ -339,6 +340,13 @@
     justify-content: space-around;
     width: 50%;
     align-self: center;
+}
+
+.interactionButtonsContainerList {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 @media (max-width: 950px) {
