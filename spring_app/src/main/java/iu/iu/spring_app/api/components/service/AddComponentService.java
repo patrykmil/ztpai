@@ -6,6 +6,9 @@ import iu.iu.spring_app.api.components.model.Type;
 import iu.iu.spring_app.api.components.repository.ComponentRepository;
 import iu.iu.spring_app.api.components.repository.SetRepository;
 import iu.iu.spring_app.api.components.repository.TypeRepository;
+import iu.iu.spring_app.api.messages.model.Message;
+import iu.iu.spring_app.api.messages.service.AddMessageService;
+import iu.iu.spring_app.api.messages.service.GetMessageService;
 import iu.iu.spring_app.api.users.model.User;
 import iu.iu.spring_app.api.users.repository.UserRepository;
 import iu.iu.spring_app.api.users.service.GetUserService;
@@ -24,6 +27,8 @@ public class AddComponentService {
     private final GetUserService getUserService;
     private final TypeService typeService;
     private final SetService setService;
+    private final GetMessageService getMessageService;
+    private final AddMessageService addMessageService;
 
     public AddComponentService(ComponentRepository componentRepository,
                                SetRepository setRepository,
@@ -32,7 +37,7 @@ public class AddComponentService {
                                TagsService tagsService,
                                ColorService colorService,
                                ValidationService validationService,
-                               GetUserService getUserService, TypeService typeService, SetService setService) {
+                               GetUserService getUserService, TypeService typeService, SetService setService, GetMessageService getMessageService, AddMessageService addMessageService) {
         this.componentRepository = componentRepository;
         this.setRepository = setRepository;
         this.typeRepository = typeRepository;
@@ -43,6 +48,8 @@ public class AddComponentService {
         this.getUserService = getUserService;
         this.typeService = typeService;
         this.setService = setService;
+        this.getMessageService = getMessageService;
+        this.addMessageService = addMessageService;
     }
 
     @Transactional
@@ -67,6 +74,14 @@ public class AddComponentService {
         colorService.setComponentColor(component, payload);
         tagsService.setComponentTags(component, payload);
 
-        return componentRepository.save(component);
+        Component savedComponent = componentRepository.save(component);
+        var message = Message.builder()
+                                .title("New component added " + savedComponent.getName())
+                                .link("https://iu.iu/components/" + savedComponent.getId())
+                                .user(savedComponent.getAuthor())
+                                .build();
+        addMessageService.addMessage(message);
+
+        return savedComponent;
     }
 }
