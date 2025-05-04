@@ -2,17 +2,18 @@ package iu.iu.spring_app.api.messages.rabbit;
 
 import iu.iu.spring_app.api.messages.model.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MessageProducer {
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
+
+    public MessageProducer(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     public void sendMessage(Message message)
     {
-        rabbitTemplate.convertAndSend(
-                "message-exchange", "mess", message);
+        rabbitTemplate.convertAndSend("message-exchange", "mess", message);
     }
 }

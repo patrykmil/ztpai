@@ -1,13 +1,11 @@
 package iu.iu.spring_app.api.liked.service;
 
 import iu.iu.spring_app.api.components.model.Component;
-import iu.iu.spring_app.api.components.repository.ComponentRepository;
 import iu.iu.spring_app.api.components.service.GetComponentService;
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import iu.iu.spring_app.api.liked.model.Liked;
 import iu.iu.spring_app.api.liked.repository.LikedRepository;
 import iu.iu.spring_app.api.users.model.User;
-import iu.iu.spring_app.api.users.repository.UserRepository;
 import iu.iu.spring_app.api.users.service.GetUserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,19 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class LikedService {
     private final LikedRepository likedRepository;
-    private final UserRepository userRepository;
-    private final ComponentRepository componentRepository;
     private final GetUserService getUserService;
     private final GetComponentService getComponentService;
 
     public LikedService(LikedRepository likedRepository,
-                        UserRepository userRepository,
-                        ComponentRepository componentRepository,
                         GetUserService getUserService,
                         GetComponentService getComponentService) {
         this.likedRepository = likedRepository;
-        this.userRepository = userRepository;
-        this.componentRepository = componentRepository;
         this.getUserService = getUserService;
         this.getComponentService = getComponentService;
     }
