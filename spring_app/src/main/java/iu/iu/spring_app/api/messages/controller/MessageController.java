@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Messages", description = "APIs for managing messages")
 public class MessageController implements MessageControllerInterface {
     private final GetMessageService getMessageService;
     private final AddMessageService addMessageService;
