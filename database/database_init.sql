@@ -70,6 +70,16 @@ CREATE TABLE liked
     liked_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, component_id)
 );
+--------------------------------------------------------------------------------------------------
+CREATE TABLE message
+(
+    message_id   SERIAL PRIMARY KEY,
+    user_id      INT REFERENCES iuser (user_id) ON DELETE CASCADE NOT NULL,
+    title        VARCHAR(80),
+    body         VARCHAR(300),
+    link         VARCHAR(40),
+    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 --------------------------------------------------------------------------------------------------Insert HEX in uppercase trigger
 CREATE OR REPLACE FUNCTION enforce_uppercase_hex()
     RETURNS TRIGGER AS $$
