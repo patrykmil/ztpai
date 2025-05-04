@@ -25,6 +25,7 @@ public class MessageController implements MessageControllerInterface {
     }
 
     public ResponseEntity<Message> addMessage(@RequestBody Message payload) {
-        return ResponseEntity.ok(addMessageService.addMessage(payload));
+        addMessageService.addMessage(payload);
+        return ResponseEntity.ok().build();
     }
 }

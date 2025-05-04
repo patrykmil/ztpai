@@ -55,6 +55,18 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
+
+  rabbit:
+    container_name: rabbit
+    image: 'rabbitmq:3-management'
+    env_file: .env
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    ports:
+      - "5671:5671"
+      - "5672:5672"
+      - "15672:15672"
 #networks:
 #  app-network:
 #    driver: bridge
