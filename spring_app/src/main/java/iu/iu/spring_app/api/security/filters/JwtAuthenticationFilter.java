@@ -34,6 +34,7 @@ protected void doFilterInternal(@NonNull HttpServletRequest request,
                                 throws IOException, ServletException {
     final String authHeader = request.getHeader("Authorization");
     final String jwt;
+    String email;
     if(StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
         filterChain.doFilter(request, response);
         return;
@@ -41,7 +42,7 @@ protected void doFilterInternal(@NonNull HttpServletRequest request,
 
     jwt = authHeader.substring(7);
     try {
-        final String email = jwtService.extractUserName(jwt);
+        email = jwtService.extractUserName(jwt);
         if(StringUtils.isNoneEmpty(email) && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userService.userDetailsService().loadUserByUsername(email);
             if(jwtService.isTokenValid(jwt, userDetails)) {

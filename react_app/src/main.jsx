@@ -2,7 +2,7 @@ import {StrictMode} from "react";
 import {createRoot} from "react-dom/client";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, RouterProvider, useNavigate} from "react-router-dom";
 import "./index.css";
 import HomePage from "./HomePage.jsx";
 import NotFound from "./ErrorPages/NotFound.jsx";
@@ -37,6 +37,17 @@ api.interceptors.request.use((config) => {
     }
     return config;
 }, (error) => {
+    return Promise.reject(error);
+});
+
+api.interceptors.response.use((response) => response, (error) => {
+    if (error.response && error.response.status === 403) {
+        if (window.location.pathname !== '/login') {
+            useAuthStore.getState().logout();
+            useNavigate("/login");
+            alert("Session expired\nLog in to view this panel")
+        }
+    }
     return Promise.reject(error);
 });
 
