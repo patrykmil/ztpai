@@ -8,6 +8,7 @@ import iu.iu.spring_app.api.messages.model.Message;
 import iu.iu.spring_app.api.messages.service.AddMessageService;
 import iu.iu.spring_app.api.users.model.User;
 import iu.iu.spring_app.api.users.service.GetUserService;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +50,10 @@ public class AddComponentService {
         Type type = typeService.getTypeByName(validationService.sanitizeInput(payload.getType().getName()));
 
         Set set = setService.getSetByName(validationService.sanitizeInput(payload.getSet().getName()));
+        if(!set.getUser().getEmail().equals(email)) {
+            throw new AccessDeniedException("Not allowed to use this set");
+        }
+
 
         Component component = Component.builder()
                 .name(validationService.sanitizeInput(payload.getName()))
