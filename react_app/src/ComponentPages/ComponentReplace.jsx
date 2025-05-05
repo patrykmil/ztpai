@@ -1,5 +1,5 @@
 import useAuthStore from "../store/authStore.js";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Navigation from "../Navigation/Navigation.jsx";
 import {useEffect, useState} from "react";
 import styles from "./components/Component.module.css";
@@ -13,32 +13,60 @@ import FormFields from "./components/create/FormFields";
 import CodeEditor from "./components/create/CodeEditor";
 import CreateSetPopup from "./components/create/CreateSetPopup";
 
-const ComponentCreate = () => {
+const ComponentReplace = () => {
+    const {id} = useParams();
     const [tags, setTags] = useState([]);
     const userInfo = useAuthStore();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("html");
     const [isPopupVisible, setIsPopupVisible] = useState(false);
-    const [previewData, setPreviewData] = useState({
-        id: 999,
-        css: "p {\n\tfont-size:24px;\n\tbackground: linear-gradient(to right, violet, green);\n\t-webkit-background-clip: text;\n\tbackground-clip: text;\n\tcolor: transparent;\n}",
-        html: "<p>Start creating!!!</p>",
+
+    const {data: componentData, isLoading: isComponentLoading, error: componentError} = useQuery({
+        queryKey: ["component", id],
+        queryFn: async () => {
+            const {data} = await api.get(`/api/components/get/${id}`);
+            return data;
+        },
     });
 
-    const {data: suppData, isLoading, error, refetch} = useQuery({
+    const [previewData, setPreviewData] = useState({
+        id: id,
+        css: componentData?.css || "",
+        html: componentData?.html || "",
+    });
+
+    const {data: suppData, isLoading: isSuppLoading, error: suppError, refetch} = useQuery({
         queryKey: ["supp", userInfo.userId],
         queryFn: () => fetchSupp(userInfo.userId),
         enabled: !!userInfo.userId,
     });
 
+    useEffect(() => {
+        if (componentData) {
+            setPreviewData({
+                id: componentData.id,
+                css: componentData.css,
+                html: componentData.html,
+            });
+            setTags(componentData.tags);
+        }
+    }, [componentData]);
+
     const form = useForm({
         defaultValues: {
-            name: "", type: "", set: "", hex: "", tags: [], tag: "",
-            html: previewData.html, css: previewData.css,
+            name: componentData?.name || "",
+            type: componentData?.type?.name || "",
+            set: componentData?.set?.name || "",
+            hex: '#' + componentData?.color?.hex || "",
+            tags: componentData?.tags || [],
+            tag: "",
+            html: componentData?.html || "",
+            css: componentData?.css || "",
         },
         onSubmit: async ({value}) => {
             try {
                 const submitData = {
+                    id: componentData.id,
                     tag: undefined,
                     name: value.name,
                     color: {hex: value.hex},
@@ -52,12 +80,12 @@ const ComponentCreate = () => {
                         color: {id: tag.color.id, hex: tag.color.hex}
                     }))
                 };
-                const response = await api.post("/api/components/add", submitData);
-                if (response.status === 201) {
-                    navigate(`/components/${response.data.id}`);
+                const response = await api.put(`/api/components/replace`, submitData);
+                if (response.status === 200) {
+                    navigate(`/components/${id}`);
                 }
             } catch (error) {
-                alert(error.response?.data || "Component added");
+                alert(error.response?.data || "Component updated");
             }
         },
         validators: {
@@ -70,8 +98,9 @@ const ComponentCreate = () => {
     }, [userInfo, navigate]);
 
     if (!userInfo.token) return null;
-    if (isLoading) return <div className="loadingText">Loading...</div>;
-    if (error) return <InternalServer/>;
+    if (isComponentLoading || isSuppLoading) return <div className="loadingText">Loading...</div>;
+    if (componentError || suppError) return <InternalServer/>;
+
 
     const handleAddTag = (tag) => {
         const currentTags = form.getFieldValue("tags") || [];
@@ -98,7 +127,7 @@ const ComponentCreate = () => {
                 setIsPopupVisible(false);
                 nameInput.value = '';
                 await refetch();
-                form.setFieldMeta('set', {isTouched: false, errors: []});
+                form.setFieldMeta('set', { isTouched: false, errors: [] });
                 form.setFieldValue('set', newSetName);
             }
         }
@@ -144,4 +173,4 @@ const ComponentCreate = () => {
     );
 };
 
-export default ComponentCreate;
+export default ComponentReplace;
