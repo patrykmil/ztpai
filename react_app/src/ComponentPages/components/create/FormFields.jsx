@@ -2,7 +2,7 @@ import styles from "./../Component.module.css";
 import InputField from "./InputField.jsx";
 import SelectField from "./SelectField.jsx";
 
-const ComponentFormFields = ({ form, suppData, handleAddTag, tags, handleTagRemove, setIsPopupVisible }) => {
+const ComponentFormFields = ({ form, suppData, handleTagAdd, tags, handleTagRemove, setIsPopupVisible }) => {
     return (
         <>
             <div className={styles.formFields}>
@@ -38,7 +38,7 @@ const ComponentFormFields = ({ form, suppData, handleAddTag, tags, handleTagRemo
                         onInput={(e) => {
                             const matchingTag = suppData.tags.find((t) => t.name === e.target.value);
                             if (matchingTag) {
-                                handleAddTag(matchingTag);
+                                handleTagAdd(matchingTag);
                                 field.handleChange("");
                                 e.target.value = "";
                             }
