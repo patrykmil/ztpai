@@ -1,7 +1,7 @@
 import ComponentTags from "../single/ComponentTags.jsx";
 import styles from "../Component.module.css";
 
-const ComponentDetails = ({component}) => (
+const ComponentDetails = ({maxTags, component}) => (
     <>
         <div className={styles.userInfo}>
             <p className={`${styles.paragraph} ${styles.inline}`}>by {component.author.name}</p>
@@ -9,7 +9,7 @@ const ComponentDetails = ({component}) => (
         </div>
         <p className={styles.paragraph}>this item is part of <span
             style={{color: `#${component.color.hex}`, textDecoration: `underline`}}>{component.set.name}</span> set</p>
-        <ComponentTags tags={component.tags}/>
+        <ComponentTags max={maxTags} tags={component.tags}/>
     </>
 );
 

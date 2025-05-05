@@ -13,7 +13,7 @@ const ComponentCard = ({component}) => (
             <Link to={`/components/${component.id}`} className={styles.listItemInside}>
                 <ComponentPreview component={component}/>
                 <ComponentHeader component={component}/>
-                <ComponentDetails component={component}/>
+                <ComponentDetails maxTags={3} component={component}/>
             </Link>
             <div className={styles.interactionButtonsContainerList}>
                 <ButtonCopy component={component}/>

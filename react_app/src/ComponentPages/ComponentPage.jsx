@@ -48,7 +48,7 @@ const ComponentPage = () => {
                             <ButtonLike component={data}/>
                         </div>
                         <ComponentHeader component={data}/>
-                        <ComponentDetails component={data}/>
+                        <ComponentDetails maxTags={33} component={data}/>
                     </div>
                     <div className={styles.rightSide}>
                         <ChangeCodeButtons activeTab={activeTab} setActiveTab={setActiveTab}/>
