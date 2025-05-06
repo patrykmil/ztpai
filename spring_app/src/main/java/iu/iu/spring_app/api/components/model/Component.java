@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -65,5 +66,8 @@ public class Component {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private java.util.Set<Tag> tags = new HashSet<>();
+
+    @Formula("(SELECT COUNT(*) FROM liked l WHERE l.component_id = component_id)")
+    private Long likesCount;
 
 }

@@ -1,6 +1,7 @@
 package iu.iu.spring_app.api.components.controller;
 
 import iu.iu.spring_app.api.components.model.Component;
+import iu.iu.spring_app.api.components.model.ComponentFilter;
 import iu.iu.spring_app.api.components.service.AddComponentService;
 import iu.iu.spring_app.api.components.service.DeleteComponentService;
 import iu.iu.spring_app.api.components.service.GetComponentService;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
@@ -77,5 +79,10 @@ public class ComponentController implements ComponentControllerInterface {
     public ResponseEntity<Component> deleteComponent(Integer id, Authentication authentication) {
         deleteComponentService.deleteComponentById(id, authentication.getName());
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<List<Component>> searchComponents(@RequestBody ComponentFilter payload) {
+        return ResponseEntity.ok(getComponentService.getFilteredComponents(payload));
     }
 }

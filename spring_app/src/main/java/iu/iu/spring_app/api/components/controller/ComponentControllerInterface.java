@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import iu.iu.spring_app.api.components.model.Component;
+import iu.iu.spring_app.api.components.model.ComponentFilter;
 import iu.iu.spring_app.api.errors.ExceptionResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -46,4 +47,7 @@ public interface ComponentControllerInterface {
     @ApiResponse(responseCode = "404", description = "Component not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @DeleteMapping("/delete/{id}")
     ResponseEntity<Component> deleteComponent(@PathVariable Integer id, Authentication authentication);
+
+    @PostMapping("/search")
+    ResponseEntity<List<Component>> searchComponents(@RequestBody ComponentFilter payload);
 }
