@@ -1,50 +1,6 @@
 services:
-  frontend-dev:
-    container_name: react-app
-    build:
-      context: ./react_app
-      target: builder
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./react_app:/app
-      - /app/node_modules
-    command: bun run dev --host
-    environment:
-      - VITE_HOST=0.0.0.0
-
-  #   frontend:
-  #     build:
-  #       context: ./react_app
-  #       dockerfile: Dockerfile
-  #     ports:
-  #       - "8080:80"
-  #     volumes:
-  #       - ./react_app:/app
-  #       - /app/node_modules
-
-  #  backend-dev:
-  #    container_name: spring-app
-  #    build:
-  #      context: ./spring_app
-  #      dockerfile: Dockerfile
-  #    ports:
-  #      - "8080:8080"
-  #      - "5005:5005" # for remote debugging
-  #    volumes:
-  #      - ./spring_app:/app
-  #      - ~/.m2:/root/.m2
-  #    # command: sh /app/docker-entrypoint.sh
-  #    environment:
-  #      - SPRING_PROFILES_ACTIVE=dev
-  #      - POSTGRES_USER=${POSTGRES_USER}
-  #      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-  #      - POSTGRES_DB=${POSTGRES_DB}
-  #    depends_on:
-  #      - database
-
-  database:
-    container_name: postgreSQL
+  db:
+    container_name: database
     env_file: .env
     build:
       context: ./database
@@ -67,6 +23,27 @@ services:
       - "5671:5671"
       - "5672:5672"
       - "15672:15672"
-#networks:
-#  app-network:
-#    driver: bridge
+
+  frontdev:
+    container_name: frontend
+    build:
+      context: ./react_app
+      target: builder
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./react_app:/app
+      - /app/node_modules
+    command: bun run dev --host
+    environment:
+      - VITE_HOST=0.0.0.0
+
+  #   frontend:
+  #     build:
+  #       context: ./react_app
+  #       dockerfile: Dockerfile
+  #     ports:
+  #       - "8080:80"
+  #     volumes:
+  #       - ./react_app:/app
+  #       - /app/node_modules
