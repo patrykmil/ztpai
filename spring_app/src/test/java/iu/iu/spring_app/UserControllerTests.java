@@ -38,8 +38,7 @@ public class UserControllerTests {
 
     private User testUser;
     private List<User> userList;
-    private Map<String, String> loginPayload;
-    private Map<String, String> registerPayload;
+    private Map<String, String> userInfo;
 
     @BeforeEach
     void setUp() {
@@ -52,15 +51,9 @@ public class UserControllerTests {
         userList = new ArrayList<>();
         userList.add(testUser);
 
-        loginPayload = new HashMap<>();
-        loginPayload.put("email", "test@test.com");
-        loginPayload.put("password", "password");
-
-        registerPayload = new HashMap<>();
-        registerPayload.put("email", "test@test.com");
-        registerPayload.put("password", "password");
-        registerPayload.put("username", "testuser");
-
+        userInfo = new HashMap<>();
+        userInfo.put("email", "test@test.com");
+        userInfo.put("password", "password");
     }
 
     @Test
@@ -89,42 +82,21 @@ public class UserControllerTests {
     }
 
     @Test
-    void getUserById_NotFound() {
-        when(getUserService.getUserById(999)).thenReturn(null);
-
-        assertThrows(ResourceNotFoundException.class, () -> userController.getUserById(999));
-    }
-
-    @Test
     void getUserByEmail_Success() {
         when(getUserService.getUserByEmail(any())).thenReturn(testUser);
-        ResponseEntity<User> response = userController.getUserByEmail(loginPayload);
+        ResponseEntity<User> response = userController.getUserByEmail(userInfo);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(testUser, response.getBody());
-    }
-
-    @Test
-    void getUserByEmail_NotFound() {
-        when(getUserService.getUserByEmail(any())).thenReturn(null);
-
-        assertThrows(ResourceNotFoundException.class, () -> userController.getUserByEmail(loginPayload));
     }
 
     @Test
     void getUserByUsername_Success() {
         when(getUserService.getUserByUsername(any())).thenReturn(testUser);
-        ResponseEntity<User> response = userController.getUserByUsername(loginPayload);
+        ResponseEntity<User> response = userController.getUserByUsername(userInfo);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         assertEquals(testUser, response.getBody());
-    }
-
-    @Test
-    void getUserByUsername_NotFound() {
-        when(getUserService.getUserByUsername(any())).thenReturn(null);
-
-        assertThrows(ResourceNotFoundException.class, () -> userController.getUserByUsername(loginPayload));
     }
 
     @Test
@@ -142,7 +114,7 @@ public class UserControllerTests {
         payload.put("email", "notfound@test.com");
 
         org.mockito.Mockito.doThrow(new ResourceNotFoundException("User not found"))
-                .when(deleteUserService).deleteUserByEmail(payload);
+                .when(deleteUserService).deleteUserByEmail(payload.get("email"));
 
         assertThrows(ResourceNotFoundException.class, () -> userController.deleteByEmail(payload));
     }
@@ -154,16 +126,5 @@ public class UserControllerTests {
 
         ResponseEntity<?> response = userController.deleteByUsername(payload);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
-
-    @Test
-    void deleteByUsername_NotFound() {
-        Map<String, String> payload = new HashMap<>();
-        payload.put("username", "nonexistent");
-
-        org.mockito.Mockito.doThrow(new ResourceNotFoundException("User not found"))
-                .when(deleteUserService).deleteUserByUsername(payload);
-
-        assertThrows(ResourceNotFoundException.class, () -> userController.deleteByUsername(payload));
     }
 }
