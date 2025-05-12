@@ -127,7 +127,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <jvmArguments>
-                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005
+                        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
                     </jvmArguments>
                 </configuration>
             </plugin>
@@ -138,6 +138,23 @@
                     <argLine>
                         @{argLine} -Xshare:off -javaagent:"${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar"
                     </argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version> <!-- Use a recent version of the compiler plugin -->
+                <configuration>
+                    <source>23</source> <!-- Or use <java.version> property -->
+                    <target>23</target> <!-- Or use <java.version> property -->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.36</version> <!-- Match your Lombok dependency version -->
+                        </path>
+                        <!-- Add other annotation processors if needed -->
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
