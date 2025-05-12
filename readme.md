@@ -16,14 +16,14 @@ IU - library of html/css components
 
 ## Technologies
 
-| Function        | Used                                                                                                                                                             |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Backend         | ![Java Icon](icons/java.svg){width=45 height=45} ![Springboot Icon](icons/spring.svg){width=45 height=45} ![Rabbit Icon](icons/rabbitmq.svg){width=45 height=45} |
-| Database        | ![PostgreSQL Icon](icons/postgresql.svg){width=45 height=45}                                                                                                     |
-| Frontend        | ![Bun Icon](icons/bun.png){width=45 height=45} ![JavaScript Icon](icons/javascript.svg){width=45 height=45} ![React Icon](icons/react.svg){width=45 height=45}   |
-| Site structure  | ![HTML Icon](icons/html.svg){width=45 height=45} ![CSS Icon](icons/css.svg){width=45 height=45}                                                                  |
-| Version Control | ![Git Icon](icons/git.svg){width=45 height=45} ![GitHub Icon](icons/github.svg){width=45 height=45}                                                              |
-| Contenerization | ![Docker Icon](icons/docker.svg){width=45 height=45}                                                                                                             |
+| Function        | Used                                                                                                                                                        |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Backend         | <img src="icons/java.svg" width="45" height="45"> <img src="icons/spring.svg" width="45" height="45"> <img src="icons/rabbitmq.svg" width="45" height="45"> |
+| Database        | <img src="icons/postgresql.svg" width="45" height="45">                                                                                                     |
+| Frontend        | <img src="icons/bun.png" width="45" height="45"> <img src="icons/javascript.svg" width="45" height="45"> <img src="icons/react.svg" width="45" height="45"> |
+| Site structure  | <img src="icons/html.svg" width="45" height="45"> <img src="icons/css.svg" width="45" height="45">                                                          |
+| Version Control | <img src="icons/git.svg" width="45" height="45"> <img src="icons/github.svg" width="45" height="45">                                                        |
+| Contenerization | <img src="icons/docker.svg" width="45" height="45">                                                                                                         |
 
 ## Setup
 
