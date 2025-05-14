@@ -1,10 +1,13 @@
 import {useQuery} from "@tanstack/react-query";
 import {api} from '../main.jsx'
 import ComponentCard from "./components/list/ComponentCard.jsx"
-import RefreshButton from "./components/list/RefreshButton.jsx"
 import InternalServer from "../ErrorPages/InternalServer.jsx";
 import Navigation from "../Navigation/Navigation.jsx";
 import styles from "./components/Component.module.css"
+import SearchBar from "./components/list/filters/SearchBar.jsx";
+import Sorting from "./components/list/filters/Sorting.jsx";
+import FilterButton from "./components/list/filters/FilterButton.jsx";
+import Types from "./components/list/filters/Types.jsx";
 
 const fetchComponents = async () => {
     const {data} = await api.get("/api/components/get/all");
@@ -25,10 +28,18 @@ const ComponentList = () => {
         <>
             <Navigation/>
             <div className={styles.mainPage}>
-                <RefreshButton refetch={refetch}/>
-                {data.map(component => (
-                    <ComponentCard key={component.id} component={component}/>
-                ))}
+                <SearchBar/>
+                {/*<RefreshButton refetch={refetch}/>*/}
+                <div className={styles.bottom}>
+                    <div className={styles.filter}>
+                        <Sorting/>
+                        <Types/>
+                        <FilterButton/>
+                    </div>
+                    {data.map(component => (
+                        <ComponentCard key={component.id} component={component}/>
+                    ))}
+                </div>
             </div>
         </>
     );
