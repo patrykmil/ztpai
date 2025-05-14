@@ -1,29 +1,20 @@
 import styles from "./../../Component.module.css"
-import {useState} from "react";
 
-const Types = () => {
-
-    const [checkedState, setCheckedState] = useState({
-        Buttons: false,
-        Inputs: false,
-        Checkboxes: false,
-        'Radio buttons': false
-    });
-
+const Types = ({ types, setTypes }) => {
     const handleSelectAll = () => {
-        const newState = Object.keys(checkedState).reduce((acc, key) => {
+        const newState = Object.keys(types).reduce((acc, key) => {
             acc[key] = true;
             return acc;
         }, {});
-        setCheckedState(newState);
+        setTypes(newState);
     };
 
     const handleSelectNone = () => {
-        const newState = Object.keys(checkedState).reduce((acc, key) => {
+        const newState = Object.keys(types).reduce((acc, key) => {
             acc[key] = false;
             return acc;
         }, {});
-        setCheckedState(newState);
+        setTypes(newState);
     };
 
     return (
@@ -33,20 +24,20 @@ const Types = () => {
                 <button className={styles.selectCheckboxes} type="button" onClick={handleSelectAll}>All</button>
                 <button className={styles.selectCheckboxes} type="button" onClick={handleSelectNone}>None</button>
             </div>
-            {Object.keys(checkedState).map((type) => (
+            {Object.keys(types).map((type) => (
                 <label key={type} className={styles.searchOptions}>
                     <input
                         type="checkbox"
                         className={styles.checkbox}
                         name="filters"
                         value={type}
-                        checked={checkedState[type]}
-                        onChange={(e) => setCheckedState({
-                            ...checkedState,
+                        checked={types[type]}
+                        onChange={(e) => setTypes({
+                            ...types,
                             [type]: e.target.checked
                         })}
                     />
-                    <p>{type}</p>
+                    <p>{type.charAt(0).toUpperCase() + type.slice(1)}</p>
                 </label>
             ))}
         </div>
