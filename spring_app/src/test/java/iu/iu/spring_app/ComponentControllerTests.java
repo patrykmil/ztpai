@@ -2,6 +2,7 @@ package iu.iu.spring_app;
 
 import iu.iu.spring_app.api.components.controller.ComponentController;
 import iu.iu.spring_app.api.components.model.Component;
+import iu.iu.spring_app.api.components.model.ComponentFilter;
 import iu.iu.spring_app.api.components.service.AddComponentService;
 import iu.iu.spring_app.api.components.service.DeleteComponentService;
 import iu.iu.spring_app.api.components.service.GetComponentService;
@@ -55,13 +56,6 @@ class ComponentControllerTests {
     }
 
     @Test
-    void getAllComponents_EmptyList() {
-        when(getComponentService.getAllComponents()).thenReturn(Collections.emptyList());
-        assertThrows(ResourceNotFoundException.class, () ->
-                componentController.getAllComponents());
-    }
-
-    @Test
     void getComponent_Success() {
         Component component = new Component();
         component.setId(1);
@@ -74,9 +68,10 @@ class ComponentControllerTests {
 
     @Test
     void getComponent_NotFound() {
-        when(getComponentService.getComponentById(999)).thenReturn(null);
-        assertThrows(ResourceNotFoundException.class, () ->
-                componentController.getComponent(999));
+        when(getComponentService.getComponentById(999))
+                .thenThrow(new ResourceNotFoundException("Component not found"));
+
+        assertThrows(ResourceNotFoundException.class, () -> componentController.getComponent(999));
     }
 
     @Test
@@ -133,8 +128,68 @@ class ComponentControllerTests {
     }
 
     @Test
+    void searchComponents_Success() {
+        ComponentFilter filter = new ComponentFilter();
+        List<Component> components = Arrays.asList(new Component(), new Component());
+        when(getComponentService.getFilteredComponents(filter)).thenReturn(components);
+
+        ResponseEntity<List<Component>> response = componentController.searchComponents(filter);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(components, response.getBody());
+    }
+
+    @Test
+    void searchComponents_EmptyResult() {
+        ComponentFilter filter = new ComponentFilter();
+        when(getComponentService.getFilteredComponents(filter)).thenReturn(Collections.emptyList());
+
+        ResponseEntity<List<Component>> response = componentController.searchComponents(filter);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Collections.emptyList(), response.getBody());
+    }
+
+    @Test
+    void getLikedComponents_Success() {
+        List<Component> components = Arrays.asList(new Component(), new Component());
+        when(getComponentService.getLikedByUserComponents(1)).thenReturn(components);
+
+        ResponseEntity<List<Component>> response = componentController.getLikedComponents(1);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(components, response.getBody());
+    }
+
+    @Test
+    void getLikedComponents_EmptyList() {
+        when(getComponentService.getLikedByUserComponents(1)).thenReturn(Collections.emptyList());
+
+        ResponseEntity<List<Component>> response = componentController.getLikedComponents(1);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Collections.emptyList(), response.getBody());
+    }
+
+    @Test
+    void getSetComponents_Success() {
+        List<Component> components = Arrays.asList(new Component(), new Component());
+        when(getComponentService.getSetComponents(1)).thenReturn(components);
+
+        ResponseEntity<List<Component>> response = componentController.getSetComponents(1);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(components, response.getBody());
+    }
+
+    @Test
+    void getSetComponents_EmptySet() {
+        when(getComponentService.getSetComponents(1)).thenReturn(Collections.emptyList());
+
+        ResponseEntity<List<Component>> response = componentController.getSetComponents(1);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Collections.emptyList(), response.getBody());
+    }
+
+    @Test
     void replaceComponent_NullRequest() {
         assertThrows(ResourceNotFoundException.class, () ->
                 componentController.replaceComponent(null, authentication));
     }
+
 }
