@@ -47,4 +47,18 @@ public class GetComponentService {
                 .sorted((c1, c2) -> searchService.sortComponents(c1, c2, filter.getSorting()))
                 .collect(Collectors.toList());
     }
+
+    public List<Component> getLikedByUserComponents(Integer userId) {
+        return componentRepository.findAllLikedByUserId(userId)
+                .stream()
+                .peek(validationService::unescapeComponent)
+                .collect(Collectors.toList());
+    }
+
+    public List<Component> getSetComponents(Integer setId) {
+            return componentRepository.findAllBySetId(setId)
+                    .stream()
+                    .peek(validationService::unescapeComponent)
+                    .collect(Collectors.toList());
+    }
 }

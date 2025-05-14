@@ -17,7 +17,6 @@ import java.util.List;
 public interface ComponentControllerInterface {
     @Operation(summary = "Get all components", description = "Retrieves all components in the system")
     @ApiResponse(responseCode = "200", description = "Components found", content = @Content(schema = @Schema(implementation = Component.class)))
-    @ApiResponse(responseCode = "404", description = "No components found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @GetMapping("/get/all")
     ResponseEntity<List<Component>> getAllComponents();
 
@@ -48,6 +47,18 @@ public interface ComponentControllerInterface {
     @DeleteMapping("/delete/{id}")
     ResponseEntity<Component> deleteComponent(@PathVariable Integer id, Authentication authentication);
 
+    @Operation(summary = "Get filtered components", description = "Retrieves all components meeting the filtering conditions")
+    @ApiResponse(responseCode = "200", description = "Components found", content = @Content(schema = @Schema(implementation = Component.class)))
     @PostMapping("/search")
     ResponseEntity<List<Component>> searchComponents(@RequestBody ComponentFilter payload);
+
+    @Operation(summary = "Get components liked by user", description = "Retrieves all components liked by user with provided ID")
+    @ApiResponse(responseCode = "200", description = "Components found", content = @Content(schema = @Schema(implementation = Component.class)))
+    @GetMapping("/get/liked/{userId}")
+    ResponseEntity<List<Component>> getLikedComponents(@PathVariable Integer userId);
+
+    @Operation(summary = "Get components from set", description = "Retrieves all components from set provided with setID")
+    @ApiResponse(responseCode = "200", description = "Components found", content = @Content(schema = @Schema(implementation = Component.class)))
+    @GetMapping("/get/set/{setId}")
+    ResponseEntity<List<Component>> getSetComponents(@PathVariable Integer setId);
 }

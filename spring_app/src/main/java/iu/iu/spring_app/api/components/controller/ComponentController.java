@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
@@ -38,27 +37,24 @@ public class ComponentController implements ComponentControllerInterface {
 
     @Override
     public ResponseEntity<List<Component>> getAllComponents() {
-        List<Component> components = getComponentService.getAllComponents();
-        if (components.isEmpty()) {
-            throw new ResourceNotFoundException("No components found");
-        }
-        return ResponseEntity.ok(components);
+        return ResponseEntity.ok(getComponentService.getAllComponents());
+    }
+
+    @Override
+    public ResponseEntity<List<Component>> getLikedComponents(Integer userId) {
+        return ResponseEntity.ok(getComponentService.getLikedByUserComponents(userId));
     }
 
     @Override
     public ResponseEntity<Component> getComponent(Integer id) {
-        Component component = getComponentService.getComponentById(id);
-        if (component == null) {
-            throw new ResourceNotFoundException("Component " + id + " not found");
-        }
-        return ResponseEntity.ok(component);
+        return ResponseEntity.ok(getComponentService.getComponentById(id));
     }
 
     @Override
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Component> addComponent(Component payload, Authentication authentication) {
         if (payload == null) {
-            throw new ResourceNotFoundException("Request body is null");
+            throw new ResourceNotFoundException("Component cannot be null");
         }
         Component savedComponent = addComponentService.addComponent(payload, authentication.getName());
         return ResponseEntity.created(URI.create("/api/components/" + savedComponent.getId()))
@@ -69,7 +65,7 @@ public class ComponentController implements ComponentControllerInterface {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Component> replaceComponent(Component payload, Authentication authentication) {
         if (payload == null) {
-            throw new ResourceNotFoundException("Request body is null");
+            throw new ResourceNotFoundException("Component cannot be null");
         }
         return ResponseEntity.ok(replaceComponentService.replaceComponent(payload, authentication.getName()));
     }
@@ -82,7 +78,15 @@ public class ComponentController implements ComponentControllerInterface {
     }
 
     @Override
-    public ResponseEntity<List<Component>> searchComponents(@RequestBody ComponentFilter payload) {
+    public ResponseEntity<List<Component>> searchComponents(ComponentFilter payload) {
+        if (payload == null) {
+            throw new ResourceNotFoundException("Payload cannot be null");
+        }
         return ResponseEntity.ok(getComponentService.getFilteredComponents(payload));
+    }
+
+    @Override
+    public ResponseEntity<List<Component>> getSetComponents(Integer setId) {
+        return ResponseEntity.ok(getComponentService.getSetComponents(setId));
     }
 }
