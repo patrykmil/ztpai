@@ -41,8 +41,8 @@ public class ComponentController implements ComponentControllerInterface {
     }
 
     @Override
-    public ResponseEntity<List<Component>> getLikedComponents(Integer userId) {
-        return ResponseEntity.ok(getComponentService.getLikedByUserComponents(userId));
+    public ResponseEntity<List<Component>> getLikedComponents(String username) {
+        return ResponseEntity.ok(getComponentService.getLikedByUserComponents(username));
     }
 
     @Override

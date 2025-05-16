@@ -151,18 +151,18 @@ class ComponentControllerTests {
     @Test
     void getLikedComponents_Success() {
         List<Component> components = Arrays.asList(new Component(), new Component());
-        when(getComponentService.getLikedByUserComponents(1)).thenReturn(components);
+        when(getComponentService.getLikedByUserComponents("test")).thenReturn(components);
 
-        ResponseEntity<List<Component>> response = componentController.getLikedComponents(1);
+        ResponseEntity<List<Component>> response = componentController.getLikedComponents("test");
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(components, response.getBody());
     }
 
     @Test
     void getLikedComponents_EmptyList() {
-        when(getComponentService.getLikedByUserComponents(1)).thenReturn(Collections.emptyList());
+        when(getComponentService.getLikedByUserComponents("test")).thenReturn(Collections.emptyList());
 
-        ResponseEntity<List<Component>> response = componentController.getLikedComponents(1);
+        ResponseEntity<List<Component>> response = componentController.getLikedComponents("test");
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(Collections.emptyList(), response.getBody());
     }

@@ -4,6 +4,7 @@ import iu.iu.spring_app.api.components.model.Component;
 import iu.iu.spring_app.api.components.model.ComponentFilter;
 import iu.iu.spring_app.api.components.repository.ComponentRepository;
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
+import iu.iu.spring_app.api.users.service.GetUserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,13 +15,15 @@ public class GetComponentService {
     private final ComponentRepository componentRepository;
     private final ValidationService validationService;
     private final SearchService searchService;
+    private final GetUserService getUserService;
 
     public GetComponentService(ComponentRepository componentRepository,
                                ValidationService validationService,
-                               SearchService searchService) {
+                               SearchService searchService, GetUserService getUserService) {
         this.componentRepository = componentRepository;
         this.validationService = validationService;
         this.searchService = searchService;
+        this.getUserService = getUserService;
     }
 
     public List<Component> getAllComponents() {
@@ -48,7 +51,8 @@ public class GetComponentService {
                 .collect(Collectors.toList());
     }
 
-    public List<Component> getLikedByUserComponents(Integer userId) {
+    public List<Component> getLikedByUserComponents(String username) {
+        Integer userId = getUserService.getUserByUsername(username).getId();
         return componentRepository.findAllLikedByUserId(userId)
                 .stream()
                 .peek(validationService::unescapeComponent)
