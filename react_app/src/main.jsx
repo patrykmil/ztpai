@@ -14,6 +14,7 @@ import Login from "./Authentication/Login.jsx";
 import useAuthStore from "./store/authStore.js";
 import ComponentCreate from "./ComponentPages/ComponentCreate.jsx";
 import ComponentReplace from "./ComponentPages/ComponentReplace.jsx";
+import ComponentCollection from "./ComponentPages/ComponentCollection.jsx";
 
 const router = createBrowserRouter([
     {path: "/", element: <HomePage/>},
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
     {path: "/components/:id", element: <ComponentPage/>},
     {path: "/create", element: <ComponentCreate/>},
     {path: "/modify/:id", element: <ComponentReplace/>},
+    {path: "/collection/:username", element: <ComponentCollection/>},
     {path: "/register", element: <Register/>},
     {path: "/login", element: <Login/>},
     {path: "*", element: <NotFound/>}

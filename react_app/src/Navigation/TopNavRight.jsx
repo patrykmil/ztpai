@@ -15,7 +15,7 @@ const TopNavRight = ({user}) => (
         ) : (
             <div className={styles.topNavRight}>
                 <Link to={`/users/${user.username}`}>
-                    <img src={`/public/avatars/${user.avatar}`}  alt={"Avatar"}></img>
+                    <img src={`/avatars/${user.avatar}`}  alt={"Avatar"}></img>
                 </Link>
                     <p className={styles.rightMenuText} onClick={user.logout}>Logout</p>
             </div>
