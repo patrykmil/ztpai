@@ -19,8 +19,15 @@ public class SetService {
         this.userRepository = userRepository;
     }
 
-    public List<Set> getUserSets(Integer userId) {
+    public List<Set> getUserSetsById(Integer userId) {
         User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User not found")
+        );
+        return setRepository.findByUser(user);
+    }
+
+    public List<Set> getUserSetsByName(String username) {
+        User user = userRepository.findByName(username).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")
         );
         return setRepository.findByUser(user);

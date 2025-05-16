@@ -54,7 +54,7 @@ public interface ComponentControllerInterface {
 
     @Operation(summary = "Get components liked by user", description = "Retrieves all components liked by user with provided ID")
     @ApiResponse(responseCode = "200", description = "Components found", content = @Content(schema = @Schema(implementation = Component.class)))
-    @GetMapping("/get/liked/{userId}")
+    @GetMapping("/get/liked/{username}")
     ResponseEntity<List<Component>> getLikedComponents(@PathVariable String username);
 
     @Operation(summary = "Get components from set", description = "Retrieves all components from set provided with setID")

@@ -29,11 +29,17 @@ public interface ComponentPropertiesControllerInterface {
     @GetMapping("/types/get/all")
     ResponseEntity<List<Type>> getAllTypes();
 
-    @Operation(summary = "Get all sets for a user", description = "Retrieves all component sets belonging to the specified user")
+    @Operation(summary = "Get all sets for a user", description = "Retrieves all component sets belonging to user with specified id")
     @ApiResponse(responseCode = "200", description = "Sets found", content = @Content(schema = @Schema(implementation = Set.class)))
     @ApiResponse(responseCode = "404", description = "No sets found for user", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
-    @GetMapping("/sets/get/{userId}")
-    ResponseEntity<List<Set>> getAllSets(@PathVariable Integer userId);
+    @GetMapping("/sets/get/id/{userId}")
+    ResponseEntity<List<Set>> getAllSetsById(@PathVariable Integer userId);
+
+    @Operation(summary = "Get all sets for a user", description = "Retrieves all component sets belonging to user with specified name")
+    @ApiResponse(responseCode = "200", description = "Sets found", content = @Content(schema = @Schema(implementation = Set.class)))
+    @ApiResponse(responseCode = "404", description = "No sets found for user", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
+    @GetMapping("/sets/get/name/{username}")
+    ResponseEntity<List<Set>> getAllSetsByName(@PathVariable String username);
 
     @Operation(summary = "Add a new set", description = "Creates a new component set for the authenticated user")
     @ApiResponse(responseCode = "201", description = "Set created successfully")

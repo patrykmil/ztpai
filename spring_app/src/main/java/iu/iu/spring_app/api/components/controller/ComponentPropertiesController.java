@@ -38,8 +38,14 @@ public class ComponentPropertiesController implements ComponentPropertiesControl
     }
 
     @Override
-    public ResponseEntity<List<Set>> getAllSets(Integer userId) {
-        List<Set> sets = setService.getUserSets(userId);
+    public ResponseEntity<List<Set>> getAllSetsById(Integer userId) {
+        List<Set> sets = setService.getUserSetsById(userId);
+        return ResponseEntity.ok(sets);
+    }
+
+    @Override
+    public ResponseEntity<List<Set>> getAllSetsByName(String username) {
+        List<Set> sets = setService.getUserSetsByName(username);
         return ResponseEntity.ok(sets);
     }
 

@@ -60,11 +60,21 @@ class ComponentPropertiesControllerTests {
     }
 
     @Test
-    void getAllSets_Success() {
+    void getAllSetsById_Success() {
         List<Set> sets = Arrays.asList(new Set(), new Set());
-        when(setService.getUserSets(1)).thenReturn(sets);
+        when(setService.getUserSetsById(1)).thenReturn(sets);
 
-        ResponseEntity<List<Set>> response = componentPropertiesController.getAllSets(1);
+        ResponseEntity<List<Set>> response = componentPropertiesController.getAllSetsById(1);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(sets, response.getBody());
+    }
+
+    @Test
+    void getAllSetsByName_Success() {
+        List<Set> sets = Arrays.asList(new Set(), new Set());
+        when(setService.getUserSetsByName("test")).thenReturn(sets);
+
+        ResponseEntity<List<Set>> response = componentPropertiesController.getAllSetsByName("test");
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(sets, response.getBody());
     }
