@@ -7,14 +7,14 @@ const TopNavRight = ({user}) => (
                 <Link to="/login" className={styles.rightMenuText}>
                     Log in
                 </Link>
-                <p style={{margin: "0 1rem"}}>or</p>
+                <p className={styles.marginSides}>or</p>
                 <Link to="/register" className={styles.rightMenuText}>
                     Register
                 </Link>
             </div>
         ) : (
             <div className={styles.topNavRight}>
-                <Link to={`/users/${user.username}`}>
+                <Link to={`/messages`}>
                     <img src={`/avatars/${user.avatar}`}  alt={"Avatar"}></img>
                 </Link>
                     <p className={styles.rightMenuText} onClick={user.logout}>Logout</p>

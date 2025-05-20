@@ -1,0 +1,42 @@
+.mainPage {
+    margin-top: 9rem;
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+    gap: 2rem;
+}
+
+.messageCard {
+    display: flex;
+    flex-flow: row wrap;
+    width: 90%;
+    border-radius: var(--border-radius-standard);
+    border: 2px dashed var(--background-gray);
+    padding: 2rem;
+}
+
+.left {
+    flex: 70;
+}
+
+.right {
+    flex: 30;
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+    gap: 1rem;
+}
+
+.link:hover {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.title {
+    font-size: var(--font-double);
+
+}
+
+.date {
+    font-size: var(--font-big);
+}

@@ -106,6 +106,10 @@ nav button {
     cursor: pointer;
 }
 
+.marginSides {
+    margin: 0 1rem;
+}
+
 /* Mobile nav */
 
 nav .mobileMenuIcon {
