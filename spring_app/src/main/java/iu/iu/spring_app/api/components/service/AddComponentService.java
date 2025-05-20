@@ -69,7 +69,7 @@ public class AddComponentService {
 
         Component savedComponent = componentRepository.save(component);
         var message = Message.builder()
-                                .title("New component added " + savedComponent.getName())
+                                .title("New component added \"" + savedComponent.getName()+ "\"")
                                 .link("https://iu.iu/components/" + savedComponent.getId())
                                 .user(savedComponent.getAuthor())
                                 .build();

@@ -29,7 +29,7 @@ public class DeleteComponentService {
         componentRepository.delete(component);
 
         var message = Message.builder()
-                .title("Component" + component.getName() + "has been deleted")
+                .title("Component \"" + component.getName() + "\" has been deleted")
                 .user(component.getAuthor())
                 .build();
         addMessageService.addMessage(message);
