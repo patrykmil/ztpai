@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .sessionManagement(session
                         -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                                .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/login", "/api/register").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/components/get/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/components/search").permitAll()
                                 .requestMatchers(

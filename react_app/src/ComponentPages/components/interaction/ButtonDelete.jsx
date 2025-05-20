@@ -10,7 +10,7 @@ const ButtonDelete = ({component}) => {
 
     const deleteComponent = useMutation({
         mutationFn: async () => {
-            const response = await api.delete(`/api/components/delete/${component.id}`);
+            const response = await api.delete(`/components/delete/${component.id}`);
             return response.data;
         },
         onSuccess: () => {

@@ -11,17 +11,17 @@ import {useState} from "react";
 
 
 const fetchLiked = async (username) => {
-    const {data} = await api.get(`/api/components/get/liked/${username}`);
+    const {data} = await api.get(`/components/get/liked/${username}`);
     return data;
 }
 
 const fetchSets = async (username) => {
-    const {data} = await api.get(`/api/sets/get/name/${username}`);
+    const {data} = await api.get(`/sets/get/name/${username}`);
     return data;
 }
 
 const fetchSetComponents = async (setID) => {
-    const {data} = await api.get(`/api/components/get/set/${setID}`)
+    const {data} = await api.get(`/components/get/set/${setID}`)
     return data;
 }
 

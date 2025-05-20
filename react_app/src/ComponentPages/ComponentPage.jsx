@@ -16,7 +16,7 @@ import ButtonDelete from "./components/interaction/ButtonDelete.jsx";
 import ButtonLike from "./components/interaction/ButtonLike.jsx";
 
 const fetchComponent = async (id) => {
-    const {data} = await api.get(`/api/components/get/${id}`);
+    const {data} = await api.get(`/components/get/${id}`);
     return data;
 };
 

@@ -3,9 +3,9 @@ import {api} from "../../../main.jsx";
 
 export const fetchSupp = async (userId) => {
     const [typesResponse, tagsResponse, setsResponse] = await Promise.all([
-        api.get("/api/types/get/all"),
-        api.get("/api/tags/get/all"),
-        api.get(`/api/sets/get/id/${userId}`)
+        api.get("/types/get/all"),
+        api.get("/tags/get/all"),
+        api.get(`/sets/get/id/${userId}`)
     ]);
     return {
         types: typesResponse.data,

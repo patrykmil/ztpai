@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("")
+@RequestMapping("/api")
 public interface AuthenticationControllerInterface {
     @Operation(summary = "Register new user", description = "Creates a new user account and returns JWT token")
     @ApiResponse(responseCode = "200", description = "User registered successfully",

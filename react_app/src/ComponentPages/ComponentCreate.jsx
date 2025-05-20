@@ -50,7 +50,7 @@ const ComponentCreate = () => {
                         color: {id: tag.color.id, hex: tag.color.hex}
                     }))
                 };
-                const response = await api.post("/api/components/add", submitData);
+                const response = await api.post("/components/add", submitData);
                 if (response.status === 201) {
                     navigate(`/components/${response.data.id}`);
                 }

@@ -11,7 +11,7 @@ import Types from "./components/list/filters/Types.jsx";
 import FilterButton from "./components/list/filters/FilterButton.jsx";
 
 const fetchComponents = async (filter) => {
-            const { data } = await api.post("/api/components/search", filter);
+            const { data } = await api.post("/components/search", filter);
             return data;
         };
 

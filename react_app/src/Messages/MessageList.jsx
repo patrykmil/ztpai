@@ -5,7 +5,7 @@ import InternalServer from "../ErrorPages/InternalServer.jsx";
 import styles from "./Message.module.css"
 
 const fetchMessages = async () => {
-    const { data } = await api.get("/api/messages/get/my");
+    const { data } = await api.get("/messages/get/my");
     return data;
 };
 

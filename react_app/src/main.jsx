@@ -33,7 +33,7 @@ const router = createBrowserRouter([
 const queryClient = new QueryClient();
 
 export const api = axios.create({
-    baseURL: 'http://localhost:8080'
+    baseURL: 'http://localhost:8080/api'
 });
 
 api.interceptors.request.use((config) => {

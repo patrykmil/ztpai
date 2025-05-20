@@ -21,7 +21,7 @@ const ComponentReplace = () => {
     const {data: componentData, isLoading: isComponentLoading, error: componentError} = useQuery({
         queryKey: ["component", id],
         queryFn: async () => {
-            const {data} = await api.get(`/api/components/get/${id}`);
+            const {data} = await api.get(`/components/get/${id}`);
             return data;
         },
     });
@@ -77,7 +77,7 @@ const ComponentReplace = () => {
                         color: {id: tag.color.id, hex: tag.color.hex}
                     }))
                 };
-                const response = await api.put(`/api/components/replace`, submitData);
+                const response = await api.put(`/components/replace`, submitData);
                 if (response.status === 200) {
                     navigate(`/components/${id}`);
                 }
