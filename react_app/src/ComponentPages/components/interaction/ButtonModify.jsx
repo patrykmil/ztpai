@@ -6,11 +6,11 @@ const ButtonModify = ({component}) => {
     const navigate = useNavigate()
     const userInfo = useAuthStore();
 
-    const link = window.location.href;
+    const destination = window.location.pathname.replace("components", "modify");
 
     if (userInfo.userId === component.author.id) {
         return (
-            <button className={styles.interactionButton} onClick={() => console.log(link)}>
+            <button className={styles.interactionButton} onClick={() => navigate(destination)}>
                 <img src={"/icons/modify.svg"} alt={"Modify component"}/>
             </button>
         );

@@ -273,8 +273,8 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    justify-content: center;
-    gap: 2rem;
+    justify-content: space-around;
+    /*gap: 2rem;*/
     background-color: var(--background-gray);
     border: 1px solid var(--primary);
     width: 15.625rem;
@@ -326,6 +326,13 @@
     color: var(--primary);
     text-decoration: none;
     cursor: pointer;
+}
+
+.adminButton {
+    width: fit-content;
+    align-self: center;
+    font-size: var(--font-big);
+    font-weight: 600;
 }
 
 .interactionButton {

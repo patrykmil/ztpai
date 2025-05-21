@@ -62,6 +62,7 @@ public class AuthenticationService {
                 .id(user.getId())
                 .name(user.getName())
                 .avatarPath(user.getAvatar().getAvatarPath())
+                .admin(user.getAdmin())
                 .build();
     }
 }

@@ -15,6 +15,7 @@ import ButtonShare from "./components/interaction/ButtonShare.jsx";
 import ButtonDelete from "./components/interaction/ButtonDelete.jsx";
 import ButtonLike from "./components/interaction/ButtonLike.jsx";
 import ButtonModify from "./components/interaction/ButtonModify.jsx";
+import AdminPanel from "./components/single/AdminPanel.jsx";
 
 const fetchComponent = async (id) => {
     const {data} = await api.get(`/components/get/${id}`);
@@ -30,7 +31,7 @@ const ComponentPage = () => {
 
     const [activeTab, setActiveTab] = useState("html");
 
-   if (isLoading) return <div className="loadingText">Loading...</div>;
+    if (isLoading) return <div className="loadingText">Loading...</div>;
     if (error) return <InternalServer/>;
 
     return (
@@ -49,7 +50,7 @@ const ComponentPage = () => {
                             <ButtonDelete component={data}/>
                             <ButtonLike component={data}/>
                         </div>
-                        
+                        <AdminPanel component={data}/>
                         <ComponentHeader component={data}/>
                         <ComponentDetails maxTags={33} component={data}/>
                     </div>

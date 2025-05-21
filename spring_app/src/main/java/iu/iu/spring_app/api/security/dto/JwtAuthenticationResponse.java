@@ -14,4 +14,5 @@ public class JwtAuthenticationResponse {
     Integer id;
     String name;
     String avatarPath;
+    Boolean admin;
 }
