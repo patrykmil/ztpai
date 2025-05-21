@@ -7,7 +7,9 @@
 
 - [Introduction](#introduction)
 - [Technologies](#technologies)
+- [Prerequisites](#prerequisites)
 - [Setup](#setup)
+- [Structure](#structure)
 - [Users](#users)
 
 ## Introduction
@@ -16,14 +18,20 @@ IU - library of html/css components
 
 ## Technologies
 
-| Function        | Used                                                                                                                                                        |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Backend         | <img src="icons/java.svg" width="45" height="45"> <img src="icons/spring.svg" width="45" height="45"> <img src="icons/rabbitmq.svg" width="45" height="45"> |
-| Database        | <img src="icons/postgresql.svg" width="45" height="45">                                                                                                     |
-| Frontend        | <img src="icons/bun.png" width="45" height="45"> <img src="icons/javascript.svg" width="45" height="45"> <img src="icons/react.svg" width="45" height="45"> |
-| Site structure  | <img src="icons/html.svg" width="45" height="45"> <img src="icons/css.svg" width="45" height="45">                                                          |
-| Version Control | <img src="icons/git.svg" width="45" height="45"> <img src="icons/github.svg" width="45" height="45">                                                        |
-| Contenerization | <img src="icons/docker.svg" width="45" height="45">                                                                                                         |
+| Function        | Used                                                                                                                                                                                                  |
+|-----------------| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Backend         | <img src="readme_assets/icons/java.svg" width="45" height="45"> <img src="readme_assets/icons/spring.svg" width="45" height="45"> <img src="readme_assets/icons/rabbitmq.svg" width="45" height="45"> |
+| Database        | <img src="readme_assets/icons/postgresql.svg" width="45" height="45">                                                                                                                                 |
+| Frontend        | <img src="readme_assets/icons/bun.png" width="45" height="45"> <img src="readme_assets/icons/javascript.svg" width="45" height="45"> <img src="readme_assets/icons/react.svg" width="45" height="45"> |
+| Site Structure  | <img src="readme_assets/icons/html.svg" width="45" height="45"> <img src="readme_assets/icons/css.svg" width="45" height="45">                                                                        |
+| Version Control | <img src="readme_assets/icons/git.svg" width="45" height="45"> <img src="readme_assets/icons/github.svg" width="45" height="45">                                                                      |
+| Contenerization | <img src="readme_assets/icons/docker.svg" width="45" height="45">                                                                                                                                     |
+
+## Prerequisites
+
+* Git
+* Docker
+* Docker compose
 
 ## Setup
 
@@ -33,7 +41,7 @@ Clone repository:
   git clone https://github.com/patrykmil/ztpai.git
 ```
 
-Rename .env.template and fill with your own values
+Rename .env.template to .env and fill with your own values
 
 Inside the project directory, run:
 
@@ -41,12 +49,23 @@ Inside the project directory, run:
   docker compose up -d --build
 ```
 
+## Structure
+
 | Service                   | Port  |
 | ------------------------- | ----- |
 | API                       | 8080  |
 | Website                   | 5173  |
 | Rabbitmq management panel | 15672 |
 | Database                  | 5432  |
+
+
+### Architecture
+
+<img src="/readme_assets/iu.excalidraw.png" width="50%">
+
+### Entity Relationship Diagram
+
+<img src="/readme_assets/erd.png" width="50%">
 
 ## Users
 
