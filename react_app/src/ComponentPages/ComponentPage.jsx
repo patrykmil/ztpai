@@ -14,6 +14,7 @@ import ButtonCopy from "./components/interaction/ButtonCopy.jsx";
 import ButtonShare from "./components/interaction/ButtonShare.jsx";
 import ButtonDelete from "./components/interaction/ButtonDelete.jsx";
 import ButtonLike from "./components/interaction/ButtonLike.jsx";
+import ButtonModify from "./components/interaction/ButtonModify.jsx";
 
 const fetchComponent = async (id) => {
     const {data} = await api.get(`/components/get/${id}`);
@@ -44,9 +45,11 @@ const ComponentPage = () => {
                         <div className={styles.interactionButtonsContainer}>
                             <ButtonCopy component={data}/>
                             <ButtonShare component={data}/>
+                            <ButtonModify component={data}/>
                             <ButtonDelete component={data}/>
                             <ButtonLike component={data}/>
                         </div>
+                        
                         <ComponentHeader component={data}/>
                         <ComponentDetails maxTags={33} component={data}/>
                     </div>
