@@ -16,6 +16,10 @@ const useAuthStore = create(
                 avatar: data.avatarPath,
                 admin: data.admin
             }),
+            setToken: (token) => set((state) => ({
+                ...state,
+                token: token
+            })),
             logout: () => set({
                 token: null,
                 userId: null,

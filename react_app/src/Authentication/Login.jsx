@@ -11,7 +11,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const loginMutation = useMutation({
-        mutationFn: (data) => api.post("/login", data),
+        mutationFn: (data) => api.post("/login", data, {withCredentials: true}),
         onSuccess: (response) => {
             setAuth(response.data);
             navigate("/");

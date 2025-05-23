@@ -2,7 +2,7 @@ import {StrictMode} from "react";
 import {createRoot} from "react-dom/client";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
-import {createBrowserRouter, RouterProvider, useNavigate} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import "./index.css";
 import HomePage from "./HomePage.jsx";
 import NotFound from "./ErrorPages/NotFound.jsx";
@@ -16,6 +16,7 @@ import ComponentCreate from "./ComponentPages/ComponentCreate.jsx";
 import ComponentReplace from "./ComponentPages/ComponentReplace.jsx";
 import ComponentCollection from "./ComponentPages/ComponentCollection.jsx";
 import MessageList from "./Messages/MessageList.jsx";
+import TokenRefresher from "./Authentication/TokenRefresher.jsx";
 
 const router = createBrowserRouter([
     {path: "/", element: <HomePage/>},
@@ -33,8 +34,23 @@ const router = createBrowserRouter([
 const queryClient = new QueryClient();
 
 export const api = axios.create({
-    baseURL: 'http://localhost:8080/api'
+    baseURL: 'http://localhost:8080/api',
+    withCredentials: true
 });
+
+let isRefreshing = false;
+let refreshSubscribers = [];
+
+const processQueue = (error, token = null) => {
+    refreshSubscribers.forEach(callback => {
+        if (error) {
+            callback(error);
+        } else {
+            callback(token);
+        }
+    });
+    refreshSubscribers = [];
+};
 
 api.interceptors.request.use((config) => {
     const token = useAuthStore.getState().token;
@@ -46,21 +62,73 @@ api.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-api.interceptors.response.use((response) => response, (error) => {
-    const navigate = useNavigate();
-    if (error.response && error.response.status === 403) {
-        if (window.location.pathname !== '/login') {
-            useAuthStore.getState().logout();
-            navigate("/login");
-            alert("Session expired\nLog in to view this panel")
+api.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        const originalRequest = error.config;
+
+        if (error.response?.status === 401 &&
+            !originalRequest._retry &&
+            !originalRequest.url?.includes('/refresh')) {
+
+            if (isRefreshing) {
+                return new Promise((resolve, reject) => {
+                    refreshSubscribers.push((token) => {
+                        if (token) {
+                            originalRequest.headers.Authorization = `Bearer ${token}`;
+                            resolve(api(originalRequest));
+                        } else {
+                            reject(error);
+                        }
+                    });
+                });
+            }
+
+            originalRequest._retry = true;
+            isRefreshing = true;
+
+            try {
+                const response = await api.post('/refresh');
+                const { token } = response.data;
+
+                useAuthStore.getState().setToken(token);
+
+                originalRequest.headers.Authorization = `Bearer ${token}`;
+
+                processQueue(null, token);
+
+                return api(originalRequest);
+            } catch (refreshError) {
+                processQueue(refreshError);
+                useAuthStore.getState().logout();
+
+                if (window.location.pathname !== '/login' && window.location.pathname !== '/register') {
+                    window.location.href = '/login';
+                }
+
+                return Promise.reject(refreshError);
+            } finally {
+                isRefreshing = false;
+            }
         }
+
+        if (error.response?.status === 401 &&
+            originalRequest.url?.includes('/refresh')) {
+            useAuthStore.getState().logout();
+
+            if (window.location.pathname !== '/login' && window.location.pathname !== '/register') {
+                window.location.href = '/login';
+            }
+        }
+
+        return Promise.reject(error);
     }
-    return Promise.reject(error);
-});
+);
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <QueryClientProvider client={queryClient}>
+            <TokenRefresher/>
             <RouterProvider router={router}/>
             <ReactQueryDevtools initialIsOpen={false}/>
         </QueryClientProvider>
