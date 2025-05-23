@@ -8,6 +8,9 @@ import iu.iu.spring_app.api.errors.ExceptionResponse;
 import iu.iu.spring_app.api.security.dto.JwtAuthenticationResponse;
 import iu.iu.spring_app.api.security.dto.LoginRequest;
 import iu.iu.spring_app.api.security.dto.RegisterRequest;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +21,7 @@ public interface AuthenticationControllerInterface {
     @ApiResponse(responseCode = "200", description = "User registered successfully",
             content = @Content(schema = @Schema(implementation = JwtAuthenticationResponse.class)))
     @PostMapping("/register")
-    JwtAuthenticationResponse register(@RequestBody RegisterRequest request);
+    JwtAuthenticationResponse register(@RequestBody RegisterRequest request, HttpServletResponse response);
 
     @Operation(summary = "Login user", description = "Authenticates user and returns JWT token")
     @ApiResponse(responseCode = "200", description = "Login successful",
@@ -26,5 +29,7 @@ public interface AuthenticationControllerInterface {
     @ApiResponse(responseCode = "404", description = "User not found",
             content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @PostMapping("/login")
-    JwtAuthenticationResponse login(@RequestBody LoginRequest request);
+    JwtAuthenticationResponse login(@RequestBody LoginRequest request, HttpServletResponse response);
+
+    ResponseEntity<JwtAuthenticationResponse> refreshToken(HttpServletRequest request);
 }

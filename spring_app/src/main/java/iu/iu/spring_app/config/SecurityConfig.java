@@ -50,27 +50,26 @@ public class SecurityConfig {
                 .sessionManagement(session
                         -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                                .requestMatchers(HttpMethod.POST, "/api/login", "/api/register").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/components/get/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/components/search").permitAll()
-                                .requestMatchers(
-                                        "/v1/api/**",
-                                        "/v2/api-docs",
-                                        "/v3/api-docs",
-                                        "/v3/api-docs/**",
-                                        "/swagger-resources",
-                                        "/swagger-resources/**",
-                                        "/configuration/ui",
-                                        "/configuration/security",
-                                        "/swagger-ui/**",
-                                        "/webjars/**",
-                                        "/swagger-ui.html"
-                                ).permitAll()
-                                .anyRequest().authenticated()
-                        )
+                        .requestMatchers(HttpMethod.POST, "/api/login", "/api/register", "/api/refresh").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/components/get/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/components/search").permitAll()
+                        .requestMatchers(
+                                "/v1/api/**",
+                                "/v2/api-docs",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-resources",
+                                "/swagger-resources/**",
+                                "/configuration/ui",
+                                "/configuration/security",
+                                "/swagger-ui/**",
+                                "/webjars/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
 }
