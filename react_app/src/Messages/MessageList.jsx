@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { api } from '../main.jsx'
+import {useQuery} from "@tanstack/react-query";
+import {api} from '../main.jsx'
 import Navigation from "../Navigation/Navigation.jsx";
 import InternalServer from "../ErrorPages/InternalServer.jsx";
 import styles from "./Message.module.css"
@@ -13,8 +13,6 @@ const MessageList = () => {
     const { data, error, isLoading } = useQuery({
         queryKey: ['messages'],
         queryFn: fetchMessages,
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
         enabled: true
     });
 

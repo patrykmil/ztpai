@@ -26,6 +26,8 @@ const ComponentCreate = () => {
     const {data: suppData, isLoading, error} = useQuery({
         queryKey: ["supp", userInfo.userId],
         queryFn: () => fetchSupp(userInfo.userId),
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
         enabled: !!userInfo.userId,
     });
 

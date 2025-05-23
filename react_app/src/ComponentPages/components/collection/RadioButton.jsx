@@ -1,6 +1,8 @@
 import styles from "../Component.module.css"
+import {useQueryClient} from "@tanstack/react-query";
 
 const RadioButton = ({ activeView, setActiveView }) => {
+    const queryClient = useQueryClient();
     return (
         <div className={styles.radio}>
             <button
@@ -13,7 +15,10 @@ const RadioButton = ({ activeView, setActiveView }) => {
             <button
                 className={`${styles.btn} ${styles.right} ${activeView === 'liked' ? styles.chosen : ''}`}
                 type="button"
-                onClick={() => setActiveView('liked')}
+                onClick={() => {
+                    queryClient.invalidateQueries(["liked_components"]);
+                    setActiveView('liked')
+                }}
             >
                 Liked
             </button>
