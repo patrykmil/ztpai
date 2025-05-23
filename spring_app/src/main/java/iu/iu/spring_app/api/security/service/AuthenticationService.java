@@ -31,7 +31,7 @@ public class AuthenticationService {
     @Value("${refresh.token.cookie.name}")
     private String refreshTokenCookieName;
 
-    @Value("${refresh.token.cookie.max-age}")
+    @Value("${refresh.token.cookie.max-age.s}")
     private int refreshTokenCookieMaxAge;
 
     public JwtAuthenticationResponse register(RegisterRequest request, HttpServletResponse response) {
