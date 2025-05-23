@@ -25,7 +25,7 @@ const ComponentForm = ({
 
     useEffect(() => {
         if (!userInfo.token) navigate("/login");
-    }, [userInfo, navigate]);
+    }, []);
 
     if (!userInfo.token) return null;
     if (isLoading) return <div className="loadingText">Loading...</div>;

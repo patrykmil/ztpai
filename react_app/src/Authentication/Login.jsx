@@ -4,10 +4,22 @@ import {api} from '../main.jsx';
 import styles from './Security.module.css';
 import Field from './components/Field.jsx';
 import useAuthStore from '../store/authStore.js'
+import {useMutation} from '@tanstack/react-query';
 
 const Login = () => {
     const setAuth = useAuthStore(state => state.setAuth);
     const navigate = useNavigate();
+
+    const loginMutation = useMutation({
+        mutationFn: (data) => api.post("/login", data),
+        onSuccess: (response) => {
+            setAuth(response.data);
+            navigate("/");
+        },
+        onError: (error) => {
+            alert(error.response?.data?.message || 'Login failed');
+        }
+    });
 
     const form = useForm({
         defaultValues: {
@@ -15,19 +27,7 @@ const Login = () => {
             password: '',
         },
         onSubmit: async ({value}) => {
-            try {
-                console.log(value);
-                const {data} = await api.post("/login", value);
-                console.log(data)
-                setAuth(data)
-                navigate('/')
-            } catch (error) {
-                if (error.response?.data?.message) {
-                    alert(error.response.data.message);
-                } else {
-                    alert('Login failed');
-                }
-            }
+            loginMutation.mutate(value);
         },
     });
 
@@ -49,13 +49,17 @@ const Login = () => {
                         />
                         <form.Field
                             name="password"
-                            children={(field) => <Field name="password" label="Password" field={field}/>}
+                            children={(field) => <Field name="password" label="Password" field={field} type="password"/>}
                         />
                         <form.Subscribe
-                            selector={(state) => [state.canSubmit, state.isSubmitting]}
-                            children={([canSubmit, isSubmitting]) => (
-                                <button className={styles.submitButton} type="submit" disabled={!canSubmit}>
-                                    {isSubmitting ? '...' : 'Log in'}
+                            selector={(state) => [state.canSubmit]}
+                            children={([canSubmit]) => (
+                                <button
+                                    className={styles.submitButton}
+                                    type="submit"
+                                    disabled={!canSubmit || loginMutation.isPending}
+                                >
+                                    {loginMutation.isPending ? '...' : 'Log in'}
                                 </button>
                             )}
                         />

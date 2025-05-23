@@ -23,7 +23,7 @@ const ComponentCreate = () => {
         html: "<p>Start creating!!!</p>",
     });
 
-    const {data: suppData, isLoading, error, refetch} = useQuery({
+    const {data: suppData, isLoading, error} = useQuery({
         queryKey: ["supp", userInfo.userId],
         queryFn: () => fetchSupp(userInfo.userId),
         enabled: !!userInfo.userId,
@@ -64,7 +64,7 @@ const ComponentCreate = () => {
     });
 
     const { handleTagAdd, handleTagRemove } = useTagHandlers(form, setTags);
-    const { handleSetCreate } = useSetHandler(form, setIsPopupVisible, refetch);
+    const { handleSetCreate } = useSetHandler(form, setIsPopupVisible);
 
     return (
         <>

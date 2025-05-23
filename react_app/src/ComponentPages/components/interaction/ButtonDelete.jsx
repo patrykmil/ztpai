@@ -14,18 +14,17 @@ const ButtonDelete = ({component}) => {
             return response.data;
         },
         onSuccess: () => {
-            console.log('Deleted');
             navigate('/');
         }
     });
-    if (userInfo.userId === component.author.id) {
+    if (userInfo.userId !== component.author.id) {
+        return null;
+    }
         return (
             <button className={styles.interactionButton} onClick={() => deleteComponent.mutate()} disabled={deleteComponent.isPending}>
                 <img src={"/icons/delete.svg"} alt={"Delete component"}/>
             </button>
         );
-    }
-    return null;
 };
 
 export default ButtonDelete;

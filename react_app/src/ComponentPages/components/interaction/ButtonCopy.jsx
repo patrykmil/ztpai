@@ -2,7 +2,8 @@ import styles from "../Component.module.css";
 
 const ButtonCopy = ({component}) => {
     const copy = async () => {
-        const string = `//${component.name} by ${component.author.name}\n//iu.iu/components/${component.id}\n\n//----HTML----\n${component.html}\n\n//----CSS----\n${component.css}\n`;
+        const host = window.location.host;
+        const string = `//${component.name} by ${component.author.name}\n//${host}/components/${component.id}\n\n//----HTML----\n${component.html}\n\n//----CSS----\n${component.css}\n`;
         try {
             await navigator.clipboard.writeText(string);
         }catch (e) {

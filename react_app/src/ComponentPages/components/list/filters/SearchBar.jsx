@@ -3,7 +3,6 @@ import styles from "./../../Component.module.css"
 const SearchBar = ({ searchQuery, setSearchQuery }) => {
 
     const showFilterPaneMobile = () => {
-        console.log("clicked" + `.${styles.filter}`)
         const filterPane = document.querySelector(`.${styles.filter}`);
         filterPane.classList.toggle(styles.active);
     };

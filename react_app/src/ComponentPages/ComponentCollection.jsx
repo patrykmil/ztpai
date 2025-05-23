@@ -57,11 +57,6 @@ const ComponentCollection = () => {
     if (isLoading) return <div className="loadingText">Loading...</div>;
     if (error) return <InternalServer/>;
 
-    console.log("liked")
-    console.log(likedComponents);
-    console.log("sets")
-    console.log(setComponents);
-
     return (
         <>
             <Navigation/>

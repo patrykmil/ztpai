@@ -2,7 +2,8 @@ import styles from "../Component.module.css";
 
 const ButtonShare = ({component}) => {
     const copyLink = async () => {
-        const string = `iu.iu/components/${component.id}`;
+        const host = window.location.host;
+        const string = `${host}/components/${component.id}`;
         try {
             await navigator.clipboard.writeText(string);
         }catch (e) {

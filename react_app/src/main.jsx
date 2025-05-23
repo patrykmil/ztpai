@@ -47,10 +47,11 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use((response) => response, (error) => {
+    const navigate = useNavigate();
     if (error.response && error.response.status === 403) {
         if (window.location.pathname !== '/login') {
             useAuthStore.getState().logout();
-            useNavigate("/login");
+            navigate("/login");
             alert("Session expired\nLog in to view this panel")
         }
     }

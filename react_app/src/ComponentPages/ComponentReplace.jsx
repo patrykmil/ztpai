@@ -32,7 +32,7 @@ const ComponentReplace = () => {
         html: componentData?.html || "",
     });
 
-    const {data: suppData, isLoading: isSuppLoading, error: suppError, refetch} = useQuery({
+    const {data: suppData, isLoading: isSuppLoading, error: suppError} = useQuery({
         queryKey: ["supp", userInfo.userId],
         queryFn: () => fetchSupp(userInfo.userId),
         enabled: !!userInfo.userId,
@@ -91,7 +91,7 @@ const ComponentReplace = () => {
     });
 
     const { handleTagAdd, handleTagRemove } = useTagHandlers(form, setTags);
-    const { handleSetCreate } = useSetHandler(form, setIsPopupVisible, refetch);
+    const { handleSetCreate } = useSetHandler(form, setIsPopupVisible);
 
     return (
         <>

@@ -8,14 +8,15 @@ const ButtonModify = ({component}) => {
 
     const destination = window.location.pathname.replace("components", "modify");
 
-    if (userInfo.userId === component.author.id) {
-        return (
-            <button className={styles.interactionButton} onClick={() => navigate(destination)}>
-                <img src={"/icons/modify.svg"} alt={"Modify component"}/>
-            </button>
-        );
+    if (userInfo.userId !== component.author.id) {
+        return null;
     }
-    return null;
+
+    return (
+        <button className={styles.interactionButton} onClick={() => navigate(destination)}>
+            <img src={"/icons/modify.svg"} alt={"Modify component"}/>
+        </button>
+    );
 };
 
 export default ButtonModify;

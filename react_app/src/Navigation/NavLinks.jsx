@@ -2,7 +2,6 @@ import {Link} from 'react-router-dom';
 import styles from './Navigation.module.css';
 
 const NavLinks = ({user, isMobileMenuOpen = false}) => {
-    console.log(user);
     return (
         <ul className={`${styles.navOptionsList} ${isMobileMenuOpen ? styles.active : ''}`}>
             <li>
