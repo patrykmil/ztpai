@@ -22,7 +22,20 @@ const ButtonLike = ({component}) => {
             return response.data;
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['like', component.id]);
+            queryClient.setQueryData(['like', component.id], (oldData) => !oldData);
+
+            queryClient.setQueriesData(['components'], (oldData) => {
+                if (!oldData) return oldData;
+                return oldData.map(comp => {
+                    if (comp.id === component.id) {
+                        return {
+                            ...comp,
+                            likes: liked ? comp.likes - 1 : comp.likes + 1
+                        };
+                    }
+                    return comp;
+                });
+            });
         }
     });
 
