@@ -9,6 +9,7 @@ import iu.iu.spring_app.api.security.dto.RegisterRequest;
 import iu.iu.spring_app.api.users.model.User;
 import iu.iu.spring_app.api.users.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +49,7 @@ public class AuthenticationService {
         var message = Message.builder()
                 .title("Welcome " + request.getUsername() + "!")
                 .body("You can now share your work")
-                .link("https://iu.iu/create/")
+                .link("/create/")
                 .user(user)
                 .build();
         addMessageService.addMessage(message);
@@ -84,7 +85,23 @@ public class AuthenticationService {
                 .build();
     }
 
-    public JwtAuthenticationResponse refreshToken(String refreshToken) {
+    public JwtAuthenticationResponse refreshToken(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        String refreshToken = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (refreshTokenCookieName.equals(cookie.getName())) {
+                    refreshToken = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (refreshToken == null) {
+            throw new ResourceNotFoundException("Refresh token not found");
+        }
+
         String userEmail = jwtService.extractUserName(refreshToken);
 
         if (userEmail != null) {

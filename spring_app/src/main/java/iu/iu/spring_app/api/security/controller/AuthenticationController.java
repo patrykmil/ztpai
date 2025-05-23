@@ -4,12 +4,10 @@ import iu.iu.spring_app.api.security.dto.JwtAuthenticationResponse;
 import iu.iu.spring_app.api.security.dto.LoginRequest;
 import iu.iu.spring_app.api.security.dto.RegisterRequest;
 import iu.iu.spring_app.api.security.service.AuthenticationService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,37 +25,18 @@ public class AuthenticationController implements AuthenticationControllerInterfa
     }
 
     @Override
-    @PostMapping("/register")
     public JwtAuthenticationResponse register(RegisterRequest request, HttpServletResponse response) {
         return authenticationService.register(request, response);
     }
 
     @Override
-    @PostMapping("/login")
         public JwtAuthenticationResponse login(LoginRequest request, HttpServletResponse response) {
         return authenticationService.login(request, response);
     }
 
     @Override
-    @PostMapping("/refresh")
     public ResponseEntity<JwtAuthenticationResponse> refreshToken(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        String refreshToken = null;
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (refreshTokenCookieName.equals(cookie.getName())) {
-                    refreshToken = cookie.getValue();
-                    break;
-                }
-            }
-        }
-
-        if (refreshToken == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        JwtAuthenticationResponse response = authenticationService.refreshToken(refreshToken);
+        JwtAuthenticationResponse response = authenticationService.refreshToken(request);
         return ResponseEntity.ok(response);
     }
 }

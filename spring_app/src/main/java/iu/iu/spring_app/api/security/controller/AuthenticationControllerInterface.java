@@ -31,5 +31,11 @@ public interface AuthenticationControllerInterface {
     @PostMapping("/login")
     JwtAuthenticationResponse login(@RequestBody LoginRequest request, HttpServletResponse response);
 
+    @Operation(summary = "Refresh authentication token", description = "Refreshes authentication token")
+    @ApiResponse(responseCode = "200", description = "Refreshed successfully",
+            content = @Content(schema = @Schema(implementation = JwtAuthenticationResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Invalid refresh token",
+            content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
+    @PostMapping("/refresh")
     ResponseEntity<JwtAuthenticationResponse> refreshToken(HttpServletRequest request);
 }
