@@ -6,7 +6,6 @@ import iu.iu.spring_app.api.security.dto.RegisterRequest;
 import iu.iu.spring_app.api.security.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @io.swagger.v3.oas.annotations.tags.Tag(name = "Authentication", description = "APIs for user registration and authentication")
 public class AuthenticationController implements AuthenticationControllerInterface {
     private final AuthenticationService authenticationService;
-
-    @Value("${refresh.token.cookie.name}")
-    private String refreshTokenCookieName;
 
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;

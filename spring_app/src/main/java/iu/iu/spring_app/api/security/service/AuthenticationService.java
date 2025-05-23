@@ -1,5 +1,6 @@
 package iu.iu.spring_app.api.security.service;
 
+import iu.iu.spring_app.api.errors.InvalidTokenException;
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import iu.iu.spring_app.api.messages.model.Message;
 import iu.iu.spring_app.api.messages.service.AddMessageService;
@@ -99,7 +100,7 @@ public class AuthenticationService {
         }
 
         if (refreshToken == null) {
-            throw new ResourceNotFoundException("Refresh token not found");
+            throw new InvalidTokenException("Refresh token not found");
         }
 
         String userEmail = jwtService.extractUserName(refreshToken);
@@ -123,7 +124,7 @@ public class AuthenticationService {
             }
         }
 
-        throw new ResourceNotFoundException("Invalid refresh token");
+        throw new InvalidTokenException("Invalid refresh token");
     }
 
     private void addRefreshTokenCookie(HttpServletResponse response, String refreshToken) {

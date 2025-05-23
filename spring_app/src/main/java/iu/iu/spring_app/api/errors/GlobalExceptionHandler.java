@@ -1,6 +1,5 @@
 package iu.iu.spring_app.api.errors;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -47,13 +46,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 
-    @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<ExceptionResponse> handleExpiredJwtException(ExpiredJwtException ex) {
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ExceptionResponse> handleInvalidToken(InvalidTokenException ex) {
         ExceptionResponse error = new ExceptionResponse(
-                "Token expired",
-                401
+                ex.getMessage(),
+                400
         );
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+        return ResponseEntity.badRequest().body(error);
     }
 
 }
