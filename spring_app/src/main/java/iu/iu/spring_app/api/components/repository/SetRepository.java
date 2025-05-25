@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface SetRepository extends JpaRepository<Set, Integer> {
+    Optional<Set> findByNameAndUser(String name, User user);
     Optional<Set> findByName(String name);
     List<Set> findByUser(User user);
 }

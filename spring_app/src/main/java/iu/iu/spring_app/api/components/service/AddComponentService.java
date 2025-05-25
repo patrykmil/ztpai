@@ -49,7 +49,7 @@ public class AddComponentService {
 
         Type type = typeService.getTypeByName(validationService.sanitizeInput(payload.getType().getName()));
 
-        Set set = setService.getSetByName(validationService.sanitizeInput(payload.getSet().getName()));
+        Set set = setService.getSetByName(validationService.sanitizeInput(payload.getSet().getName()), author);
         if(!set.getUser().getEmail().equals(email)) {
             throw new AccessDeniedException("Not allowed to use this set");
         }

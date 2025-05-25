@@ -28,7 +28,8 @@ CREATE TABLE "public"."set" (
     "set_id" serial,
     "set_name" character varying(30) NOT NULL,
     "user_id" integer,
-    PRIMARY KEY ("set_id")
+    PRIMARY KEY ("set_id"),
+    CONSTRAINT "set_user_id_set_name_key" UNIQUE ("user_id", "set_name")
 );
 
 CREATE INDEX "set_idx_set_user_id"

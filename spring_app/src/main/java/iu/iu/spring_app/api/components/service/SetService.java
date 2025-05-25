@@ -8,6 +8,7 @@ import iu.iu.spring_app.api.users.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SetService {
@@ -19,22 +20,22 @@ public class SetService {
         this.userRepository = userRepository;
     }
 
-    public List<Set> getUserSetsById(Integer userId) {
+    public List<Set> getUserSetsByUserId(Integer userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")
         );
         return setRepository.findByUser(user);
     }
 
-    public List<Set> getUserSetsByName(String username) {
+    public List<Set> getUserSetsByUsername(String username) {
         User user = userRepository.findByName(username).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")
         );
         return setRepository.findByUser(user);
     }
 
-    public Set getSetByName(String name) {
-        return setRepository.findByName(name)
+    public Set getSetByName(String setName, User user) {
+        return setRepository.findByNameAndUser(setName, user)
                 .orElseThrow(() -> new ResourceNotFoundException("Set not found"));
     }
 
@@ -42,9 +43,16 @@ public class SetService {
         User user = userRepository.findByEmail(userName).orElseThrow(
                 () -> new ResourceNotFoundException("User not found")
         );
-        Set newSet = new Set();
-        newSet.setName(setName);
-        newSet.setUser(user);
+
+        Optional<Set> set = setRepository.findByNameAndUser(setName, user);
+        if (set.isPresent()) {
+            throw new RuntimeException("Set with that name already exists");
+        }
+
+        Set newSet = Set.builder()
+                .name(setName)
+                .user(user)
+                .build();
         return setRepository.save(newSet);
     }
 }
