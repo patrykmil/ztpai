@@ -18,14 +18,25 @@ IU - library of html/css components
 
 ## Technologies
 
-| Function        | Used                                                                                                                                                                                                  |
-|-----------------| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Backend         | <img src="readme_assets/icons/java.svg" width="45" height="45"> <img src="readme_assets/icons/spring.svg" width="45" height="45"> <img src="readme_assets/icons/rabbitmq.svg" width="45" height="45"> |
-| Database        | <img src="readme_assets/icons/postgresql.svg" width="45" height="45">                                                                                                                                 |
-| Frontend        | <img src="readme_assets/icons/bun.png" width="45" height="45"> <img src="readme_assets/icons/javascript.svg" width="45" height="45"> <img src="readme_assets/icons/react.svg" width="45" height="45"> |
-| Site Structure  | <img src="readme_assets/icons/html.svg" width="45" height="45"> <img src="readme_assets/icons/css.svg" width="45" height="45">                                                                        |
-| Version Control | <img src="readme_assets/icons/git.svg" width="45" height="45"> <img src="readme_assets/icons/github.svg" width="45" height="45">                                                                      |
-| Contenerization | <img src="readme_assets/icons/docker.svg" width="45" height="45">                                                                                                                                     |
+| Function         | Used                                                                                                                                                                                                  |
+|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Backend          | <img src="readme_assets/icons/java.svg" width="45" height="45"> <img src="readme_assets/icons/maven.svg" width="45" height="45"> <img src="readme_assets/icons/spring.svg" width="45" height="45">    |
+| Database         | <img src="readme_assets/icons/postgresql.svg" width="45" height="45">                                                                                                                                 |
+| Message broker   | <img src="readme_assets/icons/rabbitmq.svg" width="45" height="45">                                                                                                                                   |
+| Frontend         | <img src="readme_assets/icons/bun.svg" width="45" height="45"> <img src="readme_assets/icons/react.svg" width="45" height="45"> <img src="readme_assets/icons/javascript.svg" width="45" height="45"> |
+| Site structure   | <img src="readme_assets/icons/html.svg" width="45" height="45"> <img src="readme_assets/icons/css.svg" width="45" height="45">                                                                        |
+| Version control  | <img src="readme_assets/icons/git.svg" width="45" height="45">                                                                                                                                        |
+| Containerization | <img src="readme_assets/icons/docker.svg" width="45" height="45">                                                                                                                                     |
+
+- Backend: Java with Spring Boot provides good foundation with security features, and database integration. Maven makes config readable and easy to work with.
+
+- Frontend: React paired with Bun offers a fast dev experience. React make use of reusable components and has compatibility with a lot of libraries, while Bun significantly improves build times and OOTB hot updating.
+
+- Database: PostgreSQL was selected for its reliability and integration in hibernate.
+
+- Message Broker: RabbitMQ enables async communication, and works great with spring.
+
+- Containerization: Docker ensures consistent development and deployment environments, making the application easily portable and scalable across different platforms.
 
 ## Prerequisites
 
@@ -52,7 +63,7 @@ Inside the project directory, run:
 ## Structure
 
 | Service                   | Port  |
-| ------------------------- | ----- |
+|---------------------------|-------|
 | API                       | 8080  |
 | Website                   | 5173  |
 | Rabbitmq management panel | 15672 |
