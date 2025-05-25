@@ -1,4 +1,4 @@
-import useAuthStore from "../store/authStore.js";
+import useAuthStore from "../Authentication/AuthStore.js";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useForm} from "@tanstack/react-form";
@@ -11,7 +11,7 @@ import {useSetHandler} from './components/create/hooks/useSetHandler';
 import CreateSetPopup from "./components/create/CreateSetPopup.jsx";
 import Navigation from "../Navigation/Navigation.jsx";
 
-const ComponentReplace = () => {
+const ComponentModify = () => {
     const {id} = useParams();
     const [tags, setTags] = useState([]);
     const userInfo = useAuthStore();
@@ -82,7 +82,7 @@ const ComponentReplace = () => {
                     navigate(`/components/${id}`);
                 }
             } catch (error) {
-                alert(error.response?.data || "Component updated");
+                alert(error.response?.data.message || "Failed to update component");
             }
         },
         validators: {
@@ -117,4 +117,4 @@ const ComponentReplace = () => {
     );
 };
 
-export default ComponentReplace;
+export default ComponentModify;

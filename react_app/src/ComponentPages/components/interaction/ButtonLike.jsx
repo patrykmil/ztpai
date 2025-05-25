@@ -1,5 +1,5 @@
 import styles from "../Component.module.css";
-import useAuthStore from "../../../store/authStore.js";
+import useAuthStore from "../../../Authentication/AuthStore.js";
 import {api} from "../../../main.jsx";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 

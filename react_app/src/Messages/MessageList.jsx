@@ -3,7 +3,7 @@ import {api} from '../main.jsx'
 import Navigation from "../Navigation/Navigation.jsx";
 import InternalServer from "../ErrorPages/InternalServer.jsx";
 import styles from "./Message.module.css"
-import useAuthStore from "../store/authStore.js";
+import useAuthStore from "../Authentication/AuthStore.js";
 import {useNavigate} from "react-router-dom";
 
 const fetchMessages = async () => {

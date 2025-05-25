@@ -1,5 +1,5 @@
 import styles from "../Component.module.css";
-import useAuthStore from "../../../store/authStore.js";
+import useAuthStore from "../../../Authentication/AuthStore.js";
 import {useNavigate} from "react-router-dom";
 
 const ButtonModify = ({component}) => {

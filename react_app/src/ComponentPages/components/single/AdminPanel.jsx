@@ -1,4 +1,4 @@
-import useAuthStore from "../../../store/authStore.js";
+import useAuthStore from "../../../Authentication/AuthStore.js";
 import AdminPopup from "./AdminPopup.jsx";
 import {useState} from "react";
 import styles from "../Component.module.css";

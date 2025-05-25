@@ -1,4 +1,4 @@
-import useAuthStore from "../store/authStore.js";
+import useAuthStore from "../Authentication/AuthStore.js";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {useForm} from "@tanstack/react-form";
@@ -57,7 +57,7 @@ const ComponentCreate = () => {
                     navigate(`/components/${response.data.id}`);
                 }
             } catch (error) {
-                alert(error.response?.data || "Component added");
+                alert(error.response?.data.message || "Failed to add component");
             }
         },
         validators: {

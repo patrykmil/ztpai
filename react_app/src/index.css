@@ -34,7 +34,7 @@ body {
 }
 
 #root {
-    min-height: 100dvh;
+    min-height: calc(100dvh - 9rem);
     width: 100%;
 }
 

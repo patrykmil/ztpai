@@ -3,7 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {api} from '../main.jsx';
 import styles from './Security.module.css';
 import Field from './components/Field.jsx';
-import useAuthStore from '../store/authStore.js'
+import useAuthStore from './AuthStore.js'
 import {useMutation} from '@tanstack/react-query';
 
 const Login = () => {

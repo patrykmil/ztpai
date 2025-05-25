@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'react';
 import {api} from '../main.jsx';
-import useAuthStore from '../store/authStore.js';
+import useAuthStore from './AuthStore.js';
 
 const TokenRefresher = () => {
     const token = useAuthStore(state => state.token);
@@ -14,7 +14,7 @@ const TokenRefresher = () => {
 
         if (!token) return;
 
-        const refreshAfter = 10 * 60 * 1000; // 10 minutes
+        const refreshAfter = 1000 * 60 * 10;
 
         timerRef.current = setTimeout(async () => {
             try {

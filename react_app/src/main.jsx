@@ -11,19 +11,19 @@ import ComponentPage from "./ComponentPages/ComponentPage.jsx";
 import axios from "axios";
 import Register from "./Authentication/Register.jsx";
 import Login from "./Authentication/Login.jsx";
-import useAuthStore from "./store/authStore.js";
+import useAuthStore from "./Authentication/AuthStore.js";
 import ComponentCreate from "./ComponentPages/ComponentCreate.jsx";
-import ComponentReplace from "./ComponentPages/ComponentReplace.jsx";
+import ComponentModify from "./ComponentPages/ComponentModify.jsx";
 import ComponentCollection from "./ComponentPages/ComponentCollection.jsx";
 import MessageList from "./Messages/MessageList.jsx";
-import TokenRefresher from "./Authentication/TokenRefresher.jsx";
+import TokenRefresher from "./Authentication/TokenRefresher.js";
 
 const router = createBrowserRouter([
     {path: "/", element: <HomePage/>},
     {path: "/components", element: <ComponentList/>},
     {path: "/components/:id", element: <ComponentPage/>},
     {path: "/create", element: <ComponentCreate/>},
-    {path: "/modify/:id", element: <ComponentReplace/>},
+    {path: "/modify/:id", element: <ComponentModify/>},
     {path: "/collection/:username", element: <ComponentCollection/>},
     {path: "/register", element: <Register/>},
     {path: "/login", element: <Login/>},

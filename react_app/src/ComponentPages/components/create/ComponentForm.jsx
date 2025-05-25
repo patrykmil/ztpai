@@ -4,7 +4,7 @@ import ComponentPreview from "./../ComponentPreview.jsx";
 import FormFields from "./FormFields";
 import CodeEditor from "./CodeEditor";
 import InternalServer from "../../../ErrorPages/InternalServer.jsx";
-import useAuthStore from "../../../store/authStore.js";
+import useAuthStore from "../../../Authentication/AuthStore.js";
 import {useNavigate} from "react-router-dom";
 
 const ComponentForm = ({
