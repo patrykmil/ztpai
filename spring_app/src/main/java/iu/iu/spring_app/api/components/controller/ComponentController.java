@@ -5,7 +5,7 @@ import iu.iu.spring_app.api.components.model.ComponentFilter;
 import iu.iu.spring_app.api.components.service.AddComponentService;
 import iu.iu.spring_app.api.components.service.DeleteComponentService;
 import iu.iu.spring_app.api.components.service.GetComponentService;
-import iu.iu.spring_app.api.components.service.ReplaceComponentService;
+import iu.iu.spring_app.api.components.service.ModifyComponentService;
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,16 +20,16 @@ import java.util.List;
 public class ComponentController implements ComponentControllerInterface {
     private final GetComponentService getComponentService;
     private final AddComponentService addComponentService;
-    private final ReplaceComponentService replaceComponentService;
+    private final ModifyComponentService modifyComponentService;
     private final DeleteComponentService deleteComponentService;
 
     public ComponentController(GetComponentService getComponentService,
                                AddComponentService addComponentService,
-                               ReplaceComponentService replaceComponentService,
+                               ModifyComponentService modifyComponentService,
                                DeleteComponentService deleteComponentService) {
         this.getComponentService = getComponentService;
         this.addComponentService = addComponentService;
-        this.replaceComponentService = replaceComponentService;
+        this.modifyComponentService = modifyComponentService;
         this.deleteComponentService = deleteComponentService;
     }
 
@@ -61,11 +61,11 @@ public class ComponentController implements ComponentControllerInterface {
 
     @Override
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Component> replaceComponent(Component payload, Authentication authentication) {
+    public ResponseEntity<Component> modifyComponent(Component payload, Authentication authentication) {
         if (payload == null) {
             throw new ResourceNotFoundException("Component cannot be null");
         }
-        return ResponseEntity.ok(replaceComponentService.replaceComponent(payload, authentication.getName()));
+        return ResponseEntity.ok(modifyComponentService.modifyComponent(payload, authentication.getName()));
     }
 
     @Override

@@ -38,7 +38,7 @@ public interface ComponentControllerInterface {
     @ApiResponse(responseCode = "403", description = "User not authenticated", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @ApiResponse(responseCode = "404", description = "Component not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @PutMapping("/replace")
-    ResponseEntity<Component> replaceComponent(@RequestBody Component payload, Authentication authentication);
+    ResponseEntity<Component> modifyComponent(@RequestBody Component payload, Authentication authentication);
 
     @Operation(summary = "Delete component", description = "Deletes an existing component for author")
     @ApiResponse(responseCode = "200", description = "Component deleted successfully")

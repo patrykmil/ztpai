@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class ReplaceComponentService {
+public class ModifyComponentService {
     private final ComponentRepository componentRepository;
     private final GetComponentService getComponentService;
     private final TagsService tagsService;
@@ -19,11 +19,11 @@ public class ReplaceComponentService {
     private final TypeService typeService;
     private final SetService setService;
 
-    public ReplaceComponentService(ComponentRepository componentRepository,
-                                   GetComponentService getComponentService,
-                                   TagsService tagsService,
-                                   ColorService colorService,
-                                   ValidationService validationService, TypeService typeService, SetService setService) {
+    public ModifyComponentService(ComponentRepository componentRepository,
+                                  GetComponentService getComponentService,
+                                  TagsService tagsService,
+                                  ColorService colorService,
+                                  ValidationService validationService, TypeService typeService, SetService setService) {
         this.componentRepository = componentRepository;
         this.getComponentService = getComponentService;
         this.tagsService = tagsService;
@@ -34,7 +34,7 @@ public class ReplaceComponentService {
     }
 
     @Transactional
-    public Component replaceComponent(Component payload, String email) {
+    public Component modifyComponent(Component payload, String email) {
         validationService.validateComponent(payload);
 
         Component oldComponent = getComponentService.getComponentById(payload.getId());

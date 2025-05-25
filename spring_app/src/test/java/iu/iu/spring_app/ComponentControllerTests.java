@@ -6,7 +6,7 @@ import iu.iu.spring_app.api.components.model.ComponentFilter;
 import iu.iu.spring_app.api.components.service.AddComponentService;
 import iu.iu.spring_app.api.components.service.DeleteComponentService;
 import iu.iu.spring_app.api.components.service.GetComponentService;
-import iu.iu.spring_app.api.components.service.ReplaceComponentService;
+import iu.iu.spring_app.api.components.service.ModifyComponentService;
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ class ComponentControllerTests {
     @Mock
     private AddComponentService addComponentService;
     @Mock
-    private ReplaceComponentService replaceComponentService;
+    private ModifyComponentService modifyComponentService;
     @Mock
     private DeleteComponentService deleteComponentService;
     @Mock
@@ -110,7 +110,7 @@ class ComponentControllerTests {
     }
 
     @Test
-    void replaceComponent_Success() {
+    void modifyComponent_Success() {
         Component request = new Component();
         request.setId(1);
         request.setName("Updated Component");
@@ -120,9 +120,9 @@ class ComponentControllerTests {
         updatedComponent.setName("Updated Component");
 
         when(authentication.getName()).thenReturn("test@test.com");
-        when(replaceComponentService.replaceComponent(request, "test@test.com")).thenReturn(updatedComponent);
+        when(modifyComponentService.modifyComponent(request, "test@test.com")).thenReturn(updatedComponent);
 
-        ResponseEntity<Component> response = componentController.replaceComponent(request, authentication);
+        ResponseEntity<Component> response = componentController.modifyComponent(request, authentication);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(updatedComponent, response.getBody());
     }
@@ -187,9 +187,9 @@ class ComponentControllerTests {
     }
 
     @Test
-    void replaceComponent_NullRequest() {
+    void modifyComponent_NullRequest() {
         assertThrows(ResourceNotFoundException.class, () ->
-                componentController.replaceComponent(null, authentication));
+                componentController.modifyComponent(null, authentication));
     }
 
 }
