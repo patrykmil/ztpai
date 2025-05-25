@@ -2,114 +2,106 @@ DROP SCHEMA IF EXISTS public CASCADE;
 CREATE SCHEMA public;
 
 --------------------------------------------------------------------------------------------------
-CREATE TABLE "public"."avatar" (
-    "avatar_id" serial,
-    "avatar_path" character varying(255) NOT NULL,
-    PRIMARY KEY ("avatar_id")
+CREATE TABLE avatar (
+    avatar_id   SERIAL PRIMARY KEY,
+    avatar_path VARCHAR(255) NOT NULL
 );
 --------------------------------------------------------------------------------------------------
-CREATE TABLE "public"."iuser" (
-  "user_id" serial,
-  "email" character varying(30) NOT NULL UNIQUE,
-  "username" character varying(30) NOT NULL,
-  "password_hash" character varying(65) NOT NULL,
-  "avatar_id" integer,
-  "admin" boolean DEFAULT false,
-  PRIMARY KEY ("user_id")
+CREATE TABLE iuser (
+    user_id       SERIAL PRIMARY KEY,
+    email         VARCHAR(30) UNIQUE NOT NULL,
+    username      VARCHAR(30)        NOT NULL,
+    password_hash VARCHAR(65)        NOT NULL,
+    avatar_id     INT REFERENCES    avatar (avatar_id) ON DELETE SET NULL,
+    admin         BOOLEAN DEFAULT FALSE
 );
 
 CREATE UNIQUE INDEX "iuser_iuser_email_key"
-    ON "public"."iuser" ("email");
+    ON iuser (email);
 
 CREATE INDEX "iuser_idx_iuser_avatar_id"
-    ON "public"."iuser" ("avatar_id");
+    ON iuser (avatar_id);
 --------------------------------------------------------------------------------------------------
-CREATE TABLE "public"."set" (
-    "set_id" serial,
-    "set_name" character varying(30) NOT NULL,
-    "user_id" integer,
-    PRIMARY KEY ("set_id"),
-    CONSTRAINT "set_user_id_set_name_key" UNIQUE ("user_id", "set_name")
+CREATE TABLE set (
+    set_id   SERIAL PRIMARY KEY,
+    set_name VARCHAR(30) NOT NULL,
+    user_id  INT         REFERENCES iuser (user_id) ON DELETE SET NULL,
+    CONSTRAINT "set_user_id_set_name_key" UNIQUE (user_id, set_name)
 );
 
 CREATE INDEX "set_idx_set_user_id"
-    ON "public"."set" ("user_id");
+    ON set (user_id);
 --------------------------------------------------------------------------------------------------
-CREATE TABLE "public"."type" (
-    "type_id" serial,
-    "type_name" character varying(30) NOT NULL,
-    PRIMARY KEY ("type_id")
+CREATE TABLE type (
+    type_id   SERIAL PRIMARY KEY,
+    type_name VARCHAR(30) NOT NULL
 );
 --------------------------------------------------------------------------------------------------
-CREATE TABLE "public"."color" (
-    "color_id" serial,
-    "hex" character varying(6) NOT NULL,
-    PRIMARY KEY ("color_id")
+CREATE TABLE color (
+    color_id SERIAL PRIMARY KEY,
+    hex      VARCHAR(6) NOT NULL
 );
 --------------------------------------------------------------------------------------------------
-CREATE TABLE "public"."component" (
-    "component_id" serial,
-    "component_name" character varying(30) NOT NULL,
-    "set_id" integer,
-    "type_id" integer,
-    "color_id" integer,
-    "user_id" integer,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "html" text,
-    "css" text,
-    PRIMARY KEY ("component_id")
+CREATE TABLE component (
+    component_id   SERIAL PRIMARY KEY,
+    component_name VARCHAR(30) NOT NULL,
+    set_id         INT         REFERENCES set (set_id) ON DELETE SET NULL,
+    type_id        INT REFERENCES type (type_id) ON DELETE CASCADE,
+    color_id       INT         REFERENCES color (color_id) ON DELETE SET NULL,
+    user_id        INT REFERENCES iuser (user_id) ON DELETE CASCADE,
+    created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    html           TEXT,
+    css            TEXT
 );
 
 CREATE INDEX "component_idx_component_set_id"
-    ON "public"."component" ("set_id");
+    ON component (set_id);
 
 CREATE INDEX "component_idx_component_type_id"
-    ON "public"."component" ("type_id");
+    ON component (type_id);
 
 CREATE INDEX "component_idx_component_color_id"
-    ON "public"."component" ("color_id");
+    ON component (color_id);
 
 CREATE INDEX "component_idx_component_user_id"
-    ON "public"."component" ("user_id");
+    ON component (user_id);
 --------------------------------------------------------------------------------------------------
-CREATE TABLE "public"."tag" (
-    "tag_id" serial,
-    "tag_name" character varying(30) NOT NULL UNIQUE,
-    "color_id" integer,
-    PRIMARY KEY ("tag_id")
+CREATE TABLE tag (
+    tag_id   SERIAL PRIMARY KEY,
+    tag_name VARCHAR(30) NOT NULL UNIQUE,
+    color_id INT         REFERENCES color (color_id) ON DELETE SET NULL
 );
 
 CREATE UNIQUE INDEX "tag_tag_tag_name_key"
-    ON "public"."tag" ("tag_name");
+    ON tag (tag_name);
 --------------------------------------------------------------------------------------------------
-CREATE TABLE "public"."component_tag" (
-    "component_id" integer NOT NULL,
-    "tag_id" integer NOT NULL,
-    PRIMARY KEY ("component_id", "tag_id")
+CREATE TABLE component_tag (
+    component_id integer NOT NULL,
+    tag_id integer NOT NULL,
+    PRIMARY KEY (component_id, tag_id)
 );
 --------------------------------------------------------------------------------------------------
-CREATE TABLE "public"."liked" (
-    "user_id" integer NOT NULL,
-    "component_id" integer NOT NULL,
-    "liked_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY ("user_id", "component_id")
+CREATE TABLE liked (
+    user_id      INT REFERENCES iuser (user_id) ON DELETE CASCADE,
+    component_id INT REFERENCES component (component_id) ON DELETE CASCADE,
+    liked_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, component_id)
 );
 
 CREATE INDEX "liked_idx_liked_component_id"
-    ON "public"."liked" ("component_id");
+    ON liked (component_id);
 --------------------------------------------------------------------------------------------------
-CREATE TABLE "public"."message" (
-    "message_id" serial,
-    "user_id" integer NOT NULL,
-    "title" character varying(80),
-    "body" character varying(300),
-    "link" character varying(40),
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY ("message_id")
+CREATE TABLE message (
+    message_id   SERIAL PRIMARY KEY,
+    user_id      INT REFERENCES iuser (user_id) ON DELETE CASCADE NOT NULL,
+    title        VARCHAR(80),
+    body         VARCHAR(300),
+    link         VARCHAR(40),
+    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX "message_idx_message_user_id"
-    ON "public"."message" ("user_id");
+    ON message (user_id);
 --------------------------------------------------------------------------------------------------Insert HEX in uppercase trigger
 CREATE OR REPLACE FUNCTION enforce_uppercase_hex()
     RETURNS TRIGGER AS $$
