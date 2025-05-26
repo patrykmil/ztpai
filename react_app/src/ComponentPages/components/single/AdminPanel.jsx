@@ -11,7 +11,7 @@ const AdminPanel = ({component}) => {
     const [isPopupVisible, setIsPopupVisible] = useState(false);
 
     const banMutation = useMutation({
-        mutationFn: (userId) => api.get(`/admin/users/ban/${userId}`),
+        mutationFn: (userId) => api.delete(`/admin/users/${userId}`),
         onSuccess: () => {
             queryClient.invalidateQueries(['component']);
             setIsPopupVisible(false);
@@ -19,7 +19,7 @@ const AdminPanel = ({component}) => {
     });
 
     const deleteMutation = useMutation({
-        mutationFn: (data) => api.post(`/admin/components/delete/${data.componentId}`, data),
+        mutationFn: (data) => api.delete(`/admin/components/${data.componentId}`, data),
         onSuccess: () => {
             queryClient.invalidateQueries(['component']);
             setIsPopupVisible(false);

@@ -18,7 +18,7 @@ import ButtonModify from "./components/interaction/ButtonModify.jsx";
 import AdminPanel from "./components/single/AdminPanel.jsx";
 
 const fetchComponent = async (id) => {
-    const {data} = await api.get(`/components/get/${id}`);
+    const {data} = await api.get(`/components/${id}`);
     return data;
 };
 

@@ -10,7 +10,7 @@ const ButtonLike = ({component}) => {
     const {data: liked = false} = useQuery({
         queryKey: ['like', component.id],
         queryFn: async () => {
-            const response = await api.post(`/components/checkLike/${component.id}`);
+            const response = await api.get(`/components/${component.id}/like`);
             return response.data;
         },
         enabled: !!userInfo.userId
@@ -18,7 +18,7 @@ const ButtonLike = ({component}) => {
 
     const switchLikeMutation = useMutation({
         mutationFn: async () => {
-            const response = await api.post(`/components/switchLike/${component.id}`);
+            const response = await api.put(`/components/${component.id}/like`);
             return response.data;
         },
         onSuccess: () => {

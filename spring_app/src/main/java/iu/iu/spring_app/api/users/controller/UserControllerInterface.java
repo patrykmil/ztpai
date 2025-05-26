@@ -18,21 +18,21 @@ public interface UserControllerInterface {
     @ApiResponse(responseCode = "200", description = "Users found", content = @Content(schema = @Schema(implementation = User.class)))
     @ApiResponse(responseCode = "403", description = "Access denied", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @ApiResponse(responseCode = "404", description = "No users found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
-    @GetMapping("/get/all")
+    @GetMapping
     ResponseEntity<List<User>> getAllUsers();
 
     @Operation(summary = "Get user by ID", description = "Retrieves a specific user by their ID")
     @ApiResponse(responseCode = "200", description = "User found", content = @Content(schema = @Schema(implementation = User.class)))
     @ApiResponse(responseCode = "403", description = "Access denied", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     ResponseEntity<User> getUserById(@PathVariable Integer id);
 
     @Operation(summary = "Get user by email", description = "Retrieves a specific user by their email")
     @ApiResponse(responseCode = "200", description = "User found", content = @Content(schema = @Schema(implementation = User.class)))
     @ApiResponse(responseCode = "403", description = "Access denied", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
-    @PostMapping("/get/email")
+    @PostMapping("/email")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Email to search", required = true,
             content = @Content(schema = @Schema(example = "{\"email\": \"user@iu.iu\"}")))
     ResponseEntity<User> getUserByEmail(@RequestBody Map<String, String> payload);
@@ -41,7 +41,7 @@ public interface UserControllerInterface {
     @ApiResponse(responseCode = "200", description = "User found", content = @Content(schema = @Schema(implementation = User.class)))
     @ApiResponse(responseCode = "403", description = "Access denied", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
-    @PostMapping("/get/by/username")
+    @PostMapping("/username")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Username to search", required = true,
             content = @Content(schema = @Schema(example = "{\"username\": \"patryk\"}")))
     ResponseEntity<User> getUserByUsername(@RequestBody Map<String, String> payload);
@@ -50,7 +50,7 @@ public interface UserControllerInterface {
     @ApiResponse(responseCode = "200", description = "User deleted successfully")
     @ApiResponse(responseCode = "403", description = "Access denied", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
-    @DeleteMapping("/delete/email")
+    @DeleteMapping("/email")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Email of user to delete", required = true,
             content = @Content(schema = @Schema(example = "{\"email\": \"user@iu.iu\"}")))
     ResponseEntity<?> deleteByEmail(@RequestBody Map<String, String> payload);
@@ -59,7 +59,7 @@ public interface UserControllerInterface {
     @ApiResponse(responseCode = "200", description = "User deleted successfully")
     @ApiResponse(responseCode = "403", description = "Access denied", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
-    @DeleteMapping("/delete/username")
+    @DeleteMapping("/username")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Username of user to delete", required = true,
             content = @Content(schema = @Schema(example = "{\"username\": \"patryk\"}")))
     ResponseEntity<?> deleteByUsername(@RequestBody Map<String, String> payload);

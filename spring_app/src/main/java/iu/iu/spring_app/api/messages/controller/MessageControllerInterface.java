@@ -21,7 +21,7 @@ public interface MessageControllerInterface {
     @Operation(summary = "Get all messages for user", description = "Retrieves all user messages")
     @ApiResponse(responseCode = "200", description = "Message found", content = @Content(schema = @Schema(implementation = Message.class)))
     @ApiResponse(responseCode = "403", description = "Access denied", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
-    @GetMapping("/get/my")
+    @GetMapping
     ResponseEntity<List<Message>> getUserMessages(Authentication authentication);
 
     @Operation(summary = "Add new message for user", description = "Admin adds new message for user")
@@ -29,7 +29,7 @@ public interface MessageControllerInterface {
             content = @Content(schema = @Schema(implementation = Message.class)))
     @ApiResponse(responseCode = "403", description = "Access denied", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
     @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = ExceptionResponse.class)))
-    @PostMapping("/add")
+    @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<Message> addMessage(@RequestBody Message payload);
 }

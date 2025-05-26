@@ -7,7 +7,7 @@ import useAuthStore from "../Authentication/AuthStore.js";
 import {useNavigate} from "react-router-dom";
 
 const fetchMessages = async () => {
-    const { data } = await api.get("/messages/get/my");
+    const { data } = await api.get("/messages");
     return data;
 };
 

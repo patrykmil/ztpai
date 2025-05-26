@@ -5,7 +5,7 @@ export const useSetHandler = (form, setIsPopupVisible) => {
     const queryClient = useQueryClient();
 
     const setMutation = useMutation({
-        mutationFn: (setName) => api.post('sets/add', { setName }),
+        mutationFn: (setName) => api.post('/sets', { setName }),
         onSuccess: () => {
             setIsPopupVisible(false);
             const nameInput = document.getElementById('newSetName');
