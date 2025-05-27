@@ -13,6 +13,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -45,14 +49,19 @@ class ComponentControllerTests {
 
     @Test
     void getAllComponents_Success() {
-        List<Component> components = Arrays.asList(
-                new Component(), new Component()
+        Page<Component> page = new PageImpl<>(
+                Arrays.asList(new Component(), new Component()),
+                PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "likesCount")),
+                2
         );
-        when(getComponentService.getAllComponents()).thenReturn(components);
+        when(getComponentService.getAllComponents(0, 10, "likesCount,desc")).thenReturn(page);
 
-        ResponseEntity<List<Component>> response = componentController.getAllComponents();
+        ResponseEntity<Page<Component>> response = componentController.getAllComponents(0, 10, "likesCount,desc");
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(components, response.getBody());
+        assertEquals(page, response.getBody());
+        assertEquals(2, response.getBody().getTotalElements());
+        assertEquals(1, response.getBody().getTotalPages());
     }
 
     @Test

@@ -5,6 +5,10 @@ import iu.iu.spring_app.api.components.model.ComponentFilter;
 import iu.iu.spring_app.api.components.repository.ComponentRepository;
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
 import iu.iu.spring_app.api.users.service.GetUserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,11 +30,18 @@ public class GetComponentService {
         this.getUserService = getUserService;
     }
 
-    public List<Component> getAllComponents() {
-        return componentRepository.findAll()
-                .stream()
-                .peek(validationService::unescapeComponent)
-                .collect(Collectors.toList());
+    public Page<Component> getAllComponents(int page, int size, String sort) {
+        String[] sortParams = sort.split(",");
+        String sortField = sortParams[0];
+        Sort.Direction direction = sortParams.length > 1 && sortParams[1].equalsIgnoreCase("desc") ?
+                Sort.Direction.DESC : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortField));
+        return componentRepository.findAll(pageable)
+                .map(component -> {
+                    validationService.unescapeComponent(component);
+                    return component;
+                });
     }
 
     public Component getComponentById(Integer id) {

@@ -1,12 +1,15 @@
 package iu.iu.spring_app.api.components.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import iu.iu.spring_app.api.components.model.Component;
 import iu.iu.spring_app.api.components.model.ComponentFilter;
 import iu.iu.spring_app.api.errors.ExceptionResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +18,19 @@ import java.util.List;
 
 @RequestMapping("/api/components")
 public interface ComponentControllerInterface {
-    @Operation(summary = "Get all components", description = "Retrieves all components in the system")
-    @ApiResponse(responseCode = "200", description = "Components found", content = @Content(schema = @Schema(implementation = Component.class)))
+    @Operation(summary = "Get paginated components", description = "Retrieves components in the system sorted by likes descending")
+    @ApiResponse(responseCode = "200", description = "Components found", content = @Content(schema = @Schema(implementation = Page.class)))
+    @Parameters({
+            @Parameter(name = "page", description = "Page number", example = "2"),
+            @Parameter(name = "size", description = "Number of items per page", example = "20"),
+            @Parameter(name = "sort",description = "Sort field and direction (format: field,direction)",example = "id,asc")
+    })
     @GetMapping
-    ResponseEntity<List<Component>> getAllComponents();
+    ResponseEntity<Page<Component>> getAllComponents(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "likesCount,desc") String sort
+    );
 
     @Operation(summary = "Get component by ID", description = "Retrieves a specific component by its ID")
     @ApiResponse(responseCode = "200", description = "Component found", content = @Content(schema = @Schema(implementation = Component.class)))

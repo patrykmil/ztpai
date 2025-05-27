@@ -7,6 +7,7 @@ import iu.iu.spring_app.api.components.service.DeleteComponentService;
 import iu.iu.spring_app.api.components.service.GetComponentService;
 import iu.iu.spring_app.api.components.service.ModifyComponentService;
 import iu.iu.spring_app.api.errors.ResourceNotFoundException;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -34,8 +35,8 @@ public class ComponentController implements ComponentControllerInterface {
     }
 
     @Override
-    public ResponseEntity<List<Component>> getAllComponents() {
-        return ResponseEntity.ok(getComponentService.getAllComponents());
+    public ResponseEntity<Page<Component>> getAllComponents(int page, int size, String sort) {
+        return ResponseEntity.ok(getComponentService.getAllComponents(page, size, sort));
     }
 
     @Override
