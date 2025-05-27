@@ -226,6 +226,16 @@
     font-size: var(--font-big);
 }
 
+.emptyState {
+    align-self: flex-start;
+}
+
+.emptyState > p {
+    font-size: var(--font-double);
+    color: var(--primary);
+    margin: 0 2rem;
+}
+
 .submitButton {
     display: inline flex;
     align-self: center;

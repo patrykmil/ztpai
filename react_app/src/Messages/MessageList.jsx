@@ -33,7 +33,6 @@ const MessageList = () => {
         new Date(b.createdAt) - new Date(a.createdAt)
     );
 
-
     const protocol = window.location.protocol;
     const host = window.location.host;
 
@@ -41,7 +40,8 @@ const MessageList = () => {
         <>
             <Navigation/>
             <div className={styles.mainPage}>
-                    {sortedMessages.map(message => (
+                {sortedMessages && sortedMessages.length > 0 ? (
+                    sortedMessages.map(message => (
                         <div key={message.messageId} className={styles.messageCard}>
                             <div className={styles.left}>
                                 <p className={styles.title}>{message.title}</p>
@@ -58,7 +58,12 @@ const MessageList = () => {
                                 )}
                             </div>
                         </div>
-                    ))}
+                    ))
+                ) : (
+                    <div className={styles.emptyState}>
+                        <p>You have no messages</p>
+                    </div>
+                )}
             </div>
         </>
     );

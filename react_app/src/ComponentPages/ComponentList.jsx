@@ -67,9 +67,15 @@ const fetchComponents = async (filter) => {
                                     setFilter={setFilter}
                                 />
                             </div>
-                            {data.map(component => (
-                                <ComponentCard key={component.id} component={component}/>
-                            ))}
+                            {data && data.length > 0 ? (
+                                data.map(component => (
+                                    <ComponentCard key={component.id} component={component}/>
+                                ))
+                            ) : (
+                                <div className={styles.emptyState}>
+                                    <p>No components found</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </>
