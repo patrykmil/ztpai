@@ -19,7 +19,7 @@ const AdminPanel = ({component}) => {
     });
 
     const deleteMutation = useMutation({
-        mutationFn: (data) => api.delete(`/admin/components/${data.componentId}`, data),
+        mutationFn: (data) => api.delete(`/admin/components`, {data: data}),
         onSuccess: () => {
             queryClient.invalidateQueries(['component']);
             setIsPopupVisible(false);

@@ -21,6 +21,7 @@ public class AdminService {
         this.componentRepository = componentRepository;
         this.addMessageService = addMessageService;
     }
+
     public void removeComponent(DeleteComponentModel deleteComponentModel) {
         Component component = componentRepository.findById(deleteComponentModel.getComponentId())
                 .orElseThrow(()-> new ResourceNotFoundException("Component not found"));
