@@ -5,7 +5,6 @@
 .column {
     display: flex;
     flex-flow: column wrap;
-    /*align-content: center;*/
 }
 
 
@@ -223,7 +222,6 @@
 }
 
 .autoResize {
-    /*min-height: 40vh;*/
     field-sizing: content;
     font-size: var(--font-big);
 }
@@ -274,7 +272,6 @@
     flex-flow: column nowrap;
     align-items: center;
     justify-content: space-around;
-    /*gap: 2rem;*/
     background-color: var(--background-gray);
     border: 1px solid var(--primary);
     width: 15.625rem;
@@ -609,7 +606,10 @@
         display: flex;
         flex-flow: column wrap;
         align-items: center;
-        /*margin: 0;*/
+    }
+
+    .list {
+        display: inline-grid;
     }
 
     .leftSide, .rightSide {
