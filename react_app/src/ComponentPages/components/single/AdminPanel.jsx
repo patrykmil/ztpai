@@ -4,25 +4,29 @@ import {useState} from "react";
 import styles from "../Component.module.css";
 import {api} from "../../../main.jsx";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {useNavigate} from "react-router-dom";
 
 const AdminPanel = ({component}) => {
     const userInfo = useAuthStore();
     const queryClient = useQueryClient();
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const navigate = useNavigate();
 
     const banMutation = useMutation({
         mutationFn: (userId) => api.delete(`/admin/users/${userId}`),
         onSuccess: () => {
-            queryClient.invalidateQueries(['component']);
+            queryClient.invalidateQueries({ queryKey: ['components'], exact: false });
             setIsPopupVisible(false);
+            navigate("/components");
         }
     });
 
     const deleteMutation = useMutation({
         mutationFn: (data) => api.delete(`/admin/components`, {data: data}),
         onSuccess: () => {
-            queryClient.invalidateQueries(['component']);
+            queryClient.invalidateQueries({ queryKey: ['components'], exact: false });
             setIsPopupVisible(false);
+            navigate("/components");
         }
     });
 

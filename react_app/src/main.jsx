@@ -1,10 +1,8 @@
 import {StrictMode} from "react";
 import {createRoot} from "react-dom/client";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import "./index.css";
-import HomePage from "./HomePage.jsx";
 import NotFound from "./ErrorPages/NotFound.jsx";
 import ComponentList from "./ComponentPages/ComponentList.jsx";
 import ComponentPage from "./ComponentPages/ComponentPage.jsx";
@@ -19,7 +17,7 @@ import MessageList from "./Messages/MessageList.jsx";
 import TokenRefresher from "./Authentication/TokenRefresher.js";
 
 const router = createBrowserRouter([
-    {path: "/", element: <HomePage/>},
+    {path: "/", element: <ComponentList/>},
     {path: "/components", element: <ComponentList/>},
     {path: "/components/:id", element: <ComponentPage/>},
     {path: "/create", element: <ComponentCreate/>},
@@ -130,7 +128,6 @@ createRoot(document.getElementById("root")).render(
         <QueryClientProvider client={queryClient}>
             <TokenRefresher/>
             <RouterProvider router={router}/>
-            <ReactQueryDevtools initialIsOpen={false}/>
         </QueryClientProvider>
     </StrictMode>
 );

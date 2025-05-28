@@ -14,7 +14,7 @@ const ButtonDelete = ({component}) => {
             return response.data;
         },
         onSuccess: () => {
-            navigate('/');
+            navigate(-1);
         }
     });
     if (userInfo.userId !== component.author.id) {
