@@ -1,6 +1,6 @@
 import styles from "./../Component.module.css";
 
-const CreateSetPopup = ({ isVisible, onClose, onSubmit }) => {
+const CreateSetPopup = ({isVisible, onClose, onSubmit}) => {
     return (
         <div className={`${styles.popup} ${isVisible ? styles.active : ''}`}>
             <div className={styles.popupContent}>

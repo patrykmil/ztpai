@@ -5,10 +5,10 @@ const InputCodeField = ({start, language, activeTab, onInput}) => {
     return (
         <textarea
             name={`language-${language}`}
-            onInput ={onInput}
+            onInput={onInput}
             className={`${styles.codeContainer} ${styles.autoResize} ${activeTab === language ? styles.active : ""}`}
             defaultValue={start}
-       />
+        />
     );
 };
 

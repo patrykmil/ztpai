@@ -29,7 +29,7 @@ INSERT INTO public.message (user_id, title, body, link, created_at)
 VALUES (10, 'Welcome admin2!', 'You can now share your work', '/create/', '2025-03-01 20:00:00.000000');
 
 INSERT INTO public.message (user_id, title, body, link, created_at)
-VALUES (1, 'New component added "gradient text"', NULL, '/components/1', '2025-03-02 14:01:00.000000');
+VALUES (3, 'New component added "gradient text"', NULL, '/components/1', '2025-03-02 14:01:00.000000');
 
 INSERT INTO public.message (user_id, title, body, link, created_at)
 VALUES (2, 'New component added "pink submit"', NULL, '/components/2', '2025-03-12 13:06:00.000000');
@@ -41,7 +41,7 @@ INSERT INTO public.message (user_id, title, body, link, created_at)
 VALUES (2, 'New component added "green submit"', NULL, '/components/4', '2025-03-10 12:51:00.000000');
 
 INSERT INTO public.message (user_id, title, body, link, created_at)
-VALUES (2, 'New component added "green input"', NULL, '/components/5', '2025-02-23 12:58:00.000000');
+VALUES (2, 'New component added "green input"', NULL, '/components/5', '2025-03-23 12:58:00.000000');
 
 INSERT INTO public.message (user_id, title, body, link, created_at)
 VALUES (6, 'New component added "blue checkbox"', NULL, '/components/6', '2025-02-28 09:16:00.000000');

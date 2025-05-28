@@ -15,5 +15,5 @@ export const useTagHandlers = (form, setTags) => {
         setTags(updatedTags);
     };
 
-    return { handleTagAdd, handleTagRemove };
+    return {handleTagAdd, handleTagRemove};
 };

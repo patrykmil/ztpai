@@ -2,7 +2,7 @@ import styles from "./../Component.module.css";
 import InputField from "./InputField.jsx";
 import SelectField from "./SelectField.jsx";
 
-const ComponentFormFields = ({ form, suppData, handleTagAdd, tags, handleTagRemove, setIsPopupVisible }) => {
+const ComponentFormFields = ({form, suppData, handleTagAdd, tags, handleTagRemove, setIsPopupVisible}) => {
     return (
         <>
             <div className={styles.formFields}>

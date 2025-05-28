@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 public class DeleteUserService {
     private final UserRepository userRepository;
     private final GetUserService getUserService;
+
     public DeleteUserService(UserRepository userRepository, GetUserService getUserService) {
         this.userRepository = userRepository;
         this.getUserService = getUserService;

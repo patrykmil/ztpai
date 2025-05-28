@@ -26,7 +26,7 @@ public class AuthenticationController implements AuthenticationControllerInterfa
     }
 
     @Override
-        public JwtAuthenticationResponse login(LoginRequest request, HttpServletResponse response) {
+    public JwtAuthenticationResponse login(LoginRequest request, HttpServletResponse response) {
         return authenticationService.login(request, response);
     }
 

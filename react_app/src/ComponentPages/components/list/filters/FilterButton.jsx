@@ -2,7 +2,7 @@ import styles from "./../../Component.module.css"
 import useComponentFilterStore from "./FilterStore.js";
 
 const FilterButton = () => {
-    const { searchQuery, types, sorting, setFilter } = useComponentFilterStore();
+    const {searchQuery, types, sorting, setFilter} = useComponentFilterStore();
 
     const handleFilter = () => {
         setFilter({

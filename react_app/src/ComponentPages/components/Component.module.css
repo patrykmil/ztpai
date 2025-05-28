@@ -591,6 +591,7 @@
     letter-spacing: 0.1em;
     color: var(--primary);
 }
+
 .btn.chosen {
     color: var(--primary);
 }

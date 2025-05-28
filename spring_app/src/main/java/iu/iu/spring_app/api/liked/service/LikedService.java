@@ -43,7 +43,9 @@ public class LikedService {
         likedRepository.findByUserIDAndComponentID(user.getId(), componentId)
                 .ifPresentOrElse(
                         likedRepository::delete,
-                        () -> { throw new ResourceNotFoundException("Component not liked"); }
+                        () -> {
+                            throw new ResourceNotFoundException("Component not liked");
+                        }
                 );
     }
 

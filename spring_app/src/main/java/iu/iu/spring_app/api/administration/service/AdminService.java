@@ -14,9 +14,10 @@ public class AdminService {
     private final UserRepository userRepository;
     private final ComponentRepository componentRepository;
     private final AddMessageService addMessageService;
+
     public AdminService(UserRepository userRepository,
-                           ComponentRepository componentRepository,
-                           AddMessageService addMessageService) {
+                        ComponentRepository componentRepository,
+                        AddMessageService addMessageService) {
         this.userRepository = userRepository;
         this.componentRepository = componentRepository;
         this.addMessageService = addMessageService;
@@ -24,7 +25,7 @@ public class AdminService {
 
     public void removeComponent(DeleteComponentModel deleteComponentModel) {
         Component component = componentRepository.findById(deleteComponentModel.getComponentId())
-                .orElseThrow(()-> new ResourceNotFoundException("Component not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Component not found"));
         componentRepository.delete(component);
         var message = Message.builder()
                 .title("Component \"" + component.getName() + "\" has been deleted by admin")

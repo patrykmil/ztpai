@@ -50,7 +50,7 @@ public class AddComponentService {
         Type type = typeService.getTypeByName(validationService.sanitizeInput(payload.getType().getName()));
 
         Set set = setService.getSetByName(validationService.sanitizeInput(payload.getSet().getName()), author);
-        if(!set.getUser().getEmail().equals(email)) {
+        if (!set.getUser().getEmail().equals(email)) {
             throw new AccessDeniedException("Not allowed to use this set");
         }
 
@@ -69,10 +69,10 @@ public class AddComponentService {
 
         Component savedComponent = componentRepository.save(component);
         var message = Message.builder()
-                                .title("New component added \"" + savedComponent.getName()+ "\"")
-                                .link("/components/" + savedComponent.getId())
-                                .user(savedComponent.getAuthor())
-                                .build();
+                .title("New component added \"" + savedComponent.getName() + "\"")
+                .link("/components/" + savedComponent.getId())
+                .user(savedComponent.getAuthor())
+                .build();
         addMessageService.addMessage(message);
 
         return savedComponent;

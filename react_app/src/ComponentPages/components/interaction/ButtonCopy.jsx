@@ -6,7 +6,7 @@ const ButtonCopy = ({component}) => {
         const string = `//${component.name} by ${component.author.name}\n//${host}/components/${component.id}\n\n//----HTML----\n${component.html}\n\n//----CSS----\n${component.css}\n`;
         try {
             await navigator.clipboard.writeText(string);
-        }catch (e) {
+        } catch (e) {
             console.error('Failed to copy: ', e);
         }
     };

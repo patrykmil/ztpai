@@ -13,19 +13,17 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     @Bean
-    public Queue queue()
-    {
+    public Queue queue() {
         return new Queue("message-queue", false);
     }
 
-    @Bean public Exchange exchange()
-    {
+    @Bean
+    public Exchange exchange() {
         return new DirectExchange("message-exchange");
     }
 
     @Bean
-    public Binding binding(Queue queue, Exchange exchange)
-    {
+    public Binding binding(Queue queue, Exchange exchange) {
         return BindingBuilder.bind(queue)
                 .to(exchange)
                 .with("mess")

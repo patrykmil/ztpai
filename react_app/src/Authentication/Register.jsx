@@ -16,7 +16,7 @@ const Register = () => {
     const navigate = useNavigate();
 
     const registerMutation = useMutation({
-        mutationFn: (data) => api.post("/register", data, { withCredentials: true }),
+        mutationFn: (data) => api.post("/register", data, {withCredentials: true}),
         onSuccess: () => navigate('/login'),
         onError: (error) => {
             alert(error.response?.data?.message || 'Registration failed');
@@ -59,7 +59,8 @@ const Register = () => {
                         />
                         <form.Field
                             name="password"
-                            children={(field) => <Field name="password" label="Password" field={field} type="password"/>}
+                            children={(field) => <Field name="password" label="Password" field={field}
+                                                        type="password"/>}
                         />
                         <form.Subscribe
                             selector={(state) => [state.canSubmit]}

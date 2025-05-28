@@ -7,7 +7,7 @@ import useAuthStore from "../Authentication/AuthStore.js";
 import {useNavigate} from "react-router-dom";
 
 const fetchMessages = async () => {
-    const { data } = await api.get("/messages");
+    const {data} = await api.get("/messages");
     return data;
 };
 
@@ -15,7 +15,7 @@ const MessageList = () => {
     const userInfo = useAuthStore();
     const navigate = useNavigate();
 
-    const { data, error, isLoading } = useQuery({
+    const {data, error, isLoading} = useQuery({
         queryKey: ['messages'],
         queryFn: fetchMessages,
         enabled: true

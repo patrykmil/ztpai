@@ -1,7 +1,7 @@
 import ComponentCard from "../list/ComponentCard.jsx";
 import styles from "../Component.module.css"
 
-const LikedList = ({ liked }) => {
+const LikedList = ({liked}) => {
     return (
         <>
             {liked && liked.length > 0 ? (

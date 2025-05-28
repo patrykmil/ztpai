@@ -90,8 +90,8 @@ const ComponentModify = () => {
         },
     });
 
-    const { handleTagAdd, handleTagRemove } = useTagHandlers(form, setTags);
-    const { handleSetCreate } = useSetHandler(form, setIsPopupVisible);
+    const {handleTagAdd, handleTagRemove} = useTagHandlers(form, setTags);
+    const {handleSetCreate} = useSetHandler(form, setIsPopupVisible);
 
     return (
         <>

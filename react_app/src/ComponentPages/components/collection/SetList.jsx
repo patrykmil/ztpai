@@ -1,7 +1,7 @@
 import ComponentCard from "../list/ComponentCard.jsx";
 import styles from "../Component.module.css"
 
-const SetList = ({ setComponents }) => {
+const SetList = ({setComponents}) => {
     const hasComponents = setComponents &&
         Object.values(setComponents).some(components => components && components.length > 0);
 

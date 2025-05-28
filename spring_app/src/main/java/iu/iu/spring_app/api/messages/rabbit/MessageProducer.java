@@ -12,8 +12,7 @@ public class MessageProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage(Message message)
-    {
+    public void sendMessage(Message message) {
         rabbitTemplate.convertAndSend("message-exchange", "mess", message);
     }
 }

@@ -1,7 +1,7 @@
 import styles from "../Component.module.css"
 import {useQueryClient} from "@tanstack/react-query";
 
-const RadioButton = ({ activeView, setActiveView }) => {
+const RadioButton = ({activeView, setActiveView}) => {
     const queryClient = useQueryClient();
     return (
         <div className={styles.radio}>

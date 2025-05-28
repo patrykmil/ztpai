@@ -48,7 +48,7 @@ a:hover {
 .loadingText {
     font-size: var(--font-triple);
     justify-self: center;
-    color:var(--primary);
+    color: var(--primary);
     margin-top: 10rem;
 }
 

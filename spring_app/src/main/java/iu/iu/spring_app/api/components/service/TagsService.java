@@ -34,7 +34,7 @@ public class TagsService {
     }
 
     public List<Tag> getTags() {
-        return  tagRepository.findAll();
+        return tagRepository.findAll();
     }
 
     public Tag getTagByName(String name) {

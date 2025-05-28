@@ -29,12 +29,12 @@ const ComponentCollection = () => {
     const {username} = useParams();
     const [activeView, setActiveView] = useState('sets');
 
-    const { data: likedComponents, isLoading: isLikedLoading, error: likedError,  } = useQuery({
+    const {data: likedComponents, isLoading: isLikedLoading, error: likedError,} = useQuery({
         queryKey: ['likedComponents', username],
         queryFn: () => fetchLiked(username)
     });
 
-    const { data: userSets, isLoading: isSetsLoading, error: setsError } = useQuery({
+    const {data: userSets, isLoading: isSetsLoading, error: setsError} = useQuery({
         queryKey: ['userSets', username],
         queryFn: () => fetchSets(username)
     });
@@ -63,11 +63,11 @@ const ComponentCollection = () => {
             <div className={`${styles.mainPage} ${styles.column}`}>
                 <RadioButton activeView={activeView} setActiveView={setActiveView}/>
                 <div className={styles.list}>
-                {activeView === 'liked' ? (
-                    <LikedList liked={likedComponents}/>
-                ) : (
-                    <SetList setComponents={setComponents}/>
-                )}
+                    {activeView === 'liked' ? (
+                        <LikedList liked={likedComponents}/>
+                    ) : (
+                        <SetList setComponents={setComponents}/>
+                    )}
                 </div>
             </div>
         </>

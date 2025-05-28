@@ -23,7 +23,7 @@ public interface ComponentControllerInterface {
     @Parameters({
             @Parameter(name = "page", description = "Page number", example = "2"),
             @Parameter(name = "size", description = "Number of items per page", example = "20"),
-            @Parameter(name = "sort",description = "Sort field and direction (format: field,direction)",example = "id,asc")
+            @Parameter(name = "sort", description = "Sort field and direction (format: field,direction)", example = "id,asc")
     })
     @GetMapping
     ResponseEntity<Page<Component>> getAllComponents(

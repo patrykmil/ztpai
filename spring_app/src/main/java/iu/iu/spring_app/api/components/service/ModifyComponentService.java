@@ -49,7 +49,7 @@ public class ModifyComponentService {
 
         Set set = setService.getSetByName(validationService.sanitizeInput(payload.getSet().getName()), user);
 
-        if(!set.getUser().getEmail().equals(email)) {
+        if (!set.getUser().getEmail().equals(email)) {
             throw new AccessDeniedException("Not allowed to use this set");
         }
 

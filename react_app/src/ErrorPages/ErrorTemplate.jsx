@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import styles from "./Error.module.css";
 
-const ErrorTemplate = ({ code, message }) => {
+const ErrorTemplate = ({code, message}) => {
     return (
         <div className={styles.content}>
             <h1 className={styles.code}>{code}</h1>

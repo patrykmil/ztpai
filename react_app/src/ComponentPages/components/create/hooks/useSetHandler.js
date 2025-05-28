@@ -5,15 +5,15 @@ export const useSetHandler = (form, setIsPopupVisible) => {
     const queryClient = useQueryClient();
 
     const setMutation = useMutation({
-        mutationFn: (setName) => api.post('/sets', { setName }),
+        mutationFn: (setName) => api.post('/sets', {setName}),
         onSuccess: () => {
             setIsPopupVisible(false);
             const nameInput = document.getElementById('newSetName');
             if (nameInput) nameInput.value = '';
 
-            queryClient.invalidateQueries({ queryKey: ['supp'] });
+            queryClient.invalidateQueries({queryKey: ['supp']});
 
-            form.setFieldMeta('set', { isTouched: false, errors: [] });
+            form.setFieldMeta('set', {isTouched: false, errors: []});
             form.setFieldValue('set', '');
         },
         onError: (error) => {
@@ -29,5 +29,5 @@ export const useSetHandler = (form, setIsPopupVisible) => {
         }
     };
 
-    return { handleSetCreate };
+    return {handleSetCreate};
 };

@@ -1,6 +1,6 @@
 import styles from "./../../Component.module.css"
 
-const Types = ({ types, setTypes }) => {
+const Types = ({types, setTypes}) => {
     const handleSelectAll = () => {
         const newState = Object.keys(types).reduce((acc, key) => {
             acc[key] = true;

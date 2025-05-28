@@ -1,7 +1,7 @@
 import styles from "../Component.module.css"
 
 
-const AdminPopup = ({ isVisible, onClose, onBan, onDelete }) => {
+const AdminPopup = ({isVisible, onClose, onBan, onDelete}) => {
     return (
         <div className={`${styles.popup} ${isVisible ? styles.active : ''}`}>
             <div className={styles.popupContent}>

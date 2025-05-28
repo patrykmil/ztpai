@@ -49,7 +49,8 @@ const Login = () => {
                         />
                         <form.Field
                             name="password"
-                            children={(field) => <Field name="password" label="Password" field={field} type="password"/>}
+                            children={(field) => <Field name="password" label="Password" field={field}
+                                                        type="password"/>}
                         />
                         <form.Subscribe
                             selector={(state) => [state.canSubmit]}

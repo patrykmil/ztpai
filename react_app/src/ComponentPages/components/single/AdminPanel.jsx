@@ -15,7 +15,7 @@ const AdminPanel = ({component}) => {
     const banMutation = useMutation({
         mutationFn: (userId) => api.delete(`/admin/users/${userId}`),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['components'], exact: false });
+            queryClient.invalidateQueries({queryKey: ['components'], exact: false});
             setIsPopupVisible(false);
             navigate("/components");
         }
@@ -24,7 +24,7 @@ const AdminPanel = ({component}) => {
     const deleteMutation = useMutation({
         mutationFn: (data) => api.delete(`/admin/components`, {data: data}),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['components'], exact: false });
+            queryClient.invalidateQueries({queryKey: ['components'], exact: false});
             setIsPopupVisible(false);
             navigate("/components");
         }

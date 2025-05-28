@@ -1,6 +1,6 @@
 import styles from "../Component.module.css"
 
-const TagSelector = ({ field, options, tags, onTagAdd }) => {
+const TagSelector = ({field, options, tags, onTagAdd}) => {
     return (
         <div className={styles.field}>
             <div className={styles.tagInput}>
@@ -27,7 +27,7 @@ const TagSelector = ({ field, options, tags, onTagAdd }) => {
             </div>
             <datalist id="tags-list">
                 {options.map((option) => (
-                    <option key={option.id} value={option.name} />
+                    <option key={option.id} value={option.name}/>
                 ))}
             </datalist>
             <div className={styles.selectedTags}>

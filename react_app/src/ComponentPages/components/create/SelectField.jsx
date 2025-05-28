@@ -1,7 +1,7 @@
 import styles from '../Component.module.css';
 import FieldInfo from "../../../Authentication/components/FieldInfo.jsx";
 
-const SelectField = ({ name, placeholder, field, options, onInput }) => {
+const SelectField = ({name, placeholder, field, options, onInput}) => {
     return (
         <div className={styles.field}>
             <input
@@ -15,7 +15,7 @@ const SelectField = ({ name, placeholder, field, options, onInput }) => {
             />
             <datalist id={`${name}-list`} className={styles.datalist}>
                 {options.map((option) => (
-                    <option key={option.id} value={option.name} />
+                    <option key={option.id} value={option.name}/>
                 ))}
             </datalist>
             <FieldInfo field={field}></FieldInfo>

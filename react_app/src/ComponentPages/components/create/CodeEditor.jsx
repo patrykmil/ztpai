@@ -2,7 +2,7 @@ import styles from "./../Component.module.css";
 import ChangeCodeButtons from "./ChangeCodeButtons.jsx";
 import InputCodeField from "./InputCodeField.jsx";
 
-const CodeEditor = ({ form, activeTab, setActiveTab, previewData, setPreviewData }) => {
+const CodeEditor = ({form, activeTab, setActiveTab, previewData, setPreviewData}) => {
     return (
         <div className={styles.rightSide}>
             <ChangeCodeButtons activeTab={activeTab} setActiveTab={setActiveTab}/>

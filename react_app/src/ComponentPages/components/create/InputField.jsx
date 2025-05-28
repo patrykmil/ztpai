@@ -1,7 +1,7 @@
 import styles from '../Component.module.css';
 import FieldInfo from "../../../Authentication/components/FieldInfo.jsx";
 
-const InputField = ({ name, placeholder, field }) => {
+const InputField = ({name, placeholder, field}) => {
     return (
         <div className={styles.field}>
             <input

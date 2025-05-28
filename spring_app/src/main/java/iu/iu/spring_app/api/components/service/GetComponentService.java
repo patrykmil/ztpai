@@ -46,7 +46,7 @@ public class GetComponentService {
 
     public Component getComponentById(Integer id) {
         Component component = componentRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Component not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Component not found"));
 
         validationService.unescapeComponent(component);
 
@@ -71,9 +71,9 @@ public class GetComponentService {
     }
 
     public List<Component> getSetComponents(Integer setId) {
-            return componentRepository.findAllBySetId(setId)
-                    .stream()
-                    .peek(validationService::unescapeComponent)
-                    .collect(Collectors.toList());
+        return componentRepository.findAllBySetId(setId)
+                .stream()
+                .peek(validationService::unescapeComponent)
+                .collect(Collectors.toList());
     }
 }

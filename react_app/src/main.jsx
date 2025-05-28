@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     {path: "/collection/:username", element: <ComponentCollection/>},
     {path: "/register", element: <Register/>},
     {path: "/login", element: <Login/>},
-    {path:"/messages", element: <MessageList/>},
+    {path: "/messages", element: <MessageList/>},
     {path: "*", element: <NotFound/>}
 ])
 
@@ -87,7 +87,7 @@ api.interceptors.response.use(
 
             try {
                 const response = await api.post('/refresh');
-                const { token } = response.data;
+                const {token} = response.data;
 
                 useAuthStore.getState().setToken(token);
 

@@ -15,8 +15,7 @@ public class MessageConsumer {
     }
 
     @RabbitListener(queues = "message-queue")
-    public void receiveMessage(Message message)
-    {
+    public void receiveMessage(Message message) {
         messageRepository.save(message);
     }
 }

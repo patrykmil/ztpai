@@ -6,7 +6,7 @@ const ButtonShare = ({component}) => {
         const string = `${host}/components/${component.id}`;
         try {
             await navigator.clipboard.writeText(string);
-        }catch (e) {
+        } catch (e) {
             console.error('Failed to copy: ', e);
         }
     };

@@ -31,7 +31,7 @@ public class User implements UserDetails {
     @JsonIgnore
     private String email;
 
-    @Column(name ="username", nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     private String name;
 
     @Column(name = "password_hash", nullable = false)

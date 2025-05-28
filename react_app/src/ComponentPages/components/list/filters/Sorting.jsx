@@ -1,6 +1,6 @@
 import styles from "./../../Component.module.css"
 
-const Sorting = ({ sorting, setSorting }) => {
+const Sorting = ({sorting, setSorting}) => {
     return (
         <div className={styles.sort}>
             <p>Sort by</p>
