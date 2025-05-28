@@ -46,15 +46,18 @@ IU - library of html/css components
 
 ## Setup
 
-Clone repository:
+### Clone the repository:
 
 ```sh
   git clone https://github.com/patrykmil/ztpai.git
 ```
 
-Rename .env.template to .env and fill with your own values
+### Configure environment variables:
 
-Inside the project directory, run:
+* Rename .env.template to .env 
+* Fill with your own values
+
+### Start the application using Docker Compose:
 
 ```sh
   docker compose up -d --build
@@ -62,12 +65,15 @@ Inside the project directory, run:
 
 ## Structure
 
-| Service                   | Port  |
-|---------------------------|-------|
-| API                       | 8080  |
-| Website                   | 5173  |
-| Rabbitmq management panel | 15672 |
-| Database                  | 5432  |
+| Service    | Ports           | Description                           |
+|------------|-----------------|---------------------------------------|
+| API        | 8080            | Spring Boot application               |
+|            | 5005            | Remote debugging port                 |
+| Website    | 5173            | React dev server with hot reloading   |
+| Database   | 5432            | PostgreSQL                            |
+| RabbitMQ   | 5672            | AMQP protocol                         |
+|            | 5671            | AMQP with TLS                         |
+|            | 15672           | Management panel                      |
 
 
 ### Architecture
