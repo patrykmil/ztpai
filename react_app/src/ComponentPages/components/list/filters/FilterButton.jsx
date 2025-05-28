@@ -1,23 +1,22 @@
 import styles from "./../../Component.module.css"
+import useComponentFilterStore from "./FilterStore.js";
 
-const FilterButton = ({ searchQuery, types, sorting, setFilter }) => {
-    const handleClick = () => {
+const FilterButton = () => {
+    const { searchQuery, types, sorting, setFilter } = useComponentFilterStore();
+
+    const handleFilter = () => {
         setFilter({
             query: searchQuery,
-            types: types,
-            sorting: sorting
+            types,
+            sorting
         });
     };
 
     return (
-        <button
-            className={styles.filterButton}
-            type="button"
-            onClick={handleClick}
-        >
+        <button onClick={handleFilter} className={styles.filterButton}>
             Apply
         </button>
-    )
-}
+    );
+};
 
 export default FilterButton;

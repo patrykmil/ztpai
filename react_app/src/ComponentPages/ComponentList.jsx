@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {useQuery} from "@tanstack/react-query";
 import {api} from '../main.jsx'
 import ComponentCard from "./components/list/ComponentCard.jsx"
@@ -9,6 +8,7 @@ import SearchBar from "./components/list/filters/SearchBar.jsx";
 import Sorting from "./components/list/filters/Sorting.jsx";
 import Types from "./components/list/filters/Types.jsx";
 import FilterButton from "./components/list/filters/FilterButton.jsx";
+import useComponentFilterStore from "./components/list/filters/FilterStore.js";
 
 const fetchComponents = async (filter) => {
             const { data } = await api.post("/components/search", filter);
@@ -16,20 +16,12 @@ const fetchComponents = async (filter) => {
         };
 
         const ComponentList = () => {
-            const [searchQuery, setSearchQuery] = useState('');
-            const [types, setTypes] = useState({
-                button: true,
-                input: true,
-                checkbox: true,
-                'radio button': true
-            });
-            const [sorting, setSorting] = useState('most likes');
-
-            const [filter, setFilter] = useState({
-                query: '',
-                types: types,
-                sorting: 'most likes'
-            });
+            const {
+                searchQuery, setSearchQuery,
+                types, setTypes,
+                sorting, setSorting,
+                filter, setFilter
+            } = useComponentFilterStore();
 
             const { data, error, isLoading } = useQuery({
                 queryKey: ['components', filter],
@@ -60,12 +52,7 @@ const fetchComponents = async (filter) => {
                                     types={types}
                                     setTypes={setTypes}
                                 />
-                                <FilterButton
-                                    searchQuery={searchQuery}
-                                    types={types}
-                                    sorting={sorting}
-                                    setFilter={setFilter}
-                                />
+                                <FilterButton/>
                             </div>
                             {data && data.length > 0 ? (
                                 data.map(component => (
